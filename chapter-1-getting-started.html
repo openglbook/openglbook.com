@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Chapter 1: Getting Started | OpenGLBook.com</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+        <script type="text/javascript" src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+        <script type="text/javascript" src="/scripts/jsglhl.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function() {
+          LinkOpenGLManPages();
+        });
+        </script>
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+
+        <div class="site">
+          
+          <div class="header">
+            <h1 class="title"><a href="/">OpenGLBook.com</a></h1>
+          </div>
+
+          <div id="navigation">
+            <div class="menu">
+              <ul>
+                <li class="page_item">
+                  <a href="/">Home</a>
+                </li>
+                <li class="page_item">
+                  <a href="/the-book.html">The Book</a>
+                  <ul class="children">
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                      <li><a href="/chapter-0-preface-what-is-opengl.html">Preface: What is OpenGL?</a></li>
+                      
+                    
+                      
+                      <li><a href="/chapter-1-getting-started.html">Chapter 1: Getting Started</a></li>
+                      
+                    
+                      
+                      <li><a href="/chapter-2-vertices-and-shapes.html">Chapter 2: Vertices and Shapes</a></li>
+                      
+                    
+                      
+                      <li><a href="/chapter-3-index-buffer-objects-and-primitive-types.html">Chapter 3: Index Buffer Objects and Primitive Types</a></li>
+                      
+                    
+                      
+                      <li><a href="/chapter-4-entering-the-third-dimension.html">Chapter 4: Entering the Third Dimension</a></li>
+                      
+                    
+                      
+                      <li><a href="/credits.html">Credits</a></li>
+                      
+                    
+                  </ul>
+                </li>
+                <li class="page_item">
+                  <a href="/blog/">Blog</a>
+                </li>
+                <li class="page_item">
+                  <a href="#">Report Issues</a>
+                  <ul class="children">
+                    <li>
+                      <a href="https://github.com/openglbook/openglbook.com/issues">
+                        Text Issues (typos, etc.)
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">Code Issues (bugs, etc.)</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <h1>Chapter 1: Getting Started</h1>
+
+<p><img
+  src="/images/4262_01_01-300x234.png"
+  title="Resulting Output"
+  alt="Resulting Output"
+  class="right"
+/></p>
+
+<p>Now that you have a significant amount of background information under your
+belt, it’s time to get your hands dirty with some actual code.</p>
+
+<p>In this chapter, you will learn how to:</p>
+
+<ul>
+<li>Create an OpenGL context with FreeGLUT</li>
+<li>Initialize GLEW</li>
+<li>Create the boilerplate code used throughout the book</li>
+</ul>
+
+<p><strong><a href="/chapter-0-preface-what-is-opengl.html">Check the requirements before continuing</a></strong></p>
+
+<div class="Attention">
+  <strong>OpenGL 3.x / DirectX 10 Level Hardware</strong>
+  <p>
+    This chapter is 100% compatible with OpenGL 3.x level hardware by changing
+    only a few lines of code.
+  </p>
+</div>
+
+<h1>First Steps</h1>
+
+<p>Before we get started, make sure that you have the libraries discussed in the
+preface ready for use in your compiler. The examples in this chapter (or in
+this entire book for that matter) will not work without them.</p>
+
+<p>Moreover, if you are using Windows, set your program to compile as a
+console/command line program since we will write to the console for debugging
+and informational purposes, even in this first chapter.</p>
+
+<p>An OpenGL context allows us to pass commands to the underlying hardware, so
+without one your OpenGL program is quite useless. This section will set up the
+first bit of code that you will need to set up a functioning window; don’t
+worry if you don’t understand what the code does at this point, we will discuss
+the code in detail after we have our first program up and running.</p>
+
+<p>Since we are starting from scratch, create a new file called <code>Chapter1.c</code>, open
+it in a text editor or your development environment and insert the following
+lines:</p>
+
+<script src="https://gist.github.com/11129276.js"> </script>
+
+<p>Now that you have defined the first program, you may safely compile and run the
+source code. What you see should be similar to the screenshot below:</p>
+
+<p><img
+  src="/images/4262_01_01.png"
+  alt="Resulting Output"
+  title="Resulting Output"
+  class="center"
+/></p>
+
+<h2>Step-By-Step</h2>
+
+<p>Even if the end result of the code above is an unspectacular blank window that
+doesn&#39;t seem to do much, there is much going on behind the scenes. Let&#39;s step
+through some of the code that we&#39;ve just added. We&#39;ll walk through the code
+from the top of the code file to the bottom, leaving and returning to functions
+where necessary.</p>
+
+<p>The <code>WINDOW_TITLE_PREFIX</code> pre-processor definition simply serves as a
+placeholder for our window title. The reason it&#39;s called prefix is because
+we&#39;ll be appending some dynamic text to it a little later on in this chapter.</p>
+
+<p>Next up are some global variable definitions <code>CurrentWidth</code>, <code>CurrentHeight</code> of
+type integer, which store the current dimensions of the window. We also define
+the global variable <code>WindowHandle</code>, used to store the handle to the window
+created by FreeGLUT.</p>
+
+<h2>Initializing</h2>
+
+<p>After declaring the function prototypes and defining the <code>main</code> application
+entry function, the next function of interest is the <code>InitWindow</code> function,
+called by the <code>Initialize</code> function.</p>
+
+<p><code>InitWindow</code> calls several FreeGLUT functions to create a window, starting off
+with <code>glutInit</code>, which initializes the FreeGLUT library. This function does not
+return anything, but simply sets up FreeGLUT for use in your application. In
+any program, this should be the first FreeGLUT function you should call.</p>
+
+<p>As you may have noticed, <code>glutInit</code> takes two arguments, which are the command
+line arguments from the main function. FreeGLUT takes several parameters, none
+of which we shall use in this book, but for demonstrative purposes, we&#39;ll
+simply pass the command line parameters to <code>glutInit</code>. If you don’t wish the
+user to have any type of control of your program, you should pass empty values
+to this function.</p>
+
+<h2>Context Types and Window Options</h2>
+
+<p>The next three function calls go together as they declare to FreeGLUT what type
+of OpenGL context we&#39;d like to use for our program. The functions in question
+are:</p>
+
+<ul>
+<li><code>glutInitContextVersion</code></li>
+<li><code>glutInitContextFlags</code></li>
+<li><code>glutInitContextProfile</code></li>
+</ul>
+
+<p>The parameters should be easily decipherable if you’ve read the section on
+deprecation in the preface; we&#39;re asking FreeGLUT to return a
+<strong>forward-compatible</strong> OpenGL 4.0 <strong>core-profile</strong> context.</p>
+
+<p>The next function, <code>glutSetOption</code>, is called with the
+<code>GLUT_ACTION_ON_WINDOW_CLOSE</code> option to make sure that the <code>glutMainLoop</code>
+function in <code>main</code> returns to the program and doesn&#39;t exit the program when
+it&#39;s done. The original GLUT library did not return to the program and after
+GLUT was done rendering it would end your program. This meant that if you had
+allocated any memory, there was no way to avoid memory leaks without some nasty
+hacking into the GLUT library. FreeGLUT effectively ends this behaviour by
+setting the <code>GLUT_ACTION_ON_WINDOW_CLOSE</code> option to
+<code>GLUT_ACTION_GLUTMAINLOOP_RETURNS</code>.</p>
+
+<p><code>glutInitWindowSize</code> specifies the initial size of the rendering window, in our
+case the values stored in the <code>CurrentHeight</code> and <code>CurrentWidth</code> variables, 800
+and 600 respectively.</p>
+
+<h2>Display Modes</h2>
+
+<p><code>glutInitDisplayMode</code> is a function that is a bit more involved since it
+defines what type of OpenGL context we would like and how the device should
+render our scene. In this sample, three distinct options are passed to the
+function, namely:</p>
+
+<ul>
+<li><code>GLUT_DEPTH</code></li>
+<li><code>GLUT_DOUBLE</code></li>
+<li><code>GLUT_RGBA</code></li>
+</ul>
+
+<p><code>GLUT_DEPTH</code> enables the usage of the <strong>depth buffer</strong>, an important mechanism
+in 3D computer graphics. The depth buffer (also called Z-buffer) contains the
+floating point Z-depth information of each pixel rendered to the screen. This
+mechanism is important in the rendering of new objects for making sure that
+they don&#39;t overlap any objects that are closer to the screen (thus also for
+determining if the new pixel should overwrite the existing pixel). We&#39;ll
+explore the depth buffer much more in chapter three where we&#39;ll start drawing
+three-dimensional objects.</p>
+
+<p><code>GLUT_DOUBLE</code> is a flag that enables the usage of <strong>double-buffering</strong>, which
+is a feature that reduces image flickering. With double buffering, all of the
+draw commands are executed on an off-screen buffer, which is sent to the screen
+when all of the drawing for a frame has been completed so that no incomplete
+images are displayed.</p>
+
+<p>The buffer that’s currently displayed is referred to as the front buffer, and
+the buffer that we&#39;re drawing to is called the (you guessed it) back buffer.
+When all of the draw commands have been completed, these buffers are swapped so
+that the back buffer becomes the front buffer and vice versa.</p>
+
+<p><code>GLUT_RGBA</code> is a flag that defines the way colours are composited by using
+individual Red, Green, Blue, and Alpha values. <code>glutInitDisplayMode</code> can take
+several other options, which we&#39;ll explore throughout the book.</p>
+
+<h2>Window Creation</h2>
+
+<p>After the display options have been set, we&#39;re finally ready to create our
+window, and thereby our rendering context. A call to <code>glutCreateWindow</code> will
+create our context and will return a handle to our newly created window. As you
+may have noticed, the sole parameter to this function is <code>WINDOW_TITLE_PREFIX</code>,
+which will set the initial title for the window, in our case the string
+&quot;Chapter 1.&quot; We immediately check the return value when the function returns
+and make sure that if the value is less than one, the program displays an error
+message and exits with the proper return value. A FreeGLUT window is not valid
+if the window-handle&#39;s value is less than the number 1, at which point the
+program should fail or retry to create the window.</p>
+
+<h2>Function Call-Backs</h2>
+
+<p>If the program got past this point, we have a valid context and we’re ready for
+drawing. But before we do that, we need to tell FreeGLUT the functions used to
+handle window resizing and rendering the scene, which we&#39;ll set with
+<code>glutReshapeFunction</code> and <code>glutDisplayFunction</code>, respectively.</p>
+
+<p>The reshape function is called each time the window is resized, and the display
+function is called each time the scene is to be drawn to the screen. The call
+back functions for this are defined below in detail in the <strong>Resizing</strong> and
+<strong>Rendering</strong> sections.</p>
+
+<h2>Debug Output</h2>
+
+<p><code>InitWindow</code> is finished at this point and returns to the Initialize function.
+Since we have an OpenGL context at this point, it&#39;s safe to call OpenGL
+functions, and the first one we call is <code>glGetString</code> with <code>GL_VERSION</code> as its
+parameter in order to retrieve the version of the OpenGL context created in the
+<code>InitWindow</code> function. This string is passed to the command line with the
+standard C function <code>fprintf</code>, which should display similar to the screen below.</p>
+
+<p><img
+  src="/images/4262_01_02.png"
+  alt="Command Line Output"
+  title="Command Line Output"
+  class="center"
+/></p>
+
+<p>If the command line does not display OpenGL 4.0, something went wrong with your
+context creation or your driver did not honour your request for an OpenGL 4.0
+context. We&#39;ll use the command line throughout the book to display debug and
+general information like this.</p>
+
+<h2>Screen Clear Color</h2>
+
+<p>The last function that we&#39;ll call in the <code>Initialize</code> function is
+<code>glClearColor</code> with its four parameters set to <code>0.0f</code>, representing (in order)
+the Red, Green, Blue, and Alpha color channels, this corresponds to the
+FreeGLUT flag <code>GLUT_RGBA</code> that we used with the <code>glutInitDisplayMode</code> function.
+The values provided to <code>glClearColor</code> must be on a scale from <code>0.0f</code> to <code>1.0f</code>,
+corresponding to 0% - 100% color channel intensity.</p>
+
+<p>The RGB color mode is the primary method used in displaying colors on many
+electronic systems, and also in OpenGL. This system is very easy to use as it
+closely resembles the way our eyes interpret light due to its additive
+properties. What this means is that when two colour channels are mixed
+together, another color is created, for example: when you overlap two equally
+bright red and blue lights, the resulting light color is purple. This concept
+is entirely the same for RGB colors, thus modification is very intuitive:</p>
+
+<p><img
+  src="/images/4262_01_03.png"
+  alt="Additive Colors"
+  title="Additive Colors"
+  class="center"
+/></p>
+
+<div class="FYI">
+  <strong>FYI: White and Black</strong>
+  <p>
+    In the RGB color space, when all of the color channels are at 100%
+    intensity, the resulting color is white. This also means that the opposite
+    is true: when all of the color channels are at 0% intensity, the resulting
+    color is black.
+  </p>
+</div>
+
+<p>The <code>glClearColor</code> function is used to define the color with which to clear the
+back buffer each time a frame is prepared to be drawn to the screen. In our
+case, the color is defined as black but can easily be modified to display any
+color imaginable, for example:</p>
+
+<ul>
+<li><code>glClearColor(<strong>1.0f</strong>, 0.0f, 0.0f, 0.0f);</code> for red</li>
+<li><code>glClearColor(0.0f, <strong>1.0f</strong>, 0.0f, 0.0f);</code> for green</li>
+<li><code>glClearColor(0.0f, 0.0f, <strong>1.0f</strong>, 0.0f);</code> for blue</li>
+<li><code>glClearColor(<strong>1.0f</strong>, 0.0f, <strong>1.0f</strong>, 0.0f);</code> for purple</li>
+<li><code>glClearColor(0.0f, 0.0f, <strong>0.5f</strong>, 0.0f);</code> for dark blue</li>
+</ul>
+
+<p>The last value, the <code>alpha channel</code>, determines the amount of transparency, but
+since we don&#39;t use transparency in this chapter, setting this value is
+meaningless for the moment.</p>
+
+<h2>Main Loop</h2>
+
+<p>At this point, we&#39;re done initializing and the <code>Initialize</code> function returns to
+the <code>main</code> function where the program will call <code>glutMainLoop</code>, the heart of
+the application. This function will run as long as the window is active and the
+window hasn&#39;t been closed, issuing draw commands and handling window
+operations. When the window closes, <code>glutMainLoop</code> terminates, and the <code>main</code>
+function returns the standard return value of <code>EXIT_SUCCESS</code>.</p>
+
+<h2>Resizing</h2>
+
+<p>There are two functions left that haven&#39;t been discussed in the previous
+section, the first of which is called <code>ResizeFunction</code>, which handles the
+window resize event. Each time the window is resized a new window size is
+defined and passed to the application. We capture these new values in
+<code>ResizeFunction</code> and store the values in <code>CurrentWidth</code> and <code>CurrentHeight</code>.</p>
+
+<p>While this is all quite straightforward, the function call that stands out the
+most is <code>glViewport</code>, something we haven&#39;t seen up to this point. A viewport
+defines the area drawn to by OpenGL; any point that falls outside of the
+viewport is not drawn. The reason this is called a viewport is because it is a
+window into the scene, looking over only a small area of a possibly much larger
+scene.</p>
+
+<p><img
+  src="/images/4262_01_04-300x225.png"
+  alt="Viewport / Scene relationship"
+  title="Viewport / Scene relationship"
+  class="center"
+/></p>
+
+<p>It is important to notify OpenGL about any changes in the viewport so that we
+don&#39;t draw any pixels outside of the screen, resulting in wasted calculations
+that would be better spent elsewhere.</p>
+
+<p>The <code>glViewport</code> function takes four parameters, namely:</p>
+
+<ul>
+<li>X-coordinate</li>
+<li>Y-coordinate</li>
+<li>Width</li>
+<li>Height</li>
+</ul>
+
+<p>The X and Y coordinates correspond to the left lower bottom corner of the
+viewport, in our case the left lower bottom corner of our window (0, 0). This
+function also allows you to draw to a very specific area on the containing
+window, smaller than the actual window itself. For example, this could prove
+useful if you need to incorporate OpenGL graphics into a user interface.</p>
+
+<h2>Rendering</h2>
+
+<p>The final function we&#39;ll discuss in this section is <code>RenderFunction</code>, where the
+drawing (rendering) of objects and the swapping of the back and front buffers
+occur.</p>
+
+<p>The first function call that we encounter in <code>RenderFunction</code> is <code>glClear</code>, an
+OpenGL function call which cleans certain buffers specified through its
+parameters. What this means is that before we reuse the buffer, all of the
+pixels in it are set to a certain value. For example, the back buffer is
+cleared with the RGB colour value specified through <code>glClearColor</code> earlier in
+the Initialize function. The back buffer is cleared by passing
+<code>GL_COLOR_BUFFER_BIT</code> to <code>glClear</code>.</p>
+
+<p>Besides the back buffer, we also clear the depth buffer by passing the
+<code>GL_DEPTH_BUFFER_BIT</code> flag into <code>glClear</code>.</p>
+
+<p>After clearing the buffers, we&#39;re free to draw whatever we like onto the
+screen. However, in this example we don&#39;t actually draw anything but an empty
+screen. This will change in subsequent chapters where we will actually start
+drawing objects, and all of this drawing will happen after the <code>glClearColor</code>
+line in <code>RenderFunction</code>.</p>
+
+<div class="FYI">
+  <strong>FYI: Drawing or Rendering?</strong>
+  <p>
+    Throughout the text you will encounter the words "drawing" and "rendering,"
+    in our case they both mean the same thing: displaying something onto the
+    screen.
+  </p>
+</div>
+
+<p>The next function that we encounter is <code>glutSwapBuffers</code>, which flips the front
+and back buffers. At this line, your changes will be displayed to the screen
+and any new drawing will occur on what was previously the front buffer.</p>
+
+<p>In the following image, buffer B is used as the front buffer for displaying
+purposes, and buffer A is used as the front buffer for drawing purposes:</p>
+
+<p><img
+  src="/images/4262_01_05.png"
+  alt="Before the swap"
+  title="Before the swap"
+  class="center"
+/></p>
+
+<p>After the call to <code>glutSwapBuffers</code>, the buffers are swapped and buffer B is
+now the front buffer and buffer A is now the back buffer:</p>
+
+<p><img
+  src="/images/4262_01_06.png"
+  alt="After the Swap"
+  title="After the Swap"
+  class="center"
+/></p>
+
+<p>After the buffers are swapped, the final function in <code>RenderFunction</code> is
+called, namely <code>glutPostRedisplay</code>, which tells FreeGLUT that the application
+is once again ready for rendering.</p>
+
+<h1>Adding GLEW</h1>
+
+<p>Now that we have an OpenGL 4.0 context, we&#39;ll need the tools to work with it,
+and by that I mean the OpenGL 4.0 function calls that most likely don&#39;t come
+standard with your system.</p>
+
+<p>To get support for these OpenGL 4.0 functions, our program will need some help
+from the GLEW library. To achieve this, the only thing we need to do is to
+update the <code>Initialize</code> function to look like the code below:</p>
+
+<script src="https://gist.github.com/11130470.js"> </script>
+
+<h2>Step-By-Step</h2>
+
+<p>With only a single function call, we have access to all of the functionality
+that OpenGL 4.0 provides.</p>
+
+<p>We already had the pre-processor include directive <code>#include &lt;glew.h&gt;</code> to get
+access to all of GLEW’s function calls. If you browse through the <code>glew.h</code>
+file, you may notice that it replaces the normally used <code>gl.h</code> file. This is
+why we won&#39;t explicitly use the <code>gl.h</code> file provided by your compiler until a
+future chapter where we will set up a rendering context from scratch.</p>
+
+<p>Next, we initialize GLEW in the <code>Initialize</code> function. If you look at the order
+in which the functions are executed, you&#39;ll notice that the OpenGL context is
+created in <code>InitWindow</code> before GLEW is initialized with a call to <code>glewInit</code>.
+This happens because GLEW needs to probe the OpenGL implementation for the
+function calls that it includes, which means that an active context is
+required.</p>
+
+<p>After the call to <code>glewInit</code>, we compare if the return value from <code>glewInit</code>
+equals <code>GLEW_OK</code>, if it does not, we write an error message to the command line
+and exit the program. The error message will contain the actual error returned
+by GLEW through the <code>glewGetErrorString</code> function call.</p>
+
+<p>Visually, your program hasn&#39;t changed, so when you run it, the screen should
+look exactly the same as the resulting screen from the previous section.</p>
+
+<h1>Measuring Performance</h1>
+
+<p>An important factor in most 3D computer graphics is performance and measuring
+how well your program performs. By performance we mean the amount of data that
+your program can process during a certain amount of time.</p>
+
+<p>Performance in real-time 3D graphics is commonly measured with the amount of
+renderings a program can complete in the duration of one second; this
+measurement is called FPS (Frames per Second). In this section, we&#39;ll add a
+simple FPS counter to our program.</p>
+
+<p>The first modification needed is an extra global variable named <code>FrameCount</code>:</p>
+
+<script src="https://gist.github.com/11130638.js"> </script>
+
+<p>Add the function declarations for <code>TimerFunction</code> and <code>IdleFunction</code> to our
+function declaration section:</p>
+
+<script src="https://gist.github.com/11130666.js"> </script>
+
+<p>In the <code>InitWindow</code> function definition, modify the last few lines to include
+calls to <code>glutIdleFunc</code> and <code>glutTimerFunc</code>:</p>
+
+<script src="https://gist.github.com/11130696.js"> </script>
+
+<p>Add the following line to <code>RenderFunction</code> as the very first line before the
+call to the <code>glClear</code> function:</p>
+
+<script src="https://gist.github.com/11132858.js"> </script>
+
+<p>Add the following function definitions below the <code>RenderFunction</code> definition:<br /></p>
+
+<script src="https://gist.github.com/11132892.js"> </script>
+
+<p>When you run your program, it should now look like the image below:</p>
+
+<p><img
+  src="/images/4262_01_07.png"
+  alt="Framerate shown in titlebar"
+  title="Framerate shown in titlebar"
+  class="center"
+/></p>
+
+<h2>Step-By-Step</h2>
+
+<p>The first change that we made was adding a new global variable called
+<code>FrameCount</code>. This variable will hold the count of the amount of frames that we
+will render in a certain amount of time. The value contained in <code>FrameCount</code> is
+incremented each time the <code>RenderFunction</code> function is called.</p>
+
+<p>Next, we declared two new functions, <code>IdleFunction</code> and <code>TimerFunction</code>, which
+we notified to FreeGLUT to have a certain meaning in <code>InitWindow</code>.</p>
+
+<p>The <code>IdleFunction</code> function definition is only a single line which causes
+FreeGLUT to redraw as soon as possible. <code>IdleFunction</code> is only run when the
+program has no more work to do, a state we wish to avoid if our goal is
+performance.</p>
+
+<h2>Frames per Second Timer</h2>
+
+<p>The <code>TimerFunction</code> function is a bit more involved, but not very hard to
+comprehend. The last line we added to the <code>InitWindow</code> function caused a timed
+function to be registered through a call to <code>glutTimerFunc</code>, which takes the
+following three parameters:</p>
+
+<ul>
+<li>The amount of milliseconds that should pass before the function is called</li>
+<li>The function to call when the amount of milliseconds have passed</li>
+<li>The value to pass to the function</li>
+</ul>
+
+<p>The first time that <code>glutTimerFunc</code> is called, the amount of milliseconds is
+set to zero, causing the function to be called immediately, in our case this
+function is <code>TimerFunction</code>.</p>
+
+<p>The first line in <code>TimerFunction</code> checks if the value is not equal to zero, if
+the value would be zero, we&#39;d know that this would be the first time the
+function is run and to skip the following block of code. In this case, the code
+would simply reset the value of <code>FrameCount</code> and register another call to
+<code>TimerFunction</code> in 250 milliseconds -- a quarter of a second.</p>
+
+<p>When <code>TimerFunction</code> is executed again, the check encounters the number one,
+signifying that this is not the first time that the function is executed and
+that we are ready to display the frame count. The frame count will be displayed
+in the title bar of the window, together with the current window&#39;s dimensions
+in the following format:</p>
+
+<p><em>Chapter 1: n Frames Per Second @ Width x Height</em></p>
+
+<p>The title of the window is changed by passing a simple character string to the
+<code>glutSetWindowTitle</code> function. The frames per second are calculated by
+multiplying the value contained in <code>FrameCount</code> by four since we execute this
+function every &frac14; of a second. The width and height are obtained by
+reading the value from the <code>CurrentWidth</code> and <code>CurrentHeight</code> global variables.</p>
+
+<p>If you wish to update the title more often, you can set the <code>glutTimerFunction</code>
+in the <code>TimerFunction</code> function to update more often. For instance, if you wish
+to update the title eight times per second instead, change the millisecond
+value to 125 and multiply the <code>FrameCount</code> by eight instead of four.</p>
+
+<h2>Vertical Sync</h2>
+
+<p>If you run your program and notice that the frames per second displayed don&#39;t
+change, your program may automatically be bound to Vertical Sync (or V-Sync).
+This value should be equal to the refresh rate of your monitor and is a feature
+added by your display driver. Vertical Sync is another method for eliminating
+flickering by waiting for the screen to finish drawing the current frame to the
+screen before submitting the next one.</p>
+
+<p>As mentioned, sometimes your driver will turn on V-Sync by default for some
+programs. This incurs no difference in quality to the output of your program
+since the frames processed per second is pegged to the maximum amount of frames
+that your display device can process. This means that if your monitor runs at
+60 Hz (refreshes the picture 60 times per second), a framerate of 100 frames
+per second means that 40 frames are never displayed and is therefore
+meaningless.</p>
+
+<p>If you so desire, you can turn Vertical Sync <em>off</em> in your display driver’s
+control panel under the <em>3D Settings</em> (or similar) heading to get a
+reading of the potential frames per second processed by your program. However,
+I do not recommend doing this since it will not enhance the performance of your
+program in any way whatsoever.</p>
+
+<div class="FYI">
+  <strong>FYI: Frames per Second</strong>
+  <p>
+    Frames per Second, more commonly referred to as FPS is the amount of
+    frames that were rendered by a program during the timespan of a second.
+    This is a metric with limited use in determining the rendering frequency of
+    a program. There is, however, another metric that may provide more useful
+    in a production software where performance is critical, and this is
+    milliseconds per frame. OpenGL provides functionality to retrieve the time
+    it took for the hardware to render a frame through performance queries,
+    which you can read about
+    <a href="http://www.opengl.org/registry/specs/ARB/timer_query.txt">here</a>.
+  </p>
+</div>
+
+<h1>Conclusion</h1>
+
+<p>If you don&#39;t understand each function call yet, <strong>don&#39;t worry</strong> since you don&#39;t
+have to memorize them all. As long as you have a decent understanding of the
+mechanics that operate the program, you should be okay until we get to the
+nitty-gritty stuff.</p>
+
+<p>Now that we have a valid rendering context and our window is good to go, in the
+<a href="/chapter-2-vertices-and-shapes.html">next chapter</a> we&#39;ll start
+drawing some actual geometry to the screen and explore vertices and polygons.</p>
+
+
+
+          <div class="footer">
+
+            <div class="contact">
+              <p>
+                <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+                  <img
+                    alt="Creative Commons License"
+                    style="border-width:0"
+                    src="http://i.creativecommons.org/l/by-sa/4.0/88x31.png"
+                  />
+                </a>
+              </p>
+            </div>
+
+            <div class="contact">
+              <p>
+                If you were charged for a copy of this text,
+                <em>demand a refund</em>. This work is available free of charge
+                at <a href="http://openglbook.com/">openglbook.com</a>
+              </p>
+            </div>
+
+            <div class="contact">
+              <p>
+                <a href="https://github.com/openglbook">Fork us on GitHub</a>
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <a href="https://github.com/openglbook">
+          <img
+            style="position: absolute; top: 0; right: 0; border: 0;"
+            src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67"
+            alt="Fork me on GitHub"
+            data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"
+          />
+        </a>
+
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-301718-10', 'openglbook.com');
+          ga('send', 'pageview');
+        </script>
+    </body>
+</html>

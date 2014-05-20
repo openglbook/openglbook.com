@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Chapter 2: Vertices and Shapes | OpenGLBook.com</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+        <script type="text/javascript" src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+        <script type="text/javascript" src="/scripts/jsglhl.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function() {
+          LinkOpenGLManPages();
+        });
+        </script>
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+
+        <div class="site">
+          
+          <div class="header">
+            <h1 class="title"><a href="/">OpenGLBook.com</a></h1>
+          </div>
+
+          <div id="navigation">
+            <div class="menu">
+              <ul>
+                <li class="page_item">
+                  <a href="/">Home</a>
+                </li>
+                <li class="page_item">
+                  <a href="/the-book.html">The Book</a>
+                  <ul class="children">
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                      <li><a href="/chapter-0-preface-what-is-opengl.html">Preface: What is OpenGL?</a></li>
+                      
+                    
+                      
+                      <li><a href="/chapter-1-getting-started.html">Chapter 1: Getting Started</a></li>
+                      
+                    
+                      
+                      <li><a href="/chapter-2-vertices-and-shapes.html">Chapter 2: Vertices and Shapes</a></li>
+                      
+                    
+                      
+                      <li><a href="/chapter-3-index-buffer-objects-and-primitive-types.html">Chapter 3: Index Buffer Objects and Primitive Types</a></li>
+                      
+                    
+                      
+                      <li><a href="/chapter-4-entering-the-third-dimension.html">Chapter 4: Entering the Third Dimension</a></li>
+                      
+                    
+                      
+                      <li><a href="/credits.html">Credits</a></li>
+                      
+                    
+                  </ul>
+                </li>
+                <li class="page_item">
+                  <a href="/blog/">Blog</a>
+                </li>
+                <li class="page_item">
+                  <a href="#">Report Issues</a>
+                  <ul class="children">
+                    <li>
+                      <a href="https://github.com/openglbook/openglbook.com/issues">
+                        Text Issues (typos, etc.)
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">Code Issues (bugs, etc.)</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <h1>Chapter 2: Vertices and Shapes</h1>
+
+<p><img
+  src="/images/4262_02_011-300x234.png"
+  alt="Our first triangle"
+  title="Our first triangle"
+  class="right"
+/></p>
+
+<p>In the previous chapter we learned how easy it was to create a fully functional
+OpenGL 4.0 context by using FreeGLUT. However, this only gave us a blank window
+with an unused OpenGL context, so let’s put that context to good use by
+learning:</p>
+
+<ul>
+<li>The fundamentals of how objects and shapes are constructed in OpenGL</li>
+<li>Different ways to render triangles</li>
+<li>How to create and use Vertex Buffer Objects (VBO)</li>
+<li>Upload custom data to the GPU</li>
+</ul>
+
+<p><strong><a href="/chapter-0-preface-what-is-opengl.html">Check the requirements before continuing</a></strong></p>
+
+<div class="Attention">
+  <strong>OpenGL 3.x / DirectX 10 Level Hardware</strong>
+  <p>
+    This chapter is 100% compatible with OpenGL 3.x level hardware by changing
+    only a few lines of code.
+  </p>
+</div>
+
+<h1>Buffer Objects</h1>
+
+<p>The program that we created in the first chapter will serve as the basis for the
+code in this chapter, so simply <strong>copy</strong> the file <code>Chapter1.c</code> to a new file
+called <code>Chapter2.1.c</code>, open it up in your editor, and let&#39;s get started.</p>
+
+<p>All solid geometry in OpenGL is composed of triangles, so it is only natural
+that the first object we draw is a triangle. As in the first chapter, if you
+don&#39;t understand everything while you&#39;re copying the code, <strong>don&#39;t worry</strong>,
+since we&#39;ll explore what happens in-depth in the next section.</p>
+
+<p>Since we’re in chapter two of the book, change the <code>WINDOW_TITLE_PREFIX</code>
+pre-processor definition to reflect Chapter 2.</p>
+
+<p>Add the following global variable declarations underneath the line containing
+the <code>FrameCount</code> variable:</p>
+
+<script src="https://gist.github.com/11133700.js"> </script>
+
+<p>Next up are the contents of our very first GLSL vertex shader, add the following
+lines below the <code>ColorBufferId</code> declaration:</p>
+
+<script src="https://gist.github.com/11133716.js"> </script>
+
+<p>Below that follows our GLSL fragment shader:</p>
+
+<script src="https://gist.github.com/11133728.js"> </script>
+
+<p>There are also a few new functions in this chapter, so add the following lines
+underneath the last function declaration, which should be <code>Idlefunction</code>:</p>
+
+<script src="https://gist.github.com/11133792.js"> </script>
+
+<p>The next change is quite a bit further in the file, inside of the Initialize
+function. Right above the <code>glClearColor</code> function call, add the following
+function calls:</p>
+
+<script src="https://gist.github.com/11133812.js"> </script>
+
+<p>We also need to register one more FreeGLUT call back function, so in the
+InitWindow function, make the final line right underneath <code>glutTimerFunc</code>:</p>
+
+<script src="https://gist.github.com/11134348.js"> </script>
+
+<p>The call back function passed to <code>glutCloseFunc</code> is <code>CleanUp</code>, which is defined
+at the end of the file right underneath the <code>glutTimerFunc</code> definition like so:</p>
+
+<script src="https://gist.github.com/11134367.js"> </script>
+
+<p>Next, modify <code>RenderFunction</code> to include the following line right below the
+function call to <code>glClear</code>:</p>
+
+<script src="https://gist.github.com/11134375.js"> </script>
+
+<p>The next function is <code>CreateVBO</code>, which creates the buffer objects and defines
+the buffer’s contents. Add it right after the <code>CleanUp</code> function definition.</p>
+
+<script src="https://gist.github.com/11134421.js"> </script>
+
+<p>Add the next function definition, <code>DestroyVBO</code>, right underneath the <code>CreateVBO</code>
+function definition:</p>
+
+<script src="https://gist.github.com/11134449.js"> </script>
+
+<p>Our next function is <code>CreateShaders</code>, which is defined right under <code>DestroyVBO</code>:</p>
+
+<script src="https://gist.github.com/11134488.js"> </script>
+
+<p>And finally, to destroy our shaders, define <code>DestroyShaders</code> right underneath
+the <code>CreateShaders</code> definition:</p>
+
+<script src="https://gist.github.com/11134505.js"> </script>
+
+<p>Now that you have all of the required content, compile your program and run it.
+The output of your program should look like the following screenshot:</p>
+
+<p><img
+  src="/images/4262_02_011.png"
+  alt="Our first triangle"
+  title="Our first triangle"
+  class="center"
+/></p>
+
+<h2>Step-By-Step</h2>
+
+<p>We&#39;ve added quite a bit of new code and many new OpenGL function calls that we
+haven&#39;t used before -- let’s explore exactly what we&#39;ve done.</p>
+
+<p>The first thing we did was change the title of the window that we created by
+modifying the <code>WINDOW_TITLE_PREFIX</code> pre-processor definition, so no big change
+there.</p>
+
+<p>Next, we declared a few new global variables to hold the identifiers created for
+the shaders and buffer objects that we&#39;ll be creating.</p>
+
+<h2>A Brief Introduction to Shaders</h2>
+
+<p>While we will be discussing shaders in much detail in a future chapter, some
+basic knowledge of them is useful before we go any further. Shaders comes up
+frequently, whether it is in talks about graphics hardware or rendering
+software, the word &quot;shader&quot; is usually prevalent.</p>
+
+<p>In the context of OpenGL (as well as Direct3D), a shader is program that runs on
+the graphics hardware. OpenGL expresses a shader program through a C-like
+programming language called the OpenGL Shading Language, or GLSL. In the code
+above, we&#39;ve already created two GLSL programs, one for per-vertex processing,
+and one for pre-fragment processing.</p>
+
+<p>A vertex shader operates on a per-vertex basis, modifying the vertex&#39;s
+attributes passed in. A fragment shader operates on a per-fragment, modifying
+the final color of a pixel.</p>
+
+<h3>The Vertex Shader</h3>
+
+<p>Let&#39;s take a quick look at the Vertex shader:</p>
+
+<script src="https://gist.github.com/11134557.js"> </script>
+
+<p>The first line of our vertex shader program is a GLSL pre-processor definition
+denoting which version of GLSL the program requires; in our case this is version
+400, corresponding with GLSL version 4.00. The <code>#version</code> pre-processor
+definition is required to access the feature set associated with that specific
+GLSL version. If you don&#39;t provide it, the GLSL version will fall back to
+version 1.10; the last version of GLSL where the #version definition was not yet
+required.</p>
+
+<p>The next line is a bit more puzzling, but not too hard to understand. The name
+of the variable on this line is <code>in_Position</code>, containing the vertex&#39;s
+positional data stored in a four-dimensional vector, denoted by the <code>vec4</code> data
+type. The keyword <code>in</code> defines that this is a parameter into this vertex shader,
+so we&#39;ll need to provide it through our OpenGL program. This is where the layout
+qualifier comes into play at the beginning of the line: <code>layout(location=0)</code>.
+We&#39;ll discuss this coupling of GLSL and vertex information from our program in
+the walkthrough of the <code>CreateVBO</code> function below.</p>
+
+<p>The next line is almost the same as the line before, except that the variable&#39;s
+name is <code>in_Color</code>, and contains the vertex&#39;s color information stored in four
+color-channels using data type <code>vec4</code>.</p>
+
+<p>The next variable declaration is that of <code>ex_Color</code>, containing the final vertex
+color to be copied to the next shader stage. To denote that this variable is an
+output of our shader, we prefix it with the keyword <code>out</code>. The prefix <code>ex_</code> is
+used in this book to denote a variable that is <em>ex</em>changed between different
+shaders.</p>
+
+<p>Much like a C-program, a GLSL shader program must contain a <code>main</code> entry
+function, but unlike C, the GLSL <code>main</code> function does not return anything and
+takes in no parameters. The <code>main</code> functions of the GLSL shaders in this chapter
+are simple for demonstration purposes; in subsequent chapters, we&#39;ll explore
+shaders that are more complex.</p>
+
+<p>The first line of our <code>main</code> function copies the value that we passed into
+<code>in_Position</code> into <code>gl_Position</code>, the final vertex position passed on to
+subsequent shader stages. You may have noticed that we don&#39;t declare
+<code>gl_Position</code> anywhere; this is because it is a built-in variable. Any
+transformation that you apply to <code>gl_Position</code> will reflect in your final
+rendering. For example, we will use this variable extensively in future chapters
+to relay the vertex&#39;s final position after we apply perspective projection
+calculations to the vertex.</p>
+
+<p>The last line of the <code>main</code> function assigns the final vertex color to our
+<code>ex_Color</code> output variable. Since <code>ex_Color</code> is marked as <code>out</code>, we will be able
+to use its value in the next shader stages. This is where we enter the fragment
+shader stage of our GLSL program:</p>
+
+<h3>The Fragment Shader</h3>
+
+<script src="https://gist.github.com/11134694.js"> </script>
+
+<p>The <code>ex_Color</code> parameter is not an output in this shader, but an input instead.
+This is because we have copied the output variable of the same name from the
+vertex shader into the fragment shader. The fragment shader&#39;s only output
+parameter is the <code>out_Color</code> variable, containing the final color of the
+fragment that this shader processed. The final color assigned to <code>out_Color</code> is
+equal to the color passed into the <code>ex_Color</code> variable.</p>
+
+<h2>Object Creation</h2>
+
+<p>We&#39;ll need some new functions for creating and destroying the buffer objects and
+shaders, so we declared five new functions. We also added calls to the
+<code>CreateShaders</code> and <code>CreateVBO</code> functions in the <code>Initialize</code> function
+definition, after OpenGL and GLEW were initialized.</p>
+
+<p>Since we&#39;re creating objects in this chapter, we need a method of destroying
+these objects properly as well. This is achieved by tying a function call back
+to <code>glutCloseFunc</code>, in our case, <code>Cleanup</code>, which calls both <code>DestroyShaders</code>
+and <code>DestroyVBO</code>. The <code>Cleanup</code> function is called by FreeGLUT right before the
+OpenGL context is destroyed, so we can do our resource cleanup correctly and
+without any problems.</p>
+
+<h2>Creating the Buffer Objects (CreateVBO)</h2>
+
+<p>Since shaders are described in much detail in chapter four, we&#39;ll solely focus
+on the creation of the buffer objects in the <code>CreateVBO</code> function.</p>
+
+<p>Before we create our vertex buffer object, we must first define the vertices of
+the geometrical object that we&#39;re creating. Vertices are points in
+three-dimensional space that define the corners of a geometrical object, in our
+case the triangle. Vertices have three dimensions, namely <strong>X</strong>, <strong>Y</strong>, <strong>Z</strong>,
+and <strong>W</strong>, much like points on a graph: </p>
+
+<ul>
+<li>The first dimension, <strong>X</strong>, represents movement along the horizontal axis</li>
+<li>The second dimension, <strong>Y</strong>, represents movement along the vertical axis</li>
+<li>The third dimension, <strong>Z</strong>, represents depth, meaning how far away or nearby an object is</li>
+</ul>
+
+<div class="FYI">
+  <strong>FYI: The Fourth Dimension</strong>
+  <p>
+    <em>W</em>, our fourth dimension has nothing to do with physics, where time
+    represents the fourth dimension, rather, it has everything to do with
+    something called homogeneous coordinates which we'll explore when we cover
+    three-dimensional geometry, matrices, and projection in a near
+    future chapter. For now, make sure that the value of <em>W</em> is always
+    1.0, and take its purpose on faith until we describe it in more detail.
+  </p>
+</div>
+
+<p>In OpenGL, the components of a vertex are represented through floating point
+numbers: since a triangle has three vertices, and a vertex has four dimensions,
+we must create twelve floating point numbers to represent our triangle.
+The array named Vertices contains the following <strong>X</strong>, <strong>Y</strong>, and <strong>Z</strong>
+coordinates:</p>
+
+<p><img
+  src="/images/4262_02_02.png"
+  alt="Vertex coordinates"
+  title="Vertex coordinates"
+  class="center"
+/></p>
+
+<p>Since vertices only define coordinates, we&#39;ll need to define another array
+containing RGBA color values. This array is called <code>Colors</code> and defines the
+colors for each of our vertices. Since RGBA colors have four components, and we
+need to color three vertices, our array contains twelve floating point values.
+In order, the colors we define in the array are Red (1.0, 0.0, 0.0, 1.0), Green
+(0.0, 1.0, 0.0, 1.0), and Blue (0.0, 0.0, 1.0, 1.0).</p>
+
+<div class="FYI">
+  <strong>FYI: Alpha</strong>
+  <p>
+    The last value of an RGBA color is called Alpha, which controls the
+    transparency of a given color where 0.0 equals 100% transparency, and 1.0
+    equals 100% opacity.
+  </p>
+</div>
+
+<p>Next, we define <code>ErrorCheckValue</code>, a variable we use at the end of the function
+for error checking purposes. The variable is initialized with the value returned
+by a call to <code>glGetError</code>, which retrieves the last error set by OpenGL. We call
+this function simply to un-set any errors that may have been set up to this
+point, but we discard the value returned by this call.</p>
+
+<h2>Vertex Array Objects (CreateVBO)</h2>
+
+<p>The first function of interest in CreateVBO is <code>glGenVertexArrays</code> which
+generates Vertex Array Objects in the GPU&#39;s memory and passes back their
+identifiers:</p>
+
+<script src="https://gist.github.com/11134839.js"> </script>
+
+<p>Its first parameter <code>n</code> describes the amount, or <strong>n</strong>umber of Vertex Arrays to
+generate. After they are generated, their identifiers (or &quot;names&quot; in the OpenGL
+documentation) are stored in the <code>arrays</code> parameter, which must be an array of
+<code>n</code> elements. In our case, we only have a single Vertex Array Object, so we pass
+in the number one to <code>n</code> and the address of the <code>VaoId</code> variable.</p>
+
+<h3>So what is a Vertex Array Object?</h3>
+
+<p>A Vertex Array Object (or VAO) is an object that describes how the vertex
+attributes are stored in a Vertex Buffer Object (or VBO). This means that the
+VAO is not the actual object storing the vertex data, but the descriptor of the
+vertex data. Vertex attributes can be described by the <code>glVertexAttribPointer</code>
+function and its two sister functions <code>glVertexAttribIPointer</code> and
+<code>glVertexAttribLPointer</code>, the first of which we&#39;ll explore below.</p>
+
+<h2>Generating Vertex Buffers (CreateVBO)</h2>
+
+<p>Now we&#39;re getting to the core of the <code>CreateVBO</code> function and we start
+generating buffers by a call to <code>glGenBuffers</code>, which generates our buffers in
+the GPU’s memory. Here&#39;s its function prototype, retrieved from the OpenGL SDK
+documentation:</p>
+
+<script src="https://gist.github.com/11134858.js"> </script>
+
+<p>Its first parameter, <code>n</code>, is the <strong>n</strong>umber of buffers requested. Once <em>n</em>
+buffers have been generated, their identifiers (also referred to as &quot;names&quot; in
+the OpenGL documentation) are stored in the array <code>buffers</code>, the function&#39;s
+second parameter. <code>buffers</code> must be a <code>GLuint</code> array of <em>n</em> elements.</p>
+
+<p>In our case, we request one buffer to be generated, and its identifier stored in
+<code>VboId</code>. The generated buffers are of an undefined type until they are bound to
+a specific <em>target</em>.</p>
+
+<h2>Binding Vertex Buffer Objects (CreateVBO)</h2>
+
+<p>Buffers can be bound to several different targets, in our case
+<code>GL_ARRAY_BUFFER</code>, which signifies that the data provided contains vertex
+attributes. The target is bound to the buffer with a call to <code>glBindBuffer</code>,
+which takes the target type as its first parameter, and the buffer’s identifier
+(returned from <code>glGenBuffers</code>) as the second:</p>
+
+<script src="https://gist.github.com/11134882.js"> </script>
+
+<p>Not only does <code>glBindBuffer</code> bind the buffer to the specified target, it also
+activates the current buffer object as the target. This means that any
+buffer-related operations that involve the specified target will be executed on
+the buffer identified by the <code>buffer</code> parameter until another buffer is bound
+with a call to <code>glBindBuffer</code>. In our code, the buffer parameter is set to the
+value stored in <code>VboId</code> by <code>glGenBuffers</code>.</p>
+
+<p>Now that the buffer is bound, we can copy our vertex data over to the GPU&#39;s
+memory. This is achieved by making a call to <code>glBufferData</code>:</p>
+
+<script src="https://gist.github.com/11135165.js"> </script>
+
+<p>The <code>target</code> parameter is once again set to <code>GL_ARRAY_BUFFER</code> to signify that we
+are copying data to the currently activated buffer with this target type, in our
+case the buffer identified by the value stored in <code>VboId</code>.</p>
+
+<p>The <code>size</code> parameter is set to our <code>Size</code> variable, previously initialized to
+contain the size in bytes of our <code>Vertices</code> array. As you can see from the
+function prototype above, the data is provided as a void pointer type through
+parameter <code>data</code>, which means that you can upload any data to the GPU’s memory
+as long as you can provide their size. In our case, this data are an array of
+floating point numbers, but it could easily be an array of bytes, or an array of
+integers for that matter.</p>
+
+<p>The <code>usage</code> parameter is set to <code>GL_STATIC_DRAW</code>, which signified to OpenGL that
+the data uploaded to the memory will not be modified (<em>static</em>) and used for
+image generation purposes (<em>draw</em>). <code>GL_STATIC_DRAW</code> is not the only usage type
+that can be supplied to this function, and we will explore several other usage
+types during the course of the book, but for now, we&#39;re not modifying the
+triangle.</p>
+
+<h2>Setting Vertex Attributes (CreateVBO)</h2>
+
+<p>Even though all of our data now resides in the GPU’s memory, OpenGL still
+doesn’t know what types of data these are; this is where the
+<code>glVertexAttribPointer</code> function comes into play whose prototype looks like
+this:</p>
+
+<script src="https://gist.github.com/11135202.js"> </script>
+
+<p><code>glVertexAttribPointer</code> provides OpenGL with all of the necessary metadata to
+use the block of raw data that we&#39;ve uploaded to the GPU’s memory using
+<code>glBufferData</code>.</p>
+
+<p>The first parameter that we provide to <code>glVertexAttribPointer</code> is <code>index</code>, which
+is a user-maintained number. This number is not generated by a function call of
+any kind, but must be maintained by you.</p>
+
+<p>If you recall from our GLSL introduction at the beginning of the chapter, there
+was a layout qualifier that we didn&#39;t discuss. This <code>index</code> parameter is used to
+identify those parameters marked with a layout qualifier in a GLSL shader
+program. For example if we changed the <code>index</code> parameter to 18, we must also
+update the GLSL shader&#39;s layout qualifier&#39;s <code>location</code> argument to 18:</p>
+
+<script src="https://gist.github.com/11135219.js"> </script>
+
+<p>Has a 1:1 association with:</p>
+
+<script src="https://gist.github.com/11135226.js"> </script>
+
+<p>As you can see, we&#39;re describing the <code>in_Position</code> variable with
+<code>glVertexAttribPointer</code> by having four floating point components, which
+corresponds to the definition of a <code>vec4</code> datatype: &quot;<strong>vec4</strong> - a four-component
+floating-point vector.&quot;</p>
+
+<div class="FYI">
+  <strong>FYI: Amount of Attributes</strong>
+  <p>
+    You can create many vertex attributes, as long as you keep their
+    <code>index</code> values less than the value of
+    <code>GL_MAX_VERTEX_ATTRIBS</code>.
+  </p>
+</div>
+
+<p>The next parameter is <code>size</code>, and unlike the <code>size</code> parameter that we used in
+our call to <code>glBufferData</code>, this one does not represent the size of the data in
+bytes, but rather the <strong>amount of components</strong> that make up a vertex. In our
+case, the <code>size</code> parameter is set to 4, signifying the X, Y, Z, and W components
+of our vertices.</p>
+
+<p>To calculate the <strong>size in bytes</strong> of each component, OpenGL needs to know the
+data-type of each component passed to the <code>type</code> parameter, in our case
+<code>GL_FLOAT</code> since each component is a floating point number.</p>
+
+<p>If the values in our vertex array were not floating point values but integer
+values, we&#39;d have the option of normalizing the values to a certain range before
+using them by passing <code>GL_TRUE</code> into the <code>normalized</code> parameter. If the values
+provided were signed integers, the values would be normalized to the [-1, - 1]
+range, and if they were unsigned, they would be normalized to the [0, 1] range.
+For example, if we&#39;d pass in an unsigned byte with a value of 255, the resulting
+floating point value would be 1.0. In our program, the values passed are
+normalized floating point numbers so the value passed to normalized is
+<code>GL_FALSE</code>.</p>
+
+<div class="FYI">
+  <strong>FYI: Normalization</strong>
+  <p>
+    Normalization is useful since it allows us to upload many types of data
+    without having to worry about converting and clamping the supplied values
+    ourselves. This is especially handy for color data, which are often
+    represented as unsigned bytes or integers.
+  </p>
+</div>
+
+<p>It is possible to upload user-defined data structures using <code>glBufferData</code>, but
+OpenGL will have to know where the significant data in a structure ends and
+where the next starts. This is achieved by passing a value into the <code>stride</code>
+parameter, which signifies how many bytes are between the significant blocks of
+data. In our case this is zero since we use a packed array, but there are many
+cases where this could be useful. By utilizing the <code>stride</code> parameter, a single
+buffer object may be used for many different attributes by calling
+<code>glVertexAttribPointer</code> with different stride and pointer values.</p>
+
+<p>Last but not least, there is the <code>pointer</code> parameter. When the current target is
+set to <code>GL_ARRAY_BUFFER</code>, this parameter is a numerical offset in bytes in the
+block of data supplied in <code>glBufferData</code> to where the significant data starts.
+As with the <code>stride</code> parameter, this parameter is also important if the data you
+upload to the GPU&#39;s memory contains many values for different purposes (i.e.
+combining color and vertex data in a single data type). In our case, the
+<code>stride</code> and <code>pointer</code> parameters are both set to zero since the data we provide
+are sequential in nature.</p>
+
+<div class="FYI">
+  <strong>FYI: Stride and offset</strong>
+  <p>
+    We explore the possibilities of the stride and pointer parameters in the
+    last section of this chapter where we upload a custom data structure to the
+    GPU's memory.
+  </p>
+</div>
+
+<p>When we&#39;re done providing vertex attributes, the attribute can be enabled with a
+call to <code>glEnableVertexAttribArray</code> and passing in the index also used as the
+first parameter in <code>glVertexAttribPointer</code>, this allows the vertex data to be
+used for drawing purposes. When you&#39;re done drawing the buffer object, a call to
+<code>glDisableVertexAttribArray</code> should be made.</p>
+
+<p>Since we&#39;re only drawing a single triangle in our program, the
+<code>glEnableVertexAttribArray</code> and <code>glDisableVertexAttribArray</code> calls are made in
+the <code>CreateVBO</code> and <code>DestroyVBO</code> functions, respectively. This means that the
+vertex attributes created in <code>CreateVBO</code> are enabled throughout the execution of
+the entire program; this would normally not be the case if there was more than a
+single object to draw.</p>
+
+<h2>Setting the Color Data (CreateVBO)</h2>
+
+<p>As you can deduce from the code sample, setting the color data is done in the
+<em>exact</em> same manner as setting the vertex data. In fact, the only difference is
+the buffer identifier passed to <code>glBindBuffer</code>, the data passed into the
+<code>glBufferData</code> function, and the vertex attribute index used.</p>
+
+<h2>Checking for Errors (CreateVBO)</h2>
+
+<p>After the color data is set, we check if there were any errors by checking if an
+error flag was set by calling <code>glGetError</code>. If there was, we translate the value
+returned from this function with a call to <code>gluErrorString</code>, which returns the
+human-readable version of the code returned, and exit the program with an error
+code.</p>
+
+<h2>Creating the Shaders (CreateShaders)</h2>
+
+<p>Much like a C or C++ program, a GLSL shader program needs to be compiled and
+linked before it can be executed.</p>
+
+<p>First, we must create shader objects for both our vertex shader, this is
+accomplished by calling the <code>glCreateShader</code> function:</p>
+
+<script src="https://gist.github.com/11240297.js"> </script>
+
+<p>This function tells the OpenGL to generate a new shader object of <code>shaderType</code>
+and return its identifier. In our program we store this identifier in variable
+<code>VertexShaderId</code>. Now that we have our shader object, we can copy our GLSL
+source code to OpenGL for compilation. This is done with a call to
+<code>glShaderSource</code>:</p>
+
+<script src="https://gist.github.com/11240312.js"> </script>
+
+<p>This function copies the source code in the string specified by parameter
+<code>string</code> and associates it with the shader object identified by parameter
+<code>shader</code>, which is the identifier returned by <code>glCreateShader</code>, in our case
+<code>VertexShaderId</code>.</p>
+
+<p>The <code>count</code> parameter specifies how many strings are present in the <code>string</code>
+parameter, in our case this is 1 since <code>VertexShader</code> is one long string. The
+last parameter <code>length</code> is an array of integers denoting the lengths of the
+strings in the <code>string</code> parameter. You can usually leave this parameter at NULL
+if you use normal null-terminated strings, as in our case.</p>
+
+<p>Now that we have our shader&#39;s source code in memory, we have to compile it
+before we can get any further. This is done with the <code>glCompileShader</code> function:</p>
+
+<script src="https://gist.github.com/11240329.js"> </script>
+
+<p>This is a fairly straightforward function which takes in the shader&#39;s identifier
+as its <code>shader</code> parameter.</p>
+
+<p>This whole process from <code>glCreateShader</code> to <code>glCompileShader</code> is repeated for
+the fragment shader. Now that we&#39;ve compiled the individual shaders, we need to
+combine them in a shader program object. To do this, we must generate a program
+object:</p>
+
+<script src="https://gist.github.com/11240338.js"> </script>
+
+<p>This function returns an identifier which we store in <code>ProgramId</code> and takes in
+no parameters. You can think of a shader program object as a regular executable:
+it is composed of several compiled objects linked together to form a whole. To
+attach the shaders to the program we use the <code>glAttachShader</code> function:</p>
+
+<script src="https://gist.github.com/11240358.js"> </script>
+
+<p>The syntax for this function couldn&#39;t be simpler in that it takes in the
+identifier for the the shader program object in its <code>program</code> parameter and the
+identifier of the shader in the <code>shader</code> parameter. The last step before we can
+use our shader program is linking:</p>
+
+<script src="https://gist.github.com/11240374.js"> </script>
+
+<p>Another almost self-explanatory function which takes in the shader program
+object&#39;s identifier and doesn&#39;t return a value. After this whole process
+completes, we can use our new shader program by calling <code>glUseProgram</code>:</p>
+
+<script src="https://gist.github.com/11240398.js"> </script>
+
+<p>Which takes in the shader program object&#39;s identifier and makes it current. The
+current program remains active until <code>glUseProgram</code> is called with another
+shader program object&#39;s identifier.</p>
+
+<h2>Drawing the VBO (RenderFunction)</h2>
+
+<p>We draw the contents of the VBO to the screen in <code>RenderFunction</code> by making a
+call to <code>glDrawArrays</code>, which operates on the vertex attribute arrays that are
+enabled for drawing with a call to <code>glEnableVertexAttribArray</code>, our color and
+vertex arrays from <code>CreateVBO</code>. The OpenGL function <code>glDrawArrays</code> has the
+following prototype:</p>
+
+<script src="https://gist.github.com/11240421.js"> </script>
+
+<p>The first parameter, <code>mode</code>, specifies the type of array data that’s going to be
+drawn to the screen with this function call. In our case, this value is set to
+<code>GL_TRIANGLES</code>, but we’ll soon explore some more options for this parameter.</p>
+
+<p>The second parameter, <code>first</code>, specifies the first index of the enabled vertex
+attribute arrays that we want to draw. The last parameter, <code>count</code>, specifies
+how many of the enabled indices to draw. In our case these parameters are set to
+zero for <code>first</code>, signifying the index of the vertex position data, and three
+for <code>count</code>, signifying that there are three vertices to draw.</p>
+
+<h2>Cleanup</h2>
+
+<p>After the program exits because of a user action, the <code>CleanUp</code> function is
+called by FreeGLUT to dispose of some of our generated objects.</p>
+
+<h3>Destroying the Shaders (DestroyShaders)</h3>
+
+<p>There are a few function calls required to clean up shaders, but before we can
+clean up, we&#39;ll have to tell OpenGL to stop using our shader program by calling:</p>
+
+<script src="https://gist.github.com/11240624.js"> </script>
+
+<p>By passing zero as the <code>program</code> parameter, we tell OpenGL to stop using the
+shader program. Now that our shader program is no longer being used, we can
+safely detach the fragment and vertex shaders from our program object by calling
+<code>glDetachShader</code>:</p>
+
+<script src="https://gist.github.com/11240633.js"> </script>
+
+<p>This function is the exact opposite of <code>glAttachShader</code> and expects the exact
+same parameters: *it takes in the identifier for the the shader program object
+in its <code>program</code> parameter and the identifier of the shader in the <code>shader</code>
+parameter.</p>
+
+<p>Since the shaders are now no longer in use by the shader program, we can safely
+delete them by calling <code>glDeleteShader</code>:</p>
+
+<script src="https://gist.github.com/11240643.js"> </script>
+
+<p>Which simply takes in the shader&#39;s identifier, in our case <code>VertexShaderId</code> and
+<code>FragmentShaderId</code>. After the shaders have been detached from the program, and
+the program is no longer in use, we can also safely delete the shader program:</p>
+
+<script src="https://gist.github.com/11240655.js"> </script>
+
+<p>Which takes in the shader program object&#39;s identifier, in our case <code>ProgramId</code>.</p>
+
+<h3>Cleanup (DestroyVBO)</h3>
+
+<p>Now that you know how to properly create buffer objects and draw them, it&#39;s time
+to learn how to destroy them, so let’s take a quick look at <code>DestroyVBO</code>.</p>
+
+<p>Much like in the <code>CreateVBO</code> function, we define an <code>ErrorCheckValue</code> variable
+and populate it by calling <code>glGetError</code> to clear any errors that were previously
+set by OpenGL.</p>
+
+<p>Next, we disable the vertex attributes that we enabled in <code>CreateVBO</code> in reverse
+order of creation by making two calls to <code>glDisableVertexAttribArray</code> with the
+appropriate indices provided.</p>
+
+<p>We make a call to <code>glBindBuffer</code> like before, however, this time we set the
+<code>buffer</code> parameter to zero to indicate that no buffers should be tied to the
+<code>GL_ARRAY_BUFFER</code> target. This allows us to safely delete the buffers by calling
+<code>glDeleteBuffers</code>, whose prototype looks like this:</p>
+
+<script src="https://gist.github.com/11240670.js"> </script>
+
+<p>As you may have noticed, this call is similar to <code>glGenBuffers</code> since it takes
+in the exact same parameters, but does the exact opposite by deleting instead of
+generating.</p>
+
+<p>At this point, it is safe to exit the program, but first we check for errors
+with our familiar error checking setup. If an error is detected, write the error
+string to the command line and exit the program with an error code.</p>
+
+<h1>Creating a Rectangle</h1>
+
+<p>In this section, we&#39;ll explore a few of the methods that we can use to define a
+rectangle in OpenGL. All of these methods use triangles as the fundamental
+building blocks for constructing the rectangle.</p>
+
+<h2>Using GL_TRIANGLES</h2>
+
+<p>Much like in our first exercise, this sample uses triangles to construct
+geometry. Create a copy of <code>Chapter2.1.c</code>, name it <code>Chapter2.2.c</code> and open it
+up. let&#39;s make some changes to our program in order to draw our rectangle:</p>
+
+<p>Change the <code>Vertices</code> array in <code>CreateVBO</code> to contain six total vertices, making
+the total number of elements in this array twenty-four:</p>
+
+<script src="https://gist.github.com/11240708.js"> </script>
+
+<p>Similar to the <code>Vertices</code> array, also change the <code>Color</code> array to contain twenty-four elements because of its six RGBA colors:</p>
+
+<script src="https://gist.github.com/11240718.js"> </script>
+
+<p>And last but not least, change the <code>DrawArrays</code> command in our <code>RenderFunction</code> to draw six vertices instead of three:</p>
+
+<script src="https://gist.github.com/11240740.js"> </script>
+
+<p>The output of your program should now look like this:</p>
+
+<p><img
+  src="/images/4262_02_03.png"
+  alt="Rectangle using GL_TRIANGLES"
+  title="Rectangle using GL_TRIANGLES"
+  class="center"
+/></p>
+
+<h3>Step-By-Step</h3>
+
+<p>We basically did the same thing as in the first section of this chapter by
+creating not one, but two triangles inside a single buffer object. We&#39;ve set up
+six vertices that define the following <strong>X</strong>, <strong>Y</strong>, and <strong>Z</strong> coordinates:</p>
+
+<p><img
+  src="/images/4262_02_04.png"
+  alt="Vertex coordinates"
+  title="Vertex coordinates"
+  class="center"
+/></p>
+
+<p>The highlighted (red) coordinates signify vertices that are used in both
+triangles, but even though the same vertices appear in both triangles, each
+triangle has to redefine this vertex. This is the same for the color array,
+which also contains duplicate values since there is one color for each vertex.</p>
+
+<p>Adding more triangles this way doesn’t take much modification, but causes
+unnecessary duplication of data when the triangles are consecutive in nature as
+ours are.</p>
+
+<h2>Using GL_TRIANGLE_STRIP</h2>
+
+<p>Create a copy of <code>Chapter2.1.c</code> named <code>Chapter2.3.c</code> and open it up for editing.
+Change the <code>Vertices</code> array in the <code>CreateVBO</code> function to contain the following
+four vertices:</p>
+
+<script src="https://gist.github.com/11240814.js"> </script>
+
+<p>Change the <code>Colors</code> array in the same function to this:</p>
+
+<script src="https://gist.github.com/11240831.js"> </script>
+
+<p>And lastly, change the <code>glDrawArrays</code> function call in <code>RenderFunction</code> to the
+following:</p>
+
+<script src="https://gist.github.com/11240843.js"> </script>
+
+<p>The output of your program should like the following screenshot:</p>
+
+<p><img
+  src="/images/4262_02_05.png"
+  alt="Rectangle using GL_TRIANGLE_STRIP"
+  title="Rectangle using GL_TRIANGLE_STRIP"
+  class="center"
+/></p>
+
+<h3>Step-By-Step</h3>
+
+<p>The example above uses a method called triangle strips to construct geometry,
+which allows us to reuse vertices to construct new triangles. As you may have
+noticed, the rendered image is exactly the same as the one rendered with
+<code>GL_TRIANGLES</code>.</p>
+
+<p>Even though the output is the same, the <code>GL_TRIANGLE_STRIP</code> method significantly
+reduces the amount of vertices used and is perfect in situations where triangles
+are constructed consecutively and vertices can be reused. The image below
+illustrates exactly how <code>GL_TRIANGLES</code> and <code>GL_TRIANGLE_STRIP</code> differ in their
+methods of triangle creation:</p>
+
+<p><img
+  src="/images/4262_02_06.png"
+  alt="GL_TRIANGLES vs GL_TRIANGLE_STRIP"
+  title="GL_TRIANGLES vs GL_TRIANGLE_STRIP"
+  class="center"
+/></p>
+
+<p>Both methods create an initial triangle, but the <code>GL_TRIANGLE_STRIP</code> mode simply
+adds one more vertex to create the next triangle, while the <code>GL_TRIANGLES</code> mode
+requires the creation of an entirely new triangle. </p>
+
+<h1>Vertex Attributes</h1>
+
+<p>The aim of this section is to show you how you can upload your own custom data
+structures to the GPU’s memory and still access its data correctly.</p>
+
+<p>Create a copy of <code>Chapter2.1.c</code> named <code>Chapter2.4.c</code>, and open it up in your
+editor. Add the following structure definition right below the
+<code>WINDOW_TITLE_PREFIX</code> definition:</p>
+
+<script src="https://gist.github.com/11240878.js"> </script>
+
+<p>Remove the <code>ColorBufferId</code> variable declaration, so the section looks as follows:</p>
+
+<script src="https://gist.github.com/11240888.js"> </script>
+
+<p>Next, replace the entire <code>CreateVBO</code> function with the following code:</p>
+
+<script src="https://gist.github.com/11240908.js"> </script>
+
+<p>And finally, remove the following line from the <code>DestroyVBO</code> function:</p>
+
+<script src="https://gist.github.com/11240924.js"> </script>
+
+<p>The output of this program is exactly the same as the output of the very first
+exercise of this chapter, a single triangle:</p>
+
+<p><img
+  src="/images/4262_02_07.png"
+  alt="Triangle using a custom data structure"
+  title="Triangle using a custom data structure"
+  class="center"
+/></p>
+
+<h2>Step-by-Step</h2>
+
+<p>The main thing that you should take away from this section is that we no longer
+use two separate buffers for our vertices&#39; color and position data. Instead, we
+utilize our user-defined structure <code>Vertex</code> and upload an array of those to the
+GPU&#39;s memory containing the same data as in the first exercise of this chapter.</p>
+
+<p>The structure itself contains two arrays of four floating point numbers,
+<code>Vertex.XYZW</code> representing the position data and <code>Vertex.RGBA</code> representing the
+color channels.</p>
+
+<p>We removed <code>ColorBufferId</code> and instead used <code>BufferId</code> for both the color and
+vertex buffers, since we no longer use multiple buffers to represent a single
+object. This becomes apparent in the <code>CreateVBO</code> function where we now call
+<code>glGenBuffers</code> asking only for a single buffer in return.</p>
+
+<p>The next major change is that we only call <code>glBindBuffer</code> once and bind both of
+the vertex attributes to this buffer. Next, we upload the entire <code>Vertices</code>
+array into the GPU’s memory, containing our three instances of <code>Vertex</code>.</p>
+
+<h2>Stride and Pointer</h2>
+
+<p>As mentioned in the first exercise of this chapter, setting the <code>stride</code> and
+<code>pointer</code> parameters of the <code>glVertexAttribPointer</code> function allows us to pack
+many different data into a single buffer. By supplying these parameters, OpenGL
+can determine the position of the next block of memory it needs to use.</p>
+
+<p>The <code>stride</code> parameter defines the amount of bytes required to get from one
+vertex to the next, which is simply the size in bytes of our <code>Vertex</code> structure
+stored in the <code>VertexSize</code> constant. This value is the same for both attributes
+since they both operate on the same data structure.</p>
+
+<p>The <code>pointer</code> parameter is zero for the position-data, since it is the first
+array in our data structure and does not require an offset to access. The color
+data, however, does need an offset, which is set to the size of the
+<code>Vertex.XYZW</code> array in bytes since this is the block of data required to skip to
+get to the color data.</p>
+
+<p>Much of the functionality remained the same in this exercise, but most
+importantly, the format of the data changed significantly.</p>
+
+<h1>Conclusion</h1>
+
+<p>We drew our first geometry onto the screen and learned many new things in this
+chapter, including how to construct basic geometry using buffer objects.</p>
+
+<p>Now that we have a basic understanding of buffers, shapes, and vertices, it&#39;s time to expand on our knowledge with array indices in the <a href="/chapter-3-index-buffer-objects-and-primitive-types.html">next chapter</a>.</p>
+
+
+
+          <div class="footer">
+
+            <div class="contact">
+              <p>
+                <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+                  <img
+                    alt="Creative Commons License"
+                    style="border-width:0"
+                    src="http://i.creativecommons.org/l/by-sa/4.0/88x31.png"
+                  />
+                </a>
+              </p>
+            </div>
+
+            <div class="contact">
+              <p>
+                If you were charged for a copy of this text,
+                <em>demand a refund</em>. This work is available free of charge
+                at <a href="http://openglbook.com/">openglbook.com</a>
+              </p>
+            </div>
+
+            <div class="contact">
+              <p>
+                <a href="https://github.com/openglbook">Fork us on GitHub</a>
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <a href="https://github.com/openglbook">
+          <img
+            style="position: absolute; top: 0; right: 0; border: 0;"
+            src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67"
+            alt="Fork me on GitHub"
+            data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"
+          />
+        </a>
+
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-301718-10', 'openglbook.com');
+          ga('send', 'pageview');
+        </script>
+    </body>
+</html>

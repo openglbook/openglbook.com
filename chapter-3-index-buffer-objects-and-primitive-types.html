@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Chapter 3: Index Buffer Objects and Primitive Types | OpenGLBook.com</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+        <script type="text/javascript" src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+        <script type="text/javascript" src="/scripts/jsglhl.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function() {
+          LinkOpenGLManPages();
+        });
+        </script>
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+
+        <div class="site">
+          
+          <div class="header">
+            <h1 class="title"><a href="/">OpenGLBook.com</a></h1>
+          </div>
+
+          <div id="navigation">
+            <div class="menu">
+              <ul>
+                <li class="page_item">
+                  <a href="/">Home</a>
+                </li>
+                <li class="page_item">
+                  <a href="/the-book.html">The Book</a>
+                  <ul class="children">
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                      <li><a href="/chapter-0-preface-what-is-opengl.html">Preface: What is OpenGL?</a></li>
+                      
+                    
+                      
+                      <li><a href="/chapter-1-getting-started.html">Chapter 1: Getting Started</a></li>
+                      
+                    
+                      
+                      <li><a href="/chapter-2-vertices-and-shapes.html">Chapter 2: Vertices and Shapes</a></li>
+                      
+                    
+                      
+                      <li><a href="/chapter-3-index-buffer-objects-and-primitive-types.html">Chapter 3: Index Buffer Objects and Primitive Types</a></li>
+                      
+                    
+                      
+                      <li><a href="/chapter-4-entering-the-third-dimension.html">Chapter 4: Entering the Third Dimension</a></li>
+                      
+                    
+                      
+                      <li><a href="/credits.html">Credits</a></li>
+                      
+                    
+                  </ul>
+                </li>
+                <li class="page_item">
+                  <a href="/blog/">Blog</a>
+                </li>
+                <li class="page_item">
+                  <a href="#">Report Issues</a>
+                  <ul class="children">
+                    <li>
+                      <a href="https://github.com/openglbook/openglbook.com/issues">
+                        Text Issues (typos, etc.)
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">Code Issues (bugs, etc.)</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <h1>Chapter 3: Index Buffer Objects and Primitive Types</h1>
+
+<p><img
+  src="/images/C3I3-289x300.png"
+  alt="Resulting Output"
+  title="Resulting Output"
+  class="right"
+/></p>
+
+<p>Now that we’ve drawn our first geometric shapes in
+<a href="/chapter-2-vertices-and-shapes.html">Chapter 2</a>, it’s time to
+step up the complexity a bit. While uploading our vertices to the GPU and
+rendering them all as a batch is a great solution for a single triangle, you
+will soon notice that as geometric complexity increases, so does the need for
+more efficient rendering methods.</p>
+
+<p>In this chapter, you’ll learn how to:</p>
+
+<ul>
+<li>Use index buffers (AKA Index Buffer Objects, or IBOs).</li>
+<li>Draw complex geometry easier.</li>
+<li>Use several more primitive types.</li>
+</ul>
+
+<p>Please note that this chapter builds on the samples provided in Chapter 2, so if
+you haven&#39;t read it, I suggest you
+<a href="/chapter-2-vertices-and-shapes.html">read it now</a></p>
+
+<p><strong><a href="/chapter-0-preface-what-is-opengl.html">Check the requirements before continuing</a></strong></p>
+
+<div class="Attention">
+  <strong>OpenGL 3.x / DirectX 10 Level Hardware</strong>
+  <p>
+    This chapter is 100% compatible with OpenGL 3.x level hardware by changing
+    only a few lines of code.
+  </p>
+</div>
+
+<h1>The Problem</h1>
+
+<p>Let&#39;s say we wanted to draw the following shape onto the screen, each of the
+spoke’s vertices (marked by P<sup>n</sup>) a different color:</p>
+
+<p><img
+  src="/images/C3I1.png"
+  alt="The basic shape"
+  title="The basic shape"
+  class="center"
+/></p>
+
+<h2>Using GL_TRIANGLES</h2>
+
+<p>If we were to use the previous chapter’s code, we’d have to draw out 16
+individual triangles composed of 48 vertices in total using the <code>GL_TRIANGLES</code>
+primitive type since we describe each triangle separately. This means that each
+set of three vertices in your array describes a single independent triangle. You
+can see an example of this in file <code>Chapter3.0.1.c</code> in the download section at
+the end of this chapter.</p>
+
+<p>In this example, P<sup>0</sup> (origin) is duplicated 8 times in total, the
+center vertices P<sup>3</sup>, P<sup>7</sup>, P<sup>11</sup>, and P<sup>15</sup>
+are duplicated 4 times each. If this seems like overkill to you for such a
+simple shape, you’re right; there are better ways of describing it.</p>
+
+<p><strong>Amount of data sent to GPU memory using <code>GL_TRIANGLES</code>:</strong><br>
+(size of <code>Vertex</code>) 32 bytes x 48 = 1,536 bytes.</p>
+
+<h2>Using GL_TRIANGLE_STRIP</h2>
+
+<p><img
+  src="/images/C3I2.gif"
+  alt="GL_TRIANGLE_STRIP"
+  title="GL_TRIANGLE_STRIP"
+  class="right"
+/></p>
+
+<p>The <code>GL_TRIANGLE_STRIP</code> primitive mode is a bit better when it comes to sheer
+number of vertices sent to the GPU, since we only send 28 in total. However,
+there’s still unneeded duplication, and the way in which we traverse the
+vertices is a bit cumbersome due to the way that <code>GL_TRIANGLE_STRIP</code> works.</p>
+
+<p>The <code>GL_TRIANGLE_STRIP</code> primitive type creates triangles out of every newly
+added vertex and its preceding two vertices. In the animation, P<sup>0</sup> to
+P<sup>1</sup> doesn’t yield a triangle, but after we add P<sup>3</sup>, a
+triangle forms. Each vertex after the addition of P<sup>3</sup> yields a new
+triangle.</p>
+
+<p>In addition to the unneeded duplication (notice P<sup>3</sup> &rarr;
+P<sup>4</sup> &rarr; P<sup>3</sup>) and the amount of data sent over, there’s
+also no way of changing the order in which we draw the vertices besides
+uploading a completely new batch of data.</p>
+
+<p><strong>Amount of data sent to GPU memory using <code>GL_TRIANGLE_STRIP</code>:</strong><br>
+(size of <code>Vertex</code>) 32 bytes x 28 = 896 bytes.</p>
+
+<h1>Enter Index Buffers</h1>
+
+<p>So far, we’ve been drawing our geometry with a call to <code>glDrawArrays</code>, which
+simply draws a certain subset of elements from the currently active vertex
+buffer object. Let’s explore a new way of drawing by walking through some new
+code. Make a copy of <code>Chapter2.4.c</code> from the previous chapter and name it
+<code>Chapter3.1.c</code>.</p>
+
+<p>Since we’re in chapter two of the book, change the <code>WINDOW_TITLE_PREFIX</code>
+pre-processor definition to reflect Chapter 3.</p>
+
+<p>Next, change <code>CurrentWidth</code> to have an initial value of 600:</p>
+
+<script src="https://gist.github.com/11241324.js"> </script>
+
+<p>Add a new identifier named <code>IndexBufferId</code> to our list of global identifier
+variable declarations:</p>
+
+<script src="https://gist.github.com/11241333.js"> </script>
+
+<p>Remove the call to <code>glDrawArrays</code> in <code>RenderFunction</code> and replace it with the
+following line:</p>
+
+<script src="https://gist.github.com/11241348.js"> </script>
+
+<p>Here’s the big change, change the <code>Vertices</code> variable in <code>CreateVBO</code> to the following:</p>
+
+<script src="https://gist.github.com/11241367.js"> </script>
+
+<p>Immediately beneath <code>Vertices</code>, add the following array definition:</p>
+
+<script src="https://gist.github.com/11241385.js"> </script>
+
+<p>At the end of the <code>CreateVBO</code> function, right below the last call to <code>glEnableVertexAttribArray</code>, add the following lines of code:</p>
+
+<script src="https://gist.github.com/11241411.js"> </script>
+
+<p>Finally, add the following lines of code between the <code>glDeleteBuffers</code> and <code>glBindVertexArray</code> lines of the <code>DestroyVBO</code> function:</p>
+
+<script src="https://gist.github.com/11241418.js"> </script>
+
+<p>Your output should look like:</p>
+
+<p><img
+  src="/images/C3I3.png"
+  alt="Resulting Output"
+  title="Resulting Output"
+  class="center"
+/></p>
+
+<h2>Step-By-Step</h2>
+
+<p>If you’ve analyzed the code a bit, you’ll notice that we upload each vertex
+exactly once to the GPU instead of 48 vertices including duplicates. Let’s walk
+through the code and take a good look at what we did here.</p>
+
+<p>The first changes were purely aesthetic: as always, we changed the window title
+to reflect this chapter and made the window a perfect square for the geometry to
+show up symmetrical. In the next chapter, we’ll introduce a method that doesn’t
+require you to reshape your window to achieve symmetry.</p>
+
+<p>The next thing we add is the <code>IndexBufferId</code> variable to the global list of
+variables. This variable will hold the buffer’s identifier generated by a call
+to <code>glGenBuffers</code>, similar to vertex buffer generation in the previous chapter.</p>
+
+<h3>Modifying Vertices and Adding Indices</h3>
+
+<p>After that, we modify the <code>CreateVBO</code> function and replace its <code>Vertices</code> array
+with an array of 17 total vertices. If we were to use <code>glDrawArrays</code> on this VBO
+without indices, we would not output the desired shape as illustrated earlier.
+Instead, we have to define one more array, named <code>Indices</code>, to hold the indices
+of the elements in <code>Vertices</code> in drawing order.</p>
+
+<p>For example, the first three indices 0, 1, and 3, correspond directly with the
+first, fourth, and second elements in the <code>Vertices</code> array, composing the
+left-bottom triangle of the shape’s top spoke. In total, we upload 48 indices
+since each spoke consists of four triangles (3 x 4 x 4).</p>
+
+<p><code>Indices</code> is defined as a <code>GLubyte</code> array of 48 elements; <code>GLubyte</code> is the
+OpenGL data type for an unsigned byte (<code>unsigned char</code>). You could use any of
+the following unsigned integral OpenGL data types: <code>GLubyte</code>, <code>GLushort</code>, and
+<code>GLuint</code>, since indices are never negative (signed) or fractional
+(float/double).</p>
+
+<h3>Index Buffer Generation, Binding, and Filling</h3>
+
+<p>The final thing inside of the <code>CreateVBO</code> function is to generate the actual
+index buffer with a familiar call to the <code>glGenBuffers</code>, nothing new there. It
+isn’t until the next function call to <code>glBindBuffers</code> that we specify a brand
+new target that we haven’t used before.</p>
+
+<p>Until now, we’ve only supplied the <code>GL_ARRAY_BUFFER</code> target to <code>glBindBuffer</code> to
+specify that the buffer is an array of vertices. While we still upload our
+vertices in this manner, our newly generated buffer is bound to the
+<code>GL_ELEMENT_ARRAY_BUFFER</code> target that allows us to specify which vertices in the
+active <code>GL_ARRAY_BUFFER</code> we’re using.</p>
+
+<p>The call to <code>glBufferData</code> should also look very similar to last chapter’s code;
+we introduce no new options here besides the usage of the
+<code>GL_ELEMENT_ARRAY_BUFFER</code> target flag.</p>
+
+<h3>Rendering the Indexed Vertex Buffer Object</h3>
+
+<p>In the code, we removed the call to <code>glDrawArrays</code> and replaced it with a call
+to a function called <code>glDrawElements</code>. Whereas <code>glDrawArrays</code> only draws the
+active <code>GL_ARRAY_BUFFER</code>, <code>glDrawElements</code> draws the indices of the active
+<code>GL_ARRAY_BUFFER</code> as specified by the buffer bound to the
+<code>GL_ELEMENT_ARRAY_BUFFER</code> target. Let’s take a closer look at the
+<code>glDrawElements</code> function:</p>
+
+<script src="https://gist.github.com/11241470.js"> </script>
+
+<p>The first parameter, <code>mode</code>, takes in the primitive mode to use such as
+<code>GL_TRIANGLES</code> or <code>GL_TRIANGLE_STRIP</code>; the same as the <code>mode</code> parameter of
+<code>glDrawArrays</code>.</p>
+
+<p>The second parameter, <code>count</code>, specifies how many elements in total to draw. In
+our case, this value is 48 since that’s the amount of indices in the <code>Indices</code>
+array.</p>
+
+<p>The third parameter, <code>type</code>, specifies which data type was used for the index
+array. In our case, this is <code>GL_UNSIGNED_BYTE</code>, since we used the <code>GLubyte</code> data
+type to construct the <code>Indices</code> array. Please note that this type <strong>must</strong>
+reflect the data type used to construct the array containing the indices.</p>
+
+<p>The fourth and last parameter, <code>indices</code>, specifies the offset in bytes in the
+index array of where we want to start rendering, allowing us to render subsets
+of the vertex data. For example, if we wished to draw just the right-hand spoke
+of the shape, we’d call the <code>glDrawElements</code> function with the following parameters:</p>
+
+<script src="https://gist.github.com/11241491.js"> </script>
+
+<p>In this function call, we draw 12 vertices starting at index offset 36 of the
+index buffer, corresponding to the vertices in the <code>Indices</code> array. Make sure to
+change the parameters in <code>glDrawElements</code> according to the type of index buffer
+you&#39;re using. For example, if we were to use an index buffer containing unsigned
+integers (<code>GLuint</code>), we&#39;d have to change the above function call to the
+following:</p>
+
+<script src="https://gist.github.com/11241498.js"> </script>
+
+<p><strong>Amount of data sent to GPU memory using Index Buffers:</strong><br>
+(size of <code>Vertex</code>) 32 bytes x 17 + 1 <code>GLubyte</code> x 48 = 592 bytes.</p>
+
+<h1>Swapping Index Buffers</h1>
+
+<p>Sometimes it is not possible to avoid having to change the indices you wish to
+render, in which case it is possible to swap the active index buffer by simply
+changing the buffer bound to the <code>GL_ELEMENT_ARRAY_BUFFER</code> target.</p>
+
+<p>Make a copy of <code>Chapter3.1.c</code> rename it to <code>Chapter3.2.c</code> and open it up in your
+editor. The first thing we do is change the block of global <code>GLuint</code> variable
+definitions to look like this:</p>
+
+<script src="https://gist.github.com/11241522.js"> </script>
+
+<p>Next, add the following function declaration right underneath the <code>IdleFunction</code>
+function declaration:</p>
+
+<script src="https://gist.github.com/11241533.js"> </script>
+
+<p>In the <code>InitWindow</code> function definition, add the following line underneath the
+call to <code>glutCloseFunc</code>:</p>
+
+<script src="https://gist.github.com/11241553.js"> </script>
+
+<p>Add the following function definition right below the <code>InitWindow</code> function
+definition:</p>
+
+<script src="https://gist.github.com/11241569.js"> </script>
+
+<p>Next, we need to make some changes to the rendering, <code>RenderFunction</code>, to
+facilitate the changes we&#39;ve made. Replace the call to glDrawElements with the
+following code:</p>
+
+<script src="https://gist.github.com/11241580.js"> </script>
+
+<p>Inside of the <code>CreateVBO</code> function right underneath the <code>Indices</code> array
+definition, place the following code:</p>
+
+<script src="https://gist.github.com/11241598.js"> </script>
+
+<p>Inside of the same function, change the call to generate the index buffers to
+the following:</p>
+
+<script src="https://gist.github.com/11241612.js"> </script>
+
+<p>Immediately after that, change the <code>glBindBuffer</code> function call to the
+following:</p>
+
+<script src="https://gist.github.com/11241628.js"> </script>
+
+<p>Right before the call to <code>glGetError</code>, add the following block of code:</p>
+
+<script src="https://gist.github.com/11241637.js"> </script>
+
+<p>Finally, in the <code>DestroyVBO</code> function, change the <code>glDeleteBuffers</code> call with
+<code>IndexBufferId</code> as its parameter to the following:</p>
+
+<script src="https://gist.github.com/11241646.js"> </script>
+
+<p>When you run the program and press the &quot;T&quot; key, you are able to toggle back and
+forth between the original shape and this new shape:</p>
+
+<p><img
+  src="/images/C3I4.png"
+  alt="Resulting Output"
+  title="Resulting Output"
+  class="center"
+/></p>
+
+<h2>Step-By-Step</h2>
+
+<p>With only a few minor changes, we were able to draw an entirely new shape out of 
+he same set of vertices. The only thing we did to achieve this was swap the
+index buffers. If you examined the code, you’ll notice that we’ve covered all of
+the functionality used in this sample before, so we’ll just glance over some of
+the highlights.</p>
+
+<p>In this sample, we changed the amount of index buffers generated to two to
+contain an alternate index buffer for our swapping purposes. In the <code>CreateVBO</code>
+function, we updated <code>glGenBuffers</code> to generate two buffer objects and store
+their identifiers in the array <code>IndexBufferId</code>, which now contains two elements.</p>
+
+<p>After that, we upload the new indices stored in <code>AlternateIndices</code> to the GPU’s
+memory using <code>glBufferData</code> as usual and set the current active index buffer
+back to the original.</p>
+
+<p>We also added some new FreeGLUT functionality for handling keyboard input:</p>
+
+<script src="https://gist.github.com/11241687.js"> </script>
+
+<p>The <code>Key</code> parameter contains the character representation of the key pressed,
+while the <code>X</code> and <code>Y</code> parameters contain the mouse positions relative to the
+window at the time of the key-press. The only thing we do in this function is
+toggle back and forth between index buffers while retaining the same vertex
+data.</p>
+
+<p>We register the call to this function in the <code>InitWindow</code> function with a call
+to <code>glutKeyBoardFunc</code>, which takes in as its only parameter a function pointer,
+just as any other FreeGLUT callback functions do.</p>
+
+<h1>More Primitive Types</h1>
+
+<p>Until now, we’ve only discussed <code>GL_TRIANGLES</code> and <code>GL_TRIANGLE_STRIP</code> as
+methods to describe geometry. However, there are several more so-called
+&quot;primitive types&quot; available in OpenGL, each of which alters the output in a
+different way. In this section, we’ll discuss a few more.</p>
+
+<div class="FYI">
+  <strong>Primitives</strong>
+  <p>
+    A "primitive" is the smallest component of a geometrical shape. So far,
+    we’ve used triangles as our primitive types but OpenGL supports two others:
+    points and line segments.
+  </p>
+</div>
+
+<h2>GL_POINTS</h2>
+
+<p>The first and simplest primitive type is <code>GL_POINTS</code>, where each vertex
+specifies a visible point in space. When using <code>GL_POINTS</code>, OpenGL will draw
+simple points onto the screen. For example, change the <code>glDrawElements</code> in
+<code>Chapter3.1.c</code> to use <code>GL_POINTS</code> instead of <code>GL_TRIANGLES</code>, and each vertex
+will show up as a colored one-pixel point.</p>
+
+<p>You can change the point-size with the function <code>glPointSize</code>, which simply
+takes in a single parameter, size, specifying the size of the points as a
+floating-point number.</p>
+
+<h2>GL<em>LINE</em>STRIP</h2>
+
+<p>The second primitive type is <code>GL_LINE_STRIP</code>, which allows us to draw lines
+between vertices. <code>GL_LINE_STRIP</code> works much like <code>GL_TRIANGLE_STRIP</code>, where
+each new vertex adds to the overall line instead of defining a brand new line
+every two vertices.</p>
+
+<p>To try this primitive type, add one more index to 0 at the very end of the index
+array named <code>Indices</code> in <code>Chapter3.1.c</code>, and change the call to <code>glDrawElements</code>
+to the following:</p>
+
+<script src="https://gist.github.com/11241702.js"> </script>
+
+<p>You should now see the outline of the shape described at the beginning of the
+chapter.</p>
+
+<h2>GL_LINE_LOOP</h2>
+
+<p>The third primitive type, <code>GL_LINE_LOOP</code> is very similar to <code>GL_LINE_STRIP</code> with
+the exception that it closes the line segment by drawing a line between the last
+vertex and the first. Whereas we added one more index to <code>Indices</code> for
+<code>GL_LINE_STRIP</code>, we would not have to do this with <code>GL_LINE_LOOP</code>.</p>
+
+<h2>GL_LINES</h2>
+
+<p><code>GL_LINES</code> is to lines what <code>GL_TRIANGLES</code> is to triangles, meaning that
+<code>GL_LINES</code> describes separate, unconnected lines. However, since a line consists
+of two points instead of the three required by a triangle, changing the sample
+in <code>Chapter3.1.c</code> does not yield a desired result. We would have to modify the
+index array extensively in order to get the correct results.</p>
+
+<h2>GL_TRIANGLE_FAN</h2>
+
+<p>The last primitive type to discuss in this section is <code>GL_TRIANGLE_FAN</code>, a close
+relative to the well-known <code>GL_TRIANGLE_STRIP</code>. Whereas <code>GL_TRIANGLE_STRIP</code>
+constructs a new triangle by connecting the last three points added to the list,
+<code>GL_TRIANGLE_FAN</code> constructs a new triangle from the very first point and the
+last two points added, resulting in a fan-like shape. This means that every new
+triangle is connected to the very first added to the list.</p>
+
+<p>There is no correct way of drawing the shapes presented in this chapter using
+<code>GL_TRIANGLE_FAN</code>, but this primitive type is useful for drawing center-oriented
+polygons, such as a pentagon with all of its vertices connecting in the center.</p>
+
+<h2>Polygon Rasterization Modes</h2>
+
+<p>If you’re looking to display your geometry as a wireframe of its original,
+there’s no need to change its primitive type. The function <code>glPolygonMode</code> can
+take care of this by changing the method used to fill the triangles, a process
+called “rasterization” that we’ll explore in a future chapter:</p>
+
+<script src="https://gist.github.com/11241729.js"> </script>
+
+<p>The function’s first parameter, <code>face</code>, specifies which polygons of your
+geometry the function affects. As of OpenGL 3.0, this parameter may <strong>only</strong> be
+set to <code>GL_FRONT_AND_BACK</code>; we’ll learn more about front- and back-faces in a
+future chapter.</p>
+
+<p>The function’s second parameter, <code>mode</code>, specifies how the polygons are
+rasterized. This mode can be set to one of the following values:</p>
+
+<ul>
+<li><code>GL_POINT</code> Draws the geometry as points, related to the <code>GL_POINTS</code> primitive
+type.</li>
+<li><code>GL_LINE</code> Draws the geometry as lines (wireframe), related to the <code>GL_LINES</code>
+primitive type.</li>
+<li><code>GL_FILL</code> The default: draws each triangle filled with a solid color.</li>
+</ul>
+
+<p>Below follows a combination of three screenshots showing all of the different rasterization modes for the example shown earlier in this chapter:</p>
+
+<p><img
+  src="/images/C3I5.png"
+  alt="Resulting Output"
+  title="Resulting Output"
+  class="center"
+/></p>
+
+<h1>Conclusion</h1>
+
+<p>Index Buffer Objects can be incredibly useful when dealing with complex shapes
+by limiting the amount of data sent to the GPU. The fact that many model formats
+provide their data in separate vertex and index sections only makes the decision
+to use index buffers more natural.</p>
+
+<p>In upcoming chapters, index buffers are the primary method to describe geometry,
+so try to get familiar with this chapter and modify the samples to draw some
+geometry of your own.</p>
+
+
+
+          <div class="footer">
+
+            <div class="contact">
+              <p>
+                <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+                  <img
+                    alt="Creative Commons License"
+                    style="border-width:0"
+                    src="http://i.creativecommons.org/l/by-sa/4.0/88x31.png"
+                  />
+                </a>
+              </p>
+            </div>
+
+            <div class="contact">
+              <p>
+                If you were charged for a copy of this text,
+                <em>demand a refund</em>. This work is available free of charge
+                at <a href="http://openglbook.com/">openglbook.com</a>
+              </p>
+            </div>
+
+            <div class="contact">
+              <p>
+                <a href="https://github.com/openglbook">Fork us on GitHub</a>
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <a href="https://github.com/openglbook">
+          <img
+            style="position: absolute; top: 0; right: 0; border: 0;"
+            src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67"
+            alt="Fork me on GitHub"
+            data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"
+          />
+        </a>
+
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-301718-10', 'openglbook.com');
+          ga('send', 'pageview');
+        </script>
+    </body>
+</html>

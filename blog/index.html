@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Blog - OpenGLBook.com | OpenGLBook.com</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+        <script type="text/javascript" src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+        <script type="text/javascript" src="/scripts/jsglhl.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function() {
+          LinkOpenGLManPages();
+        });
+        </script>
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body>
+
+        <div class="site">
+          
+          <div class="header">
+            <h1 class="title"><a href="/">OpenGLBook.com</a></h1>
+          </div>
+
+          <div id="navigation">
+            <div class="menu">
+              <ul>
+                <li class="page_item">
+                  <a href="/">Home</a>
+                </li>
+                <li class="page_item">
+                  <a href="/the-book.html">The Book</a>
+                  <ul class="children">
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                      <li><a href="/chapter-0-preface-what-is-opengl.html">Preface: What is OpenGL?</a></li>
+                      
+                    
+                      
+                      <li><a href="/chapter-1-getting-started.html">Chapter 1: Getting Started</a></li>
+                      
+                    
+                      
+                      <li><a href="/chapter-2-vertices-and-shapes.html">Chapter 2: Vertices and Shapes</a></li>
+                      
+                    
+                      
+                      <li><a href="/chapter-3-index-buffer-objects-and-primitive-types.html">Chapter 3: Index Buffer Objects and Primitive Types</a></li>
+                      
+                    
+                      
+                      <li><a href="/chapter-4-entering-the-third-dimension.html">Chapter 4: Entering the Third Dimension</a></li>
+                      
+                    
+                      
+                      <li><a href="/credits.html">Credits</a></li>
+                      
+                    
+                  </ul>
+                </li>
+                <li class="page_item">
+                  <a href="/blog/">Blog</a>
+                </li>
+                <li class="page_item">
+                  <a href="#">Report Issues</a>
+                  <ul class="children">
+                    <li>
+                      <a href="https://github.com/openglbook/openglbook.com/issues">
+                        Text Issues (typos, etc.)
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">Code Issues (bugs, etc.)</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- This loops through the paginated posts -->
+
+<div class="post">
+  <h1 class="post-title"><a href="/blog/openglbook-relaunch/">OpenGLBook.com Relaunch</a></h1>
+  <div class="meta">
+    Posted on 20 May 2014
+  </div>
+  <div>
+    
+        <p><img
+    src="/images/Octocat.png"
+    alt="Octocat"
+    title="Octocat"
+    class="right"
+/></p>
+
+<p>You may have noticed that for a few days the site was unavailable. This was caused by my old host, GoDaddy, who without informing me pulled the plug on my VPS account that hosted this site for the last three years. I still don&#39;t know why this happened and can&#39;t manually reactivate the account. Oh well, their loss.</p>
+
+<p>However, this fiasco gave me incentive to finish converting the site to Markdown in preparation for release to GitHub Pages. I was planning this anyway, so tonight I put the final touches on the conversion, and as of right now, the entire site is hosted on GitHub pages.</p>
+
+<h2>What This Means</h2>
+
+<p>1.) Even though the site&#39;s code samples were previously released under the MIT license, the site&#39;s contents were not open source. This has now been remedied by licensing the contents of the site under the <a href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a> license (CC BY-SA 4.0). The source code for the entire site is <a href="https://github.com/openglbook/openglbook.com">now available on GitHub</a> for anyone to mess around with.</p>
+
+<p>2.) I don&#39;t have to pay for hosting anymore, so no more ads (yay!).</p>
+
+<p>3.) Inline code samples are now hosted as gists, which makes maintaining the site content less of a nightmare.</p>
+
+<p>4.) Chapters are stored as Markdown, so they&#39;re editable in any text editor, not restricted to a clumsy web-based WYSIWYG editor.</p>
+
+<h2>Known Issues</h2>
+
+<ul>
+<li>Legacy chapter URLs no longer work (not fixing).</li>
+<li>Code samples haven&#39;t been put on GitHub <em>yet</em>.</li>
+<li>Many old bugs haven&#39;t been fixed since this was almost a verbatim copy.</li>
+<li>There are still many files to clean up.</li>
+</ul>
+
+<p>I&#39;m expecting more issues with the site in the next couple of days, so if you come across something that doesn&#39;t look quite right, please report the issue.</p>
+
+    
+  </div>
+  <div style="clear:both;"></div>
+</div>
+
+<div class="post">
+  <h1 class="post-title"><a href="/blog/poll-c-and-glm-support/">Poll: C++ and GLM Support</a></h1>
+  <div class="meta">
+    Posted on 20 Feb 2012
+  </div>
+  <div>
+    
+        <p>
+	Over the course of the last few months, I have received numerous emails and bug reports from people trying to compile the sample code as C++ code. So many, in fact, that I'm starting to think that the site may actually benefit from C++ code samples <em>instead</em> of C code samples.
+</p>
+<p>
+	To get a good idea of the consensus of C++ vs C in this case, I've opened up a little poll. Please take a second or so to select an option from the list and vote, I'd really like to hear your opinion on this. Also, if you have a comment on this, please post it as well.
+</p>
+<p>
+	<em>Poll Closed</em>
+	<!-- polldaddy 5961810 -->
+</p>
+
+    
+  </div>
+  <div style="clear:both;"></div>
+</div>
+
+<div class="post">
+  <h1 class="post-title"><a href="/blog/unable-to-create-opengl-4-0-context-flags-n-profile-n/">Unable to create OpenGL 4.0 context (flags m, profile n)</a></h1>
+  <div class="meta">
+    Posted on 13 Jul 2011
+  </div>
+  <div>
+    
+        <p>
+	If you're getting the message <code>Unable to create OpenGL 4.0 context (flags m, profile n)</code> when creating your context (where m and n are numbers) your hardware <strong>does not support OpenGL 4.0</strong>.
+</p>
+<p>
+	Sadly, this is not something you can fix without upgrading your hardware. As mentioned in the Preface, the minimum graphics hardware you need for an OpenGL 4.0 context is:
+</p>
+<ul>
+	<li>If you own an NVIDIA GPU, it must at least be in the Fermi family of products, starting with the GeForce GTX 400 series.</li>
+	<li>If you own an AMD/ATI GPU, it must at least be in the Radeon HD 5000 series.</li>
+</ul>
+<p>
+	It is possible to run many of the samples using OpenGL 3.3 by using the code files found in the "OpenGL 3.3" directories of each chapters' source code listings. However, OpenGL 4.0+ core features will not work in OpenGL 3.3.
+</p>
+
+    
+  </div>
+  <div style="clear:both;"></div>
+</div>
+
+<div class="post">
+  <h1 class="post-title"><a href="/blog/setting-up-opengl-glew-and-freeglut-in-visual-c/">Setting up OpenGL, GLEW, and FreeGLUT in Visual C++</a></h1>
+  <div class="meta">
+    Posted on 26 Jun 2011
+  </div>
+  <div>
+    
+        <p>
+	This post walks you through setting up OpenGL, GLEW, and FreeGLUT support in Visual C++ in order to compile the samples properly. My original thought was to put this in an appendix after all of the chapters were completed, but there's need for it now, so here's the extremely verbose step-by-step explanation:
+</p>
+      
+        <p><a href="/blog/setting-up-opengl-glew-and-freeglut-in-visual-c">Continue reading&hellip;</a></p>
+    
+  </div>
+  <div style="clear:both;"></div>
+</div>
+
+<div class="post">
+  <h1 class="post-title"><a href="/blog/glsl-input-layout-qualifier-bug-on-amd-hardware/">Chapter 4: Entering the Third Dimension Released</a></h1>
+  <div class="meta">
+    Posted on 25 Jun 2011
+  </div>
+  <div>
+    
+        <p>
+	An issue was brought up yesterday <a href="http://code.google.com/p/openglbook-samples/issues/detail?id=2" rel="nofollow">concerning a bug in Chapter 2</a>. If you change the layout input layout qualifiers in your GLSL shaders from that chapter to the following:
+</p>
+<pre>
+layout(location=18) in vec4 in_Position;
+layout(location=1) in vec4 in_Color;
+</pre>
+<p>
+	And update the calls to <code>glVertexAttribPointer</code> and <code>glEnableVertexAttribArray</code> accordingly, you will see nothing but a black screen <strong>on AMD hardware</strong>.
+</p>
+<p>
+	It turns out that this is a known bug, and <a ref="nofollow" href="http://www.opengl.org/discussion_boards/ubbthreads.php?ubb=showflat&Number=286280">someone on the OpenGL forums</a> encountered this last year, so this bug has existed for a while.
+</p>
+<p>
+	After contacting OpenGL bug-basher extraordinaire Christophe Riccio (who runs a great site at <a href="http://www.g-truc.net/" rel="nofollow">G-Truc.net</a>), he informed me that the only way to get this to work on AMD is to assign location 0, meaning that the following works:
+</p>
+<pre>
+layout(location=18) in vec4 in_Position;
+layout(location=0) in vec4 in_Color;
+</pre>
+<p>
+	So keep in mind when writing your programs to always occupy location 0 for something.
+</p>
+
+    
+  </div>
+  <div style="clear:both;"></div>
+</div>
+
+
+<!-- Pagination links -->
+<div class="pagination">
+  
+    <span class="previous">Previous</span>
+  
+  <span class="page_number ">Page: 1 of 4</span>
+  
+    <a href="/blog/page2" class="next">Next</a>
+  
+</div>
+
+          <div class="footer">
+
+            <div class="contact">
+              <p>
+                <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+                  <img
+                    alt="Creative Commons License"
+                    style="border-width:0"
+                    src="http://i.creativecommons.org/l/by-sa/4.0/88x31.png"
+                  />
+                </a>
+              </p>
+            </div>
+
+            <div class="contact">
+              <p>
+                If you were charged for a copy of this text,
+                <em>demand a refund</em>. This work is available free of charge
+                at <a href="http://openglbook.com/">openglbook.com</a>
+              </p>
+            </div>
+
+            <div class="contact">
+              <p>
+                <a href="https://github.com/openglbook">Fork us on GitHub</a>
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <a href="https://github.com/openglbook">
+          <img
+            style="position: absolute; top: 0; right: 0; border: 0;"
+            src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67"
+            alt="Fork me on GitHub"
+            data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"
+          />
+        </a>
+
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-301718-10', 'openglbook.com');
+          ga('send', 'pageview');
+        </script>
+    </body>
+</html>

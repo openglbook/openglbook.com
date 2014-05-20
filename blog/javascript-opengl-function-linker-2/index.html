@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>OpenGLBook.com | An Free OpenGL Programming Book</title>
+        <title>JavaScript OpenGL Function Linker | OpenGLBook.com</title>
         <meta name="viewport" content="width=device-width">
 
         <!-- syntax highlighting CSS -->
@@ -96,33 +96,37 @@
             </div>
           </div>
 
-          <div id="home">
-	<h1>Welcome To OpenGLBook.com!</h1>
+          <div class="post">
+<h1 class="post-title">JavaScript OpenGL Function Linker</h1>
+<div class="meta">12 Apr 2011</div>
 
-<p><img
-  src="/images/ogl.jpg"
-  title="OpenGL Logo"
-  alt="OpenGL Logo"
-  class="right"
-/></p>
+<p>
+	If anyone is interested, here's a little jQuery/JavaScript function that replaces all OpenGL function names in your HTML document with a highlighted, clickable JavaScript link to the appropriate OpenGL manual page.
+</p>
+<!--more-->
+<p>
+	For example, any OpenGL function name anywhere inside of an HTML &lt;p&gt; element will transform, simply include the javascript file:
+</p>
+<pre>&lt;script type=&quot;text/javascript&quot; src=&quot;jsglhl.js&quot;&gt;&lt;/script&gt;</pre>
+<p>
+	And call the following function somewhere after the document has loaded (if you use jQuery, use <code>$(document).ready()</code>).
+</p>
+<pre>LinkOpenGLManPages();</pre>
+<p>
+	And your OpenGL function names will transform:
+</p>
+<p>
+	glDrawElements - as normal style paragraph text<br />
+	<code>glVertexAttrib</code> - inside of a &lt;code&gt; element<br />
+	<strong>glViewport</strong> - inside of a &lt;strong&gt; element
+</p>
+<p>
+	For more examples, see <a href="/chapter-2-vertices-and-shapes.html">Chapter 2</a>. It's licensed under the <a href="http://en.wikipedia.org/wiki/MIT_License" target="_blank">MIT license</a>, so you can do with it whatever you want:<br />
+	<strong><a href="/scripts/jsglhl.js">Download</a></strong>
+</p>
 
-<p><strong>OpenGLBook.com</strong> is a free OpenGL programming resource in online book format.
-Click on <a href="/the-book.html">The Book</a> to start learning OpenGL 4.0.
-Several chapters contain OpenGL 3.3 compatible code samples in a sub-directory
-named &quot;OpenGL 3.3&quot; in the source code listing, if you only have access to
-OpenGL 3 / DirectX 11 level hardware.</p>
-
-<p><strong>New Chapters</strong> are released periodically as they are completed and announced
-on <a href="/blog/">the blog</a>.</p>
-
-<p><strong>Before you start</strong> make sure that you
-<a href="/chapter-0-preface-what-is-opengl.html">read the preface</a>
-to get a decent understanding of the evolution of computer graphics and where
-OpenGL came from. The preface also lists the hardware, software, and knowledge
-requirements for the book, so <em>don&#39;t skip it!</em></p>
 
 </div>
-
 
           <div class="footer">
 
