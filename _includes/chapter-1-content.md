@@ -43,7 +43,7 @@ first bit of code that you will need to set up a functioning window; don’t
 worry if you don’t understand what the code does at this point, we will discuss
 the code in detail after we have our first program up and running.
 
-Since we are starting from scratch, create a new file called `Chapter1.c`, open
+Since we are starting from scratch, create a new file called `chapter.1.c`, open
 it in a text editor or your development environment and insert the following
 lines:
 
@@ -544,3 +544,6 @@ nitty-gritty stuff.
 Now that we have a valid rendering context and our window is good to go, in the
 [next chapter]({{ site.url }}/chapter-2-vertices-and-shapes.html) we'll start
 drawing some actual geometry to the screen and explore vertices and polygons.
+
+You can find the source code for the samples in this chapter
+[here.](https://github.com/openglbook/openglbook-samples/tree/master/chapter-1)

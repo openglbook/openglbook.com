@@ -31,8 +31,8 @@ learning:
 # Buffer Objects #
 
 The program that we created in the first chapter will serve as the basis for the
-code in this chapter, so simply **copy** the file `Chapter1.c` to a new file
-called `Chapter2.1.c`, open it up in your editor, and let's get started.
+code in this chapter, so simply **copy** the file `chapter.1.c` to a new file
+called `chapter.2.1.c`, open it up in your editor, and let's get started.
 
 All solid geometry in OpenGL is composed of triangles, so it is only natural
 that the first object we draw is a triangle. As in the first chapter, if you
@@ -653,7 +653,7 @@ building blocks for constructing the rectangle.
 ## Using GL_TRIANGLES ##
 
 Much like in our first exercise, this sample uses triangles to construct
-geometry. Create a copy of `Chapter2.1.c`, name it `Chapter2.2.c` and open it
+geometry. Create a copy of `chapter.2.1.c`, name it `chapter.2.2.c` and open it
 up. let's make some changes to our program in order to draw our rectangle:
 
 Change the `Vertices` array in `CreateVBO` to contain six total vertices, making
@@ -702,7 +702,7 @@ ours are.
 
 ## Using GL\_TRIANGLE\_STRIP ##
 
-Create a copy of `Chapter2.1.c` named `Chapter2.3.c` and open it up for editing.
+Create a copy of `chapter.2.1.c` named `chapter.2.3.c` and open it up for editing.
 Change the `Vertices` array in the `CreateVBO` function to contain the following
 four vertices:
 
@@ -756,7 +756,7 @@ requires the creation of an entirely new triangle.
 The aim of this section is to show you how you can upload your own custom data
 structures to the GPU’s memory and still access its data correctly.
 
-Create a copy of `Chapter2.1.c` named `Chapter2.4.c`, and open it up in your
+Create a copy of `chapter.2.1.c` named `chapter.2.4.c`, and open it up in your
 editor. Add the following structure definition right below the
 `WINDOW_TITLE_PREFIX` definition:
 
@@ -831,3 +831,6 @@ We drew our first geometry onto the screen and learned many new things in this
 chapter, including how to construct basic geometry using buffer objects.
 
 Now that we have a basic understanding of buffers, shapes, and vertices, it's time to expand on our knowledge with array indices in the [next chapter]({{ site.url }}/chapter-3-index-buffer-objects-and-primitive-types.html).
+
+You can find the source code for the samples in this chapter
+[here.](https://github.com/openglbook/openglbook-samples/tree/master/chapter-2)

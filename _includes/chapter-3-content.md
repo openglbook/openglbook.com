@@ -53,7 +53,7 @@ If we were to use the previous chapter’s code, we’d have to draw out 16
 individual triangles composed of 48 vertices in total using the `GL_TRIANGLES`
 primitive type since we describe each triangle separately. This means that each
 set of three vertices in your array describes a single independent triangle. You
-can see an example of this in file `Chapter3.0.1.c` in the download section at
+can see an example of this in file `chapter.3.0.1.c` in the download section at
 the end of this chapter.
 
 In this example, P<sup>0</sup> (origin) is duplicated 8 times in total, the
@@ -97,8 +97,8 @@ uploading a completely new batch of data.
 So far, we’ve been drawing our geometry with a call to `glDrawArrays`, which
 simply draws a certain subset of elements from the currently active vertex
 buffer object. Let’s explore a new way of drawing by walking through some new
-code. Make a copy of `Chapter2.4.c` from the previous chapter and name it
-`Chapter3.1.c`.
+code. Make a copy of `chapter.2.4.c` from the previous chapter and name it
+`chapter.3.1.c`.
 
 Since we’re in chapter two of the book, change the `WINDOW_TITLE_PREFIX`
 pre-processor definition to reflect Chapter 3.
@@ -242,7 +242,7 @@ Sometimes it is not possible to avoid having to change the indices you wish to
 render, in which case it is possible to swap the active index buffer by simply
 changing the buffer bound to the `GL_ELEMENT_ARRAY_BUFFER` target.
 
-Make a copy of `Chapter3.1.c` rename it to `Chapter3.2.c` and open it up in your
+Make a copy of `chapter.3.1.c` rename it to `chapter.3.2.c` and open it up in your
 editor. The first thing we do is change the block of global `GLuint` variable
 definitions to look like this:
 
@@ -355,7 +355,7 @@ different way. In this section, we’ll discuss a few more.
 The first and simplest primitive type is `GL_POINTS`, where each vertex
 specifies a visible point in space. When using `GL_POINTS`, OpenGL will draw
 simple points onto the screen. For example, change the `glDrawElements` in
-`Chapter3.1.c` to use `GL_POINTS` instead of `GL_TRIANGLES`, and each vertex
+`chapter.3.1.c` to use `GL_POINTS` instead of `GL_TRIANGLES`, and each vertex
 will show up as a colored one-pixel point.
 
 You can change the point-size with the function `glPointSize`, which simply
@@ -370,7 +370,7 @@ each new vertex adds to the overall line instead of defining a brand new line
 every two vertices.
 
 To try this primitive type, add one more index to 0 at the very end of the index
-array named `Indices` in `Chapter3.1.c`, and change the call to `glDrawElements`
+array named `Indices` in `chapter.3.1.c`, and change the call to `glDrawElements`
 to the following:
 
 {% gist 11241702 %}
@@ -390,7 +390,7 @@ vertex and the first. Whereas we added one more index to `Indices` for
 `GL_LINES` is to lines what `GL_TRIANGLES` is to triangles, meaning that
 `GL_LINES` describes separate, unconnected lines. However, since a line consists
 of two points instead of the three required by a triangle, changing the sample
-in `Chapter3.1.c` does not yield a desired result. We would have to modify the
+in `chapter.3.1.c` does not yield a desired result. We would have to modify the
 index array extensively in order to get the correct results.
 
 ## GL\_TRIANGLE\_FAN ##
@@ -447,4 +447,9 @@ to use index buffers more natural.
 
 In upcoming chapters, index buffers are the primary method to describe geometry,
 so try to get familiar with this chapter and modify the samples to draw some
-geometry of your own.
+geometry of your own. In the
+[next chapter]({{site.url}}/chapter-4-entering-the-third-dimension.html), we're
+drawing our first three-dimensional geometry.
+
+You can find the source code for the samples in this chapter
+[here.](https://github.com/openglbook/openglbook-samples/tree/master/chapter-3)

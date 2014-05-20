@@ -624,7 +624,7 @@ are in normalized device space, OpenGL is ready to use these points for
 rasterization.
 
 <div class="FYI">
-  <strong>Geometrical Concepts</strong>
+  <strong>FYI: Geometrical Concepts</strong>
   <p>
     When we speak of the viewing frustum and the normalized device coordinates
     cube, it’s important to note that we don’t generate actual geometry for
@@ -662,9 +662,9 @@ implementation details.
 
 Now that you have a basic knowledge of transformations, let’s apply them and
 draw a rotating cube to the screen. Once again, the program that we created in
-chapter one serves as the basis for this exercise, so copy `Chapter1.c` (or
-`Chapter1.3.c` if you’re getting it from the source code repository) to a new
-file called `Chapter4.1.c`.
+chapter one serves as the basis for this exercise, so copy `chapter.1.c` (or
+`chapter.1.3.c` if you’re getting it from the source code repository) to a new
+file called `chapter.4.1.c`.
 
 First, remove all of the `#include` directives from the file, and replace them
 with a single `#include` to `Utils.h`:
@@ -1106,3 +1106,6 @@ Until the next chapter is ready, try the following exercises:
 through keyboard input (see chapter 3 for FreeGLUT keyboard input), copied to
 the GPU each time `DrawCube` executes.
 * Work out how to draw multiple cubes onto the screen.
+
+You can find the source code for the samples in this chapter
+[here.](https://github.com/openglbook/openglbook-samples/tree/master/chapter-4)
