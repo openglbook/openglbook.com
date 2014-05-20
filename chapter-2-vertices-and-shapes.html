@@ -88,7 +88,7 @@
                       </a>
                     </li>
                     <li>
-                      <a href="#">Code Issues (bugs, etc.)</a>
+                      <a href="https://github.com/openglbook/openglbook-samples/issues">Code Issues (bugs, etc.)</a>
                     </li>
                   </ul>
                 </li>
@@ -130,8 +130,8 @@ learning:</p>
 <h1>Buffer Objects</h1>
 
 <p>The program that we created in the first chapter will serve as the basis for the
-code in this chapter, so simply <strong>copy</strong> the file <code>Chapter1.c</code> to a new file
-called <code>Chapter2.1.c</code>, open it up in your editor, and let&#39;s get started.</p>
+code in this chapter, so simply <strong>copy</strong> the file <code>chapter.1.c</code> to a new file
+called <code>chapter.2.1.c</code>, open it up in your editor, and let&#39;s get started.</p>
 
 <p>All solid geometry in OpenGL is composed of triangles, so it is only natural
 that the first object we draw is a triangle. As in the first chapter, if you
@@ -753,7 +753,7 @@ building blocks for constructing the rectangle.</p>
 <h2>Using GL_TRIANGLES</h2>
 
 <p>Much like in our first exercise, this sample uses triangles to construct
-geometry. Create a copy of <code>Chapter2.1.c</code>, name it <code>Chapter2.2.c</code> and open it
+geometry. Create a copy of <code>chapter.2.1.c</code>, name it <code>chapter.2.2.c</code> and open it
 up. let&#39;s make some changes to our program in order to draw our rectangle:</p>
 
 <p>Change the <code>Vertices</code> array in <code>CreateVBO</code> to contain six total vertices, making
@@ -802,7 +802,7 @@ ours are.</p>
 
 <h2>Using GL_TRIANGLE_STRIP</h2>
 
-<p>Create a copy of <code>Chapter2.1.c</code> named <code>Chapter2.3.c</code> and open it up for editing.
+<p>Create a copy of <code>chapter.2.1.c</code> named <code>chapter.2.3.c</code> and open it up for editing.
 Change the <code>Vertices</code> array in the <code>CreateVBO</code> function to contain the following
 four vertices:</p>
 
@@ -855,7 +855,7 @@ requires the creation of an entirely new triangle. </p>
 <p>The aim of this section is to show you how you can upload your own custom data
 structures to the GPU’s memory and still access its data correctly.</p>
 
-<p>Create a copy of <code>Chapter2.1.c</code> named <code>Chapter2.4.c</code>, and open it up in your
+<p>Create a copy of <code>chapter.2.1.c</code> named <code>chapter.2.4.c</code>, and open it up in your
 editor. Add the following structure definition right below the
 <code>WINDOW_TITLE_PREFIX</code> definition:</p>
 
@@ -930,6 +930,9 @@ importantly, the format of the data changed significantly.</p>
 chapter, including how to construct basic geometry using buffer objects.</p>
 
 <p>Now that we have a basic understanding of buffers, shapes, and vertices, it&#39;s time to expand on our knowledge with array indices in the <a href="/chapter-3-index-buffer-objects-and-primitive-types.html">next chapter</a>.</p>
+
+<p>You can find the source code for the samples in this chapter
+<a href="https://github.com/openglbook/openglbook-samples/tree/master/chapter-2">here.</a></p>
 
 
 

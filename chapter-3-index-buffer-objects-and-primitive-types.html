@@ -88,7 +88,7 @@
                       </a>
                     </li>
                     <li>
-                      <a href="#">Code Issues (bugs, etc.)</a>
+                      <a href="https://github.com/openglbook/openglbook-samples/issues">Code Issues (bugs, etc.)</a>
                     </li>
                   </ul>
                 </li>
@@ -152,7 +152,7 @@ spoke’s vertices (marked by P<sup>n</sup>) a different color:</p>
 individual triangles composed of 48 vertices in total using the <code>GL_TRIANGLES</code>
 primitive type since we describe each triangle separately. This means that each
 set of three vertices in your array describes a single independent triangle. You
-can see an example of this in file <code>Chapter3.0.1.c</code> in the download section at
+can see an example of this in file <code>chapter.3.0.1.c</code> in the download section at
 the end of this chapter.</p>
 
 <p>In this example, P<sup>0</sup> (origin) is duplicated 8 times in total, the
@@ -196,8 +196,8 @@ uploading a completely new batch of data.</p>
 <p>So far, we’ve been drawing our geometry with a call to <code>glDrawArrays</code>, which
 simply draws a certain subset of elements from the currently active vertex
 buffer object. Let’s explore a new way of drawing by walking through some new
-code. Make a copy of <code>Chapter2.4.c</code> from the previous chapter and name it
-<code>Chapter3.1.c</code>.</p>
+code. Make a copy of <code>chapter.2.4.c</code> from the previous chapter and name it
+<code>chapter.3.1.c</code>.</p>
 
 <p>Since we’re in chapter two of the book, change the <code>WINDOW_TITLE_PREFIX</code>
 pre-processor definition to reflect Chapter 3.</p>
@@ -341,7 +341,7 @@ following:</p>
 render, in which case it is possible to swap the active index buffer by simply
 changing the buffer bound to the <code>GL_ELEMENT_ARRAY_BUFFER</code> target.</p>
 
-<p>Make a copy of <code>Chapter3.1.c</code> rename it to <code>Chapter3.2.c</code> and open it up in your
+<p>Make a copy of <code>chapter.3.1.c</code> rename it to <code>chapter.3.2.c</code> and open it up in your
 editor. The first thing we do is change the block of global <code>GLuint</code> variable
 definitions to look like this:</p>
 
@@ -454,7 +454,7 @@ different way. In this section, we’ll discuss a few more.</p>
 <p>The first and simplest primitive type is <code>GL_POINTS</code>, where each vertex
 specifies a visible point in space. When using <code>GL_POINTS</code>, OpenGL will draw
 simple points onto the screen. For example, change the <code>glDrawElements</code> in
-<code>Chapter3.1.c</code> to use <code>GL_POINTS</code> instead of <code>GL_TRIANGLES</code>, and each vertex
+<code>chapter.3.1.c</code> to use <code>GL_POINTS</code> instead of <code>GL_TRIANGLES</code>, and each vertex
 will show up as a colored one-pixel point.</p>
 
 <p>You can change the point-size with the function <code>glPointSize</code>, which simply
@@ -469,7 +469,7 @@ each new vertex adds to the overall line instead of defining a brand new line
 every two vertices.</p>
 
 <p>To try this primitive type, add one more index to 0 at the very end of the index
-array named <code>Indices</code> in <code>Chapter3.1.c</code>, and change the call to <code>glDrawElements</code>
+array named <code>Indices</code> in <code>chapter.3.1.c</code>, and change the call to <code>glDrawElements</code>
 to the following:</p>
 
 <script src="https://gist.github.com/11241702.js"> </script>
@@ -489,7 +489,7 @@ vertex and the first. Whereas we added one more index to <code>Indices</code> fo
 <p><code>GL_LINES</code> is to lines what <code>GL_TRIANGLES</code> is to triangles, meaning that
 <code>GL_LINES</code> describes separate, unconnected lines. However, since a line consists
 of two points instead of the three required by a triangle, changing the sample
-in <code>Chapter3.1.c</code> does not yield a desired result. We would have to modify the
+in <code>chapter.3.1.c</code> does not yield a desired result. We would have to modify the
 index array extensively in order to get the correct results.</p>
 
 <h2>GL_TRIANGLE_FAN</h2>
@@ -548,7 +548,12 @@ to use index buffers more natural.</p>
 
 <p>In upcoming chapters, index buffers are the primary method to describe geometry,
 so try to get familiar with this chapter and modify the samples to draw some
-geometry of your own.</p>
+geometry of your own. In the
+<a href="/chapter-4-entering-the-third-dimension.html">next chapter</a>, we&#39;re
+drawing our first three-dimensional geometry.</p>
+
+<p>You can find the source code for the samples in this chapter
+<a href="https://github.com/openglbook/openglbook-samples/tree/master/chapter-3">here.</a></p>
 
 
 
