@@ -1,0 +1,31 @@
+---
+layout: post
+title: JavaScript OpenGL Function Linker
+authors:
+  - email: eddyluten@gmail.com
+    name: Eddy Luten
+---
+<p>
+	If anyone is interested, here's a little jQuery/JavaScript function that replaces all OpenGL function names in your HTML document with a highlighted, clickable JavaScript link to the appropriate OpenGL manual page.
+</p>
+<!--more-->
+<p>
+	For example, any OpenGL function name anywhere inside of an HTML &lt;p&gt; element will transform, simply include the javascript file:
+</p>
+<pre>&lt;script type=&quot;text/javascript&quot; src=&quot;jsglhl.js&quot;&gt;&lt;/script&gt;</pre>
+<p>
+	And call the following function somewhere after the document has loaded (if you use jQuery, use <code>$(document).ready()</code>).
+</p>
+<pre>LinkOpenGLManPages();</pre>
+<p>
+	And your OpenGL function names will transform:
+</p>
+<p>
+	glDrawElements - as normal style paragraph text<br />
+	<code>glVertexAttrib</code> - inside of a &lt;code&gt; element<br />
+	<strong>glViewport</strong> - inside of a &lt;strong&gt; element
+</p>
+<p>
+	For more examples, see <a href="{{site.url}}/chapter-2-vertices-and-shapes.html">Chapter 2</a>. It's licensed under the <a href="http://en.wikipedia.org/wiki/MIT_License" target="_blank">MIT license</a>, so you can do with it whatever you want:<br />
+	<strong><a href="/scripts/jsglhl.js">Download</a></strong>
+</p>

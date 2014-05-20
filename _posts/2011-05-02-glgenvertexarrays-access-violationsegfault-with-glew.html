@@ -1,0 +1,23 @@
+---
+layout: post
+title: glGenVertexArrays Access Violation/segfault with GLEW
+authors:
+  - email: eddyluten@gmail.com
+    name: Eddy Luten
+---
+<p>
+	<img
+		title="Access Violation"
+		src="{{site.url}}/images/Access-Violation.png"
+		alt="Access Violation"
+		class="right"
+	/>
+	If you've been copying the code from the chapters, you may run into trouble when your program hits the <code>glGenVertexArrays</code> function in the form of an Access Violation/segfault.
+</p>
+<p>
+	To fix this, add the following statement right above your call to <code>glewInit</code>:
+</p>
+<pre>glewExperimental = GL_TRUE;</pre>
+<p>
+	There seems to be some trouble with GLEW not entirely supporting the Core Profile out of the box, but the above fix should get you by for the time being.
+</p>

@@ -1,0 +1,30 @@
+---
+layout: post
+title: ! 'Chapter 4: Entering the Third Dimension Released'
+authors:
+  - email: eddyluten@gmail.com
+    name: Eddy Luten
+---
+<p>
+	An issue was brought up yesterday <a href="http://code.google.com/p/openglbook-samples/issues/detail?id=2" rel="nofollow">concerning a bug in Chapter 2</a>. If you change the layout input layout qualifiers in your GLSL shaders from that chapter to the following:
+</p>
+<pre>
+layout(location=18) in vec4 in_Position;
+layout(location=1) in vec4 in_Color;
+</pre>
+<p>
+	And update the calls to <code>glVertexAttribPointer</code> and <code>glEnableVertexAttribArray</code> accordingly, you will see nothing but a black screen <strong>on AMD hardware</strong>.
+</p>
+<p>
+	It turns out that this is a known bug, and <a ref="nofollow" href="http://www.opengl.org/discussion_boards/ubbthreads.php?ubb=showflat&Number=286280">someone on the OpenGL forums</a> encountered this last year, so this bug has existed for a while.
+</p>
+<p>
+	After contacting OpenGL bug-basher extraordinaire Christophe Riccio (who runs a great site at <a href="http://www.g-truc.net/" rel="nofollow">G-Truc.net</a>), he informed me that the only way to get this to work on AMD is to assign location 0, meaning that the following works:
+</p>
+<pre>
+layout(location=18) in vec4 in_Position;
+layout(location=0) in vec4 in_Color;
+</pre>
+<p>
+	So keep in mind when writing your programs to always occupy location 0 for something.
+</p>

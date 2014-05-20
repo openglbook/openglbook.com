@@ -1,0 +1,10 @@
+{% sorted_for page in site.pages sort_by:weight %}
+	{% if page.in_toc == true %}
+	<li>
+		<a href="{{ page.url }}">{{ page.title }}</a>
+		{% if include.show_about == 'true' %}
+		<br />{{ page.about }}
+		{% endif %}
+	</li>
+	{% endif %}
+{% endsorted_for %}

@@ -1,0 +1,331 @@
+---
+layout: post
+title: Setting up OpenGL, GLEW, and FreeGLUT in Visual C++
+authors:
+  - email: eddyluten@gmail.com
+    name: Eddy Luten
+---
+<p>
+	This post walks you through setting up OpenGL, GLEW, and FreeGLUT support in Visual C++ in order to compile the samples properly. My original thought was to put this in an appendix after all of the chapters were completed, but there's need for it now, so here's the extremely verbose step-by-step explanation:
+</p>
+<!--more-->
+<p>
+	I'm assuming that you have Visual Studio <strong>installed</strong> or at least Visual C++ Express, which you can get for free <a rel="nofollow" href="http://www.microsoft.com/express" target="_blank">right here</a>, and and install the Windows SDK as well if you get the Visual C++ Express version, which <a href="http://msdn.microsoft.com/en-us/windowsserver/bb980924.aspx" rel="nofollow" target="_blank">you can get here</a>.
+</p>
+
+<h2>Step 1: Get the Libraries</h2>
+<p>
+	1.) Download the binary version of FreeGLUT <a href="http://www.transmissionzero.co.uk/software/freeglut-devel/" rel="nofollow" target="_blank">from this website</a>, make sure the version you get it <strong>2.6.0 or higher</strong>.
+	<br />
+	2.) Download the latest binary version of GLEW <a href="http://glew.sourceforge.net/" rel="nofollow" target="_blank">from their site</a>, make sure to download the one labeled <strong>Windows 32-bit</strong>.
+</p>
+
+<h2>Step 2: Copy the Libraries</h2>
+<p>
+	Decompress the files you just downloaded and open up the folder for FreeGLUT:
+</p>
+<p>
+	<a href="{{site.url}}/images/step-1.png" target="_blank">
+		<img
+			src="{{site.url}}/images/step-1-300x188.png"
+			alt="step 1"
+			title="step 1"
+			class="center"
+		/>
+	</a>
+</p>
+<p>
+
+	Open up another explorer window, and type <strong>%PROGRAMFILES%</strong> in the address bar, or <strong>%PROGRAMFILES(X86)%</strong> only if you're on a 64-bit system. Find the sub folder <strong>Microsoft SDKs\Windows\(highest version)</strong>:
+</p>
+<p>
+	<a href="{{site.url}}/images/step-2.png" target="_blank">
+		<img
+			src="{{site.url}}/images/step-2-300x188.png"
+			alt="step 2"
+			title="step 2"
+			class="center"
+		/>
+	</a>
+</p>
+<p>
+	Copy the contents from FreeGLUT's <strong>lib</strong> folder into the Windows SDK's <strong>Lib</strong> folder.
+	<br />
+	Copy the contents from FreeGLUT's <strong>include\GL</strong> folder into the Windows SDK's <strong>Include\gl</strong> folder.
+</p>
+<p>
+
+	Now, in the Explorer window currently pointed to FreeGLUT's location, navigate to the location where you extracted GLEW:
+</p>
+<p>
+	<a href="{{site.url}}/images/step-3.png" target="_blank">
+		<img
+			src="{{site.url}}/images/step-3-300x188.png"
+			alt="step 3"
+			title="step 3"
+			class="center"
+		/>
+	</a>
+</p>
+<p>
+	Copy the contents from GLEW's <strong>lib</strong> folder into the Windows SDK's <strong>Lib</strong> folder.
+	<br />
+	Copy the contents from GLEW's <strong>include\GL</strong> folder into the Windows SDK's <strong>Include\gl</strong> folder.
+</p>
+
+<h2>Step 3: Creating the Project</h2>
+<p>
+	The next step is to set up the Visual C++ project, so start up Visual C++ Express or Visual Studio and in the menu bar, go to <strong>File -> New -> Project...</strong>, and click on the Visual C++ heading:
+</p>
+<p>
+	<a href="{{site.url}}/images/step-4.png" target="_blank">
+		<img
+			src="{{site.url}}/images/step-4-300x207.png"
+			alt="step 4"
+			title="step 4"
+			class="center"
+		/>
+	</a>
+</p>
+<p>
+	Make sure you have the <strong>Win32 Console Application</strong> option selected, type in a name for the project, and click on the <strong>OK</strong> button, and the following screen should appear:
+</p>
+<p>
+	<a href="{{site.url}}/images/step-5.png" target="_blank">
+		<img
+			src="{{site.url}}/images/step-5-300x253.png"
+			alt="step 5"
+			title="step 5"
+			class="center"
+		/>
+	</a>
+</p>
+<p>
+	Click on next, but do not click the <strong>Finish</strong> button until you have checked the <strong>Empty Project</strong> check-box and your options look <strong>exactly</strong> like this:
+</p>
+<p>
+	<a href="{{site.url}}/images/step-7.png" target="_blank">
+		<img
+			src="{{site.url}}/images/step-7-300x253.png"
+			alt="step 7"
+			title="step 7"
+			class="center"
+		/>
+	</a>
+</p>
+
+<h2>Step 4: Adding a Source File</h2>
+<p>
+	Now that you have an empty project set up, we need to add a source file, which we'll name <strong>main.c</strong> for this tutorial. Right-click on the project, navigate to <strong>Add</strong> and click on <strong>New Item...</strong>:
+</p>
+<p>
+	<a href="{{site.url}}/images/step-8.png" target="_blank">
+		<img
+			src="{{site.url}}/images/step-8-300x148.png"
+			alt="step 8"
+			title="step 8"
+			class="center"
+		/>
+	</a>
+</p>
+<p>
+	From the list, pick the option <strong>C++ File (.cpp)</strong>, and change its Name to <strong>main.c</strong> (notice the change from .cpp to c):
+</p>
+<p>
+	<a href="{{site.url}}/images/step-9.png" target="_blank">
+		<img
+			src="{{site.url}}/images/step-9-300x207.png"
+			alt="step 9"
+			title="step 9"
+			class="center"
+		/>
+	</a>
+</p>
+<p>
+	It's important to have this file in your project before you enter the settings screen since certain settings would not appear on the screen without at least one source file available. After you click the <strong>Add</strong> button, the new file should show up in your Solution Explorer and open up in the text editor:
+</p>
+<p>
+	<a href="{{site.url}}/images/step-10.png" target="_blank">
+		<img
+			src="{{site.url}}/images/step-10-300x227.png"
+			alt="step 10"
+			title="step 10"
+			class="center"
+		/>
+	</a>
+</p>
+<h2>Step 5: Project Settings (Compiler)</h2>
+<p>
+	Right click on your project in the solution explorer again, and click on <strong>Properties</strong> in the context menu:
+</p>
+<p>
+	<a href="{{site.url}}/images/step-11.png" target="_blank">
+		<img
+			src="{{site.url}}/images/step-11-233x300.png"
+			alt="step 11"
+			title="step 11"
+			class="center"
+		/>
+	</a>
+</p>
+<p>
+	IMPORTANT: Make sure that before setting any settings to set the <strong>Configuration</strong> drop-down to <strong>All Configurations</strong>:
+</p>
+<p>
+	<a href="{{site.url}}/images/step-12.png" target="_blank">
+		<img
+			src="{{site.url}}/images/step-12.png"
+			alt="step 12"
+			title="step 12"
+			class="center"
+		/>
+	</a>
+</p>
+<p>
+	The first change we're going to make is in the <strong>General</strong> property page under the <strong>Configuration Properties</strong> heading. in the property page, change the <strong>Character Set</strong> option under <strong>Project Defaults</strong> to <strong>Not Set</strong> (see highlighted screenshot):
+</p>
+<p>
+	<a href="{{site.url}}/images/step-13.png" target="_blank">
+		<img
+			src="{{site.url}}/images/step-13-300x211.png"
+			alt="step 13"
+			title="step 13"
+			class="center"
+		/>
+	</a>
+</p>
+<p>
+	Next, go to the <strong>C/C++</strong> property page, click on the <strong>General</strong> sub-page and change the <strong>Warning Level</strong> setting to <strong>Level4 (/W4)</strong>, and the <strong>Treat Warnings As Errors</strong> setting to <strong>Yes (/WX)</strong> (see highlighted screenshot):
+</p>
+<p>
+	<a href="{{site.url}}/images/step-14.png" target="_blank">
+		<img
+			src="{{site.url}}/images/step-14-300x211.png"
+			alt="step 14"
+			title="step 14"
+			class="center"
+		/>
+	</a>
+</p>
+<p>
+	Next, go to the <strong>Preprocessor</strong> sub-page, expand the drop-down list next to the <strong>Preprocessor Definitions</strong> option, and click on <strong>Edit...</strong>. In the screen that comes up, insert a new line at the top of the options list, and add <strong>_CRT_SECURE_NO_WARNINGS</strong> so that your list looks like this:
+</p>
+<p>
+	<a href="{{site.url}}/images/step-15.png" target="_blank">
+		<img
+			src="{{site.url}}/images/step-15.png"
+			alt="step 15"
+			title="step 15"
+			class="center"
+		/>
+	</a>
+</p>
+<p>
+	IMPORTANT: Click on the <strong>OK</strong> button, and go to the <strong>Advanced</strong> sub-page. Change the <strong>Compile As</strong> option to <strong>Compile as C Code (/TC)</strong> (see highlighted screenshot):
+</p>
+<p>
+	<a href="{{site.url}}/images/step-16.png" target="_blank">
+		<img
+			src="{{site.url}}/images/step-16-300x211.png"
+			alt="step 16"
+			title="step 16"
+			class="center"
+		/>
+	</a>
+</p>
+<h2>Step 6: Project Settings (Linker)</h2>
+<p>
+	Go to the <strong>Linker</strong> property page, and click on the <strong>Input</strong> sub-page. Expand the drop-down list next to the <strong>Additional Dependencies</strong> option and click on <strong>Edit...</strong>. In the window, add <strong>glew32.lib</strong> followed by a newline, and <strong>freeglut.lib</strong> so that your list looks like this:
+</p>
+<p>
+	<a href="{{site.url}}/images/step-17.png" target="_blank">
+		<img
+			src="{{site.url}}/images/step-17.png"
+			alt="step 17"
+			title="step 17"
+			class="center"
+		/>
+	</a>
+</p>
+<p>
+	Click on the <strong>OK</strong> button, and when you're back at the settings screen, click on the <strong>OK</strong> button as well to save your settings.
+</p>
+<h2>Step 7: Compiling/Running the Project</h2>
+<p>
+	Now it's time to test your setup, so grab some source code from one of the chapters (I suggest chapter 1 for simplicity) and paste it into <strong>main.c</strong>:
+</p>
+<p>
+	<a href="{{site.url}}/images/step-18.png" target="_blank">
+		<img
+			src="{{site.url}}/images/step-18-300x227.png"
+			alt="step 18"
+			title="step 18"
+			class="center"
+		/>
+	</a>
+</p>
+<p>
+	Go to the main menu, click on <strong>Build</strong>, click on <strong>Build Solution</strong> and your build should succeed without any warnings or errors:
+</p>
+<p>
+	<a href="{{site.url}}/images/step-19.png" target="_blank">
+		<img
+			src="{{site.url}}/images/step-19.png"
+			alt="step 19"
+			title="step 19"
+			class="center"
+		/>
+	</a>
+</p>
+<p>
+	The next step is not to debug, but to copy some extra files into your project's output folder. So open up an explorer window, and point it to the location of your project output, which at this point should be the <strong>Debug</strong> folder in the solution's root folder. You should see something similar to this:
+</p>
+<p>
+	<a href="{{site.url}}/images/step-20.png" target="_blank">
+		<img
+			src="{{site.url}}/images/step-20-300x188.png"
+			alt="step 20"
+			title="step 20"
+			class="center"
+		/>
+	</a>
+</p>
+<p>
+	Open another Explorer window to the location where you extracted GLEW, and copy <strong>glew32.dll</strong> from the <strong>bin</strong> folder into the output folder of your project. Now, navigate the explorer window to the location where you extracted FreeGLUT, and copy <strong>freeglut.dll</strong> from that folder to the output folder of your project, which should now look like this:
+</p>
+<p>
+	<a href="{{site.url}}/images/step-21.png" target="_blank">
+		<img
+			src="{{site.url}}/images/step-21-300x188.png"
+			alt="step 21"
+			title="step 21"
+			class="center"
+		/>
+	</a>
+</p>
+<p>
+	You should now be able to compile, debug, and run your program without warnings and errors:
+</p>
+<p>
+	<a href="{{site.url}}/images/step-22.png" target="_blank">
+		<img
+			src="{{site.url}}/images/step-22-300x227.png"
+			alt="step 22"
+			title="step 22"
+			class="center"
+		/>
+	</a>
+</p>
+<h2>Final Thoughts</h2>
+<p>
+	This is of course one of many ways of setting up a project, but should point you in the right direction.
+</p>
+<p>
+	One thing that I like to do for certain projects is include the DLLs as part of my solution in a Solution Folder, and copy them after a successful build with a custom Post-Build step.
+</p>
+<p>
+	A cleaner way that doesn't require copying the libraries is to compile the libraries yourself and include them in your Solution as a Visual C++ static library project and set your OpenGL projects to depend on the output (build order). It increases the size of your solution, but being able to tweak source code and control what's inside a compiled binary is priceless.
+</p>
+<p>
+	If you have remarks, questions, or concerns, post them in the comment section below.
+</p>

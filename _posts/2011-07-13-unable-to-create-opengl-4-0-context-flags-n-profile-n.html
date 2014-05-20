@@ -1,0 +1,20 @@
+---
+layout: post
+title: Unable to create OpenGL 4.0 context (flags m, profile n)
+authors:
+  - email: eddyluten@gmail.com
+    name: Eddy Luten
+---
+<p>
+	If you're getting the message <code>Unable to create OpenGL 4.0 context (flags m, profile n)</code> when creating your context (where m and n are numbers) your hardware <strong>does not support OpenGL 4.0</strong>.
+</p>
+<p>
+	Sadly, this is not something you can fix without upgrading your hardware. As mentioned in the Preface, the minimum graphics hardware you need for an OpenGL 4.0 context is:
+</p>
+<ul>
+	<li>If you own an NVIDIA GPU, it must at least be in the Fermi family of products, starting with the GeForce GTX 400 series.</li>
+	<li>If you own an AMD/ATI GPU, it must at least be in the Radeon HD 5000 series.</li>
+</ul>
+<p>
+	It is possible to run many of the samples using OpenGL 3.3 by using the code files found in the "OpenGL 3.3" directories of each chapters' source code listings. However, OpenGL 4.0+ core features will not work in OpenGL 3.3.
+</p>

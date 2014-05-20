@@ -1,0 +1,8 @@
+name: OpenGLBook.com
+markdown: redcarpet
+relative_permalinks: true
+permalink: /blog/:title
+highlighter: pygments
+paginate: 5
+paginate_path: "blog/page:num"
+exclude: [LICENSE.md]

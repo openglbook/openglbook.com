@@ -1,0 +1,16 @@
+---
+layout: post
+title: Why OpenGL 4.0?
+authors:
+  - email: eddyluten@gmail.com
+    name: Eddy Luten
+---
+<p>
+	The contents on OpenGLBook.com have been written <em>explicitly</em> with OpenGL 4.0 in mind. Just in case you were wondering why, here's the rationale.
+</p>
+<p>
+	The main reason <strong>not</strong> to go with OpenGL &le; 3.1 was the fixed functionality that was still part of the specification. With the introduction of core and compatibility profiles, we're able to use a more pure and programmable API devoid of the CPU-intensive immediate mode operations. OpenGL 4.0 also exposes modern hardware features (tessellation, geometry shaders), which we'll explore in distant future chapters.
+</p>
+<p>
+	The downside of using the programmable pipeline is since we lose immediate mode functionality, we have to rewrite several functions from scratch. Functions such as <code>gluLookAt</code> and <code>gluPerspective</code> are no longer available to us, so we have to implement them ourselves. In the next couple of chapters, we will define some of that mathematical functionality using C, with full explanations of the mathematical operations provided.
+</p>
