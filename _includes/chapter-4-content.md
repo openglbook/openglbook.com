@@ -8,17 +8,17 @@ Chapter 4: Entering the Third Dimension
   class="right"
 />
 
-If you’re learning OpenGL, it’s very likely you’re doing so to learn how to
-render three-dimensional data. In this chapter, we’ll be placing our very first
-step in the world of three-dimensional computer graphics. We’ll learn:
+If you're learning OpenGL, it's very likely you're doing so to learn how to
+render three-dimensional data. In this chapter, we'll be placing our very first
+step in the world of three-dimensional computer graphics. We'll learn:
 
 * The mathematics used to describe transformations in a three-dimensional world
 * What coordinate systems are good for and how to use them
-* What polygon culling is and why it’s used
+* What polygon culling is and why it's used
 * How to render a rotating colored cube to the screen
 * Some new OpenGL function calls
 
-As mentioned in the preface, you’ll need some mathematical knowledge in order to
+As mentioned in the preface, you'll need some mathematical knowledge in order to
 understand some of the concepts presented, preferably knowledge of linear
 algebra. The mathematics in this chapter is as lightweight as possible without
 sacrificing the integrity of the presented concept.
@@ -34,7 +34,7 @@ sacrificing the integrity of the presented concept.
 </div>
 
 # Utilities #
-We use many of the functions from this chapter in the rest of the book, so let’s
+We use many of the functions from this chapter in the rest of the book, so let's
 create a few files that we can carry over from chapter to chapter. Please note
 that all of the functionality in this book is for demonstration purposes, and
 not optimized for performance. The functions provided here are verbose by design
@@ -42,7 +42,7 @@ so that the flow of the code is easy to understand.
 
 If you are looking for a professional-grade 3D mathematics library, you can find
 several excellent open source C++ libraries on the Internet or roll your own
-using high performance code. However, for this book, we’re going to create a
+using high performance code. However, for this book, we're going to create a
 file called `Utils.h`, and add the following lines:
 
 <!--- 4.1 -->
@@ -54,16 +54,16 @@ Now create a second file named `Utils.c` and insert the following lines:
 {% gist EddyLuten/11242940 %}
 
 # Step-By-Step: Mathematics #
-If you’re unfamiliar with the basics of linear algebra, much of the code in the
+If you're unfamiliar with the basics of linear algebra, much of the code in the
 listing from the previous section will seem like gibberish, and the rest of this
 chapter may be hard to follow. A few resources for learning linear algebra are
-listed in the chapter's conclusion. In the next sections, we’ll explore what
+listed in the chapter's conclusion. In the next sections, we'll explore what
 matrices are at a glance, how to use them in three-dimensional computer
-graphics, and how they are used in the code you’ve just copied.
+graphics, and how they are used in the code you've just copied.
 
 You may ask yourself "how important is it to know all these calculations by
 heart?" For most of computer graphics, it is okay just to know the applications
-of the calculations since you’d store them in reusable functions. However, for 
+of the calculations since you'd store them in reusable functions. However, for 
 complex computation, you would have to come up with calculations of your own
 using matrices, transformations, and other linear algebra.
 
@@ -73,7 +73,7 @@ composed of *m* row vectors and *n* column vectors. We use
 matrices to describe transformations from one coordinate space to another, such
 as rotation, scaling, translation, etc. In our programs, we use one type of
 matrix, namely the 4x4 square matrix (a matrix is square when *n* =
-*m*). Let’s look at our 4x4 matrix **M**:
+*m*). Let's look at our 4x4 matrix **M**:
 
 <span>
 \\(
@@ -105,8 +105,8 @@ horizontal columns that make up the matrix:
 \\)
 </span>
 
-The first three column vectors contain the x-, y-, and z-axes’ transformations
-respectively, while the last column vector contains the translation, which we’ll
+The first three column vectors contain the x-, y-, and z-axes' transformations
+respectively, while the last column vector contains the translation, which we'll
 explore further below.
 
 In our programs, we represent matrices with the structure `Matrix`, which
@@ -117,13 +117,13 @@ structure.
 ## Matrix Multiplication ##
 
 Before we continue with the explanation of how these transformations work, make
-sure that you fully understand matrix multiplication since we’ll use it many
+sure that you fully understand matrix multiplication since we'll use it many
 times in this chapter by using the `MultiplyMatrices` function from the files
-that we’ve just created. Matrix multiplication is very important since it allows
+that we've just created. Matrix multiplication is very important since it allows
 us to transform points from one coordinate system to another.
 
-To understand how matrix multiplication works, let’s take the following 2x2
-matrices for simplicity’s sake, which we’ll name **A** and **B**:
+To understand how matrix multiplication works, let's take the following 2x2
+matrices for simplicity's sake, which we'll name **A** and **B**:
 
 <div>
 \(
@@ -141,12 +141,12 @@ matrices for simplicity’s sake, which we’ll name **A** and **B**:
 \)
 </div>
 
-In order to get the product of **A** and **B**, which we’ll name matrix **C**,
-we’ll have to multiply each row vector in matrix **A** with each column vector
+In order to get the product of **A** and **B**, which we'll name matrix **C**,
+we'll have to multiply each row vector in matrix **A** with each column vector
 in matrix **B**.
 
 This means that if we wish to find the value to go into <span>\\(C_{11}\\)</span>,
-we’ll have to perform the following calculation:
+we'll have to perform the following calculation:
 
 <div>
 \(C_{11} = A_{11}B_{11} + A_{12}B_{21} = 1\cdot5 + 2\cdot7 = 5+14 = 19\)
@@ -204,14 +204,14 @@ visually distinguishable by a line of number ones along its **main diagonal**
 (which runs from top left to bottom right), whereas the rest of the matrix
 contains zeroes.
 
-Another way of looking at an identity matrix is by the fact that it’s composed
+Another way of looking at an identity matrix is by the fact that it's composed
 of unit vectors. The column vector for x points in the x-direction, the column
 vector for y in the y-direction, the column vector for z in the z-direction, and
 the column vector used for translation set to zero for no translation.
 
 Our own identity matrix is stored in the `IDENTITY_MATRIX` constant, defined in
 the `Utils.h` file. If you browse through some of the functions in `Utils.c`,
-you’ll notice that we use an identity matrix for almost every transformation.
+you'll notice that we use an identity matrix for almost every transformation.
 
 ## Transformations ##
 
@@ -224,7 +224,7 @@ and projective transformations.
 
 **Affine transformations** allow us to translate, rotate, scale, or shear our
 points in space relative to an origin using matrices. Most affine
-transformations do no alter the physical properties of an object, meaning that
+transformations do not alter the physical properties of an object, meaning that
 the distances from one point to another do no change.
 
 **Projective transformations** on the other hand, transform points in order to
@@ -234,41 +234,41 @@ perspective projection matrix, which we will explore further on in this chapter.
 
 ### Transformation Pipeline ###
 
-Before we continue describing the various transformations in `Utils.h`, there’s
+Before we continue describing the various transformations in `Utils.h`, there's
 the important subject of coordinate systems. As you know, a coordinate system is
 a method used to describe the position of a point within a space, which in our
 case is three-dimensional. In computer graphics, we use several coordinate
 systems to transform our point to a displayable entity in a process called the
-**transformation pipeline**, let’s take a quick look at each of its stages.
+**transformation pipeline**, let's take a quick look at each of its stages.
 
 #### Object Space ####
 
-The transformation pipeline starts in **object space**, which hosts an object’s
+The transformation pipeline starts in **object space**, which hosts an object's
 local coordinates, called **object coordinates**. These are the raw vertices
 provided by the modeling software, or as to relate it to the previous chapter,
 the points stored in the vertex buffer object.
 
 #### World Space ####
 
-To get the objects in a position relative to your world’s origin, we transform
+To get the objects in a position relative to your world's origin, we transform
 its vertices using a **modeling transform** to bring them into **world space**.
 There could be several more steps for objects positioned relative to each other,
 also called modeling transforms.
 
 #### Eye Space ####
 
-Now that the object’s position is relative to the world’s origin, the next step
-is the **view transform**, which positions the world relative to the viewer’s
-position, bringing the object into **eye space**. The viewer’s position is the
-camera’s position within the scene, but not the camera’s function.
+Now that the object's position is relative to the world's origin, the next step
+is the **view transform**, which positions the world relative to the viewer's
+position, bringing the object into **eye space**. The viewer's position is the
+camera's position within the scene, but not the camera's function.
 
 <div class="FYI">
   <strong>FYI: The Model-View Matrix Concept</strong>
   <p>
-    Often in code samples, you’ll notice something called a "model-view"
+    Often in code samples, you'll notice something called a "model-view"
     transformation as a single step. This is because when you multiply matrices,
     transforms combine into a single matrix. While this practice is not wrong,
-    and can actually save a tiny fraction of bandwidth, we don’t use
+    and can actually save a tiny fraction of bandwidth, we don't use
     "model-view" matrices in this book to maintain proper coordinate system
     terminologies and avoid confusion.
   </p>
@@ -301,7 +301,7 @@ screen.
 
 ### Translation Matrix ###
 
-To move (or translate) a point from its origin, we must use what’s called a
+To move (or translate) a point from its origin, we must use what's called a
 translation matrix. The translation matrix stores the magnitude of the
 translation for each of the three dimensions in the last column vector of the
 4x4 matrix:
@@ -322,7 +322,7 @@ the exception of its last column vector. Multiplying by this matrix preserves
 rotation as well as scaling since the top left part of the matrix, where scaling
 and rotation values are stored, contains a 3x3 identity matrix.
 
-Let’s see how translation works, by translating the following point, represented
+Let's see how translation works, by translating the following point, represented
 as a column vector, three units along the y-axis:
 
 <div>
@@ -380,7 +380,7 @@ a single point:
 \)
 </div>
 
-Notice how only the y-components of each column vector changes, since it’s the
+Notice how only the y-components of each column vector changes, since it's the
 only direction translated.
 
 The function that we use to translate matrices is `TranslateMatrix`, which takes
@@ -444,7 +444,7 @@ the matrix to scale, and x-, y-, and z-components that define the scaling vector
 
 ### Rotation ###
 To rotate, we use three separate matrices, each of which defines a rotation
-about the x-, y-, or z-axis, respectively. Let’s look at the matrix required to
+about the x-, y-, or z-axis, respectively. Let's look at the matrix required to
 rotate a point about its x-axis:
 
 <div>
@@ -458,7 +458,7 @@ R_{x}(\theta)=\begin{bmatrix}
 \)
 </div>
 
-If you look closely, you’ll notice that this transformation does not affect the
+If you look closely, you'll notice that this transformation does not affect the
 x-components of the column vectors or the x-column vector itself. This is
 because we rotate **about** an axis, visualized by rolling the axis of rotation
 between your fingers, so only the y- and z-vectors change direction:
@@ -561,15 +561,15 @@ in a pointer to the matrix to rotate as well as an angle of rotation in radians.
 
 ### Projection Matrices ###
 
-The last transformation we’ll discuss is very different from the previously
+The last transformation we'll discuss is very different from the previously
 mentioned ones. Its purpose is to *project* points onto a two-dimensional plane
 instead of transforming points in a three-dimensional world. Because of this
 behavior, we call this type of matrix a **projection matrix**. There are two
 major types of projections used in three-dimensional computer graphics, namely
 orthogonal projection and perspective projection.
 
-**Orthogonal projection** (also called parallel projection) doesn’t apply
-foreshortening to lines, meaning that lines don’t converge towards a point as
+**Orthogonal projection** (also called parallel projection) doesn't apply
+foreshortening to lines, meaning that lines don't converge towards a point as
 in real life. With orthogonal projection, parallel lines will remain parallel,
 and will never intersect. This type of transformation is very useful in
 three-dimensional modeling programs where many objects at various distances
@@ -592,7 +592,7 @@ plane
 * `near_plane`, which is the distance from the eye to the near plane
 * `far_plane`, which is the distance from the eye to the far plane
 
-If you’ve used OpenGL’s fixed functionality, you’ll probably recognize that
+If you've used OpenGL's fixed functionality, you'll probably recognize that
 this function is very similar to `gluPerspective`, and in fact,
 `CreateProjectionMatrix` mimics the behavior of this function exactly. We use
 this single matrix to convert the vertices from eye space to clip space as well
@@ -617,7 +617,7 @@ those points that fall within the viewing frustum, meaning that we clip the
 points that lie outside of the frustum.
 
 To obtain normalized device coordinates, we map the entire viewing frustum to
-an axis-aligned cube measuring 2x2x2 units, located at the world’s origin. This
+an axis-aligned cube measuring 2x2x2 units, located at the world's origin. This
 cube exists in order to facilitate the projection of the vertices onto the
 **projection plane** by OpenGL through parallel projection. After the vertices
 are in normalized device space, OpenGL is ready to use these points for
@@ -627,17 +627,17 @@ rasterization.
   <strong>FYI: Geometrical Concepts</strong>
   <p>
     When we speak of the viewing frustum and the normalized device coordinates
-    cube, it’s important to note that we don’t generate actual geometry for
+    cube, it's important to note that we don't generate actual geometry for
     these shapes. The planes of the frustum and the sides of the cube simply
     represent minimum and maximum boundaries for the vertices.
   </p>
 </div>
 
-In most cases, you don’t have to know the specifics of the projection matrix
+In most cases, you don't have to know the specifics of the projection matrix
 since the implementation rarely ever changes: simply define the code once and
 copy it into all of your projects. Until the OpenGL 3 version branch, the
 generation of the perspective projection matrix was part of OpenGL through the
-`glFrustum` function or GLU’s `gluPerspective`.
+`glFrustum` function or GLU's `gluPerspective`.
 
 To apply perspective projection transformations, we use the following matrix:
 
@@ -660,10 +660,10 @@ implementation details.
 
 # Drawing a Cube #
 
-Now that you have a basic knowledge of transformations, let’s apply them and
+Now that you have a basic knowledge of transformations, let's apply them and
 draw a rotating cube to the screen. Once again, the program that we created in
 chapter one serves as the basis for this exercise, so copy `chapter.1.c` (or
-`chapter.1.3.c` if you’re getting it from the source code repository) to a new
+`chapter.1.3.c` if you're getting it from the source code repository) to a new
 file called `chapter.4.1.c`.
 
 First, remove all of the `#include` directives from the file, and replace them
@@ -725,18 +725,18 @@ place the following function call:
 <!--- 4.12 -->
 {% gist EddyLuten/ca507a1e78286ea54762 %}
 
-We’ll be entering the following function definition piece by piece in logical
+We'll be entering the following function definition piece by piece in logical
 steps. First, create the following empty function definition:
 
 <!--- 4.13 -->
 {% gist EddyLuten/74fe2527c7f679fba05e %}
 
-At the first line of the function, insert the cube’s vertex definitions:
+At the first line of the function, insert the cube's vertex definitions:
 
 <!--- 4.14 -->
 {% gist EddyLuten/617687afdc71a3ee8102 %}
 
-Right after that, insert the cube’s index definitions:
+Right after that, insert the cube's index definitions:
 
 <!--- 4.15 -->
 {% gist EddyLuten/5d782e809d5df7d55401 %}
@@ -784,7 +784,7 @@ new function definition:
 <!--- 4.23 -->
 {% gist EddyLuten/e883d46cf87948e4c6e8 %}
 
-The last function we’ll define draws the cube to the screen. Insert the
+The last function we'll define draws the cube to the screen. Insert the
 following empty function definition immediately after the `DestroyCube`
 function definition:
 
@@ -837,28 +837,28 @@ screenshot:
 
 ## Step-By-Step ##
 
-There are many changes from the previous chapters in this chapter, so let’s look
+There are many changes from the previous chapters in this chapter, so let's look
 at what just happened. The first thing we did is the same we do for each
-chapter, which is to include files and change the window title’s prefix.
+chapter, which is to include files and change the window title's prefix.
 However, in this chapter, we replaced all of the `#include`s with a single
 include to `Utils.h`.
 
-Before we continue describing the code, let’s introduce a few new concepts.
+Before we continue describing the code, let's introduce a few new concepts.
 
 ### GLSL Uniforms ###
 
-In the previous chapters, we’ve learned that we can declare variables in our
-GLSL shaders, but haven’t actually imported any data besides our usual vertex
+In the previous chapters, we've learned that we can declare variables in our
+GLSL shaders, but haven't actually imported any data besides our usual vertex
 information. In this chapter, we need a way to transport our matrices to the
 vertex shader, and we do so by using so-called **uniforms**.
 
 Uniforms are global variables stored inside of the shader program, changeable
 at any time during the lifecycle of the shader program. Once a uniform is set,
-it doesn’t change and remains set until another value is set or the program
+it doesn't change and remains set until another value is set or the program
 ends.
 
 Uniforms can be any basic GLSL data type, in our case they are of type `mat4`,
-which represents 4x4 matrices. In a future chapter on shaders, we’ll discuss
+which represents 4x4 matrices. In a future chapter on shaders, we'll discuss
 more GLSL data types. 
 
 #### Retrieving Uniform Locations ####
@@ -870,7 +870,7 @@ their names by calling the OpenGL function `glGetUniformLocation`:
 <!--- 4.31 -->
 {% gist EddyLuten/e25a566c36319e3c50f7 %}
 
-* The program parameter takes in the shader program’s identifier as generated by
+* The program parameter takes in the shader program's identifier as generated by
 the call to glCreateProgram
 * The name parameter takes in the name of the uniform variable as defined in the
 GLSL source code as a regular character string
@@ -913,16 +913,16 @@ layout of the matrix:
 <!--- 4.34 -->
 {% gist EddyLuten/e074bef3945216fbce68 %}
 
-The matrix’s column vectors occupy contiguous memory, meaning that the x-column
+The matrix's column vectors occupy contiguous memory, meaning that the x-column
 vector occupies indices 0 through 3; the y-column vector occupies indices 4
 through 7, and so on.
 
-In our programs, we’ll be using a structure containing one of these arrays named
+In our programs, we'll be using a structure containing one of these arrays named
 Matrix, defined in the file `Utils.h`. All of our helper functions operate on
 this structure, not a raw array of floating point numbers.
 
 In this program, we store our matrices in three global variables named
-`ModelMatrix` for the cube’s local transformations, `ViewMatrix` for the
+`ModelMatrix` for the cube's local transformations, `ViewMatrix` for the
 camera/eye transformation, and `ProjectionMatrix` for our perspective projection
 transformation. These variables have the exact same names as the uniform
 variables in our vertex shader, described further on in this chapter.
@@ -981,9 +981,9 @@ display to the user if the program exits erroneously.
 #### Polygon Culling ####
 
 This next concept is very important from this chapter onwards. Whereas in
-previous chapters we didn’t care which way we constructed our vertices, with
+previous chapters we didn't care which way we constructed our vertices, with
 polygon culling, a method that reduces the amount of polygons to render, it
-becomes critical. For instance, if we didn’t specify polygon culling in this
+becomes critical. For instance, if we didn't specify polygon culling in this
 chapter, rendering also occurs on the insides of the cube, even though they are
 not visible.
 
@@ -996,7 +996,7 @@ with the `GL_FRONT` enumeration, the back-face of the polygon with `GL_BACK`, or
 both faces with `GL_FRONT_AND_BACK`. Yet, how do you determine which face is the
 front-face and which face is the back-face of a polygon?
 
-The answer is by defining in which direction a polygon’s vertices wind, either
+The answer is by defining in which direction a polygon's vertices wind, either
 clockwise or counterclockwise. Vertex winding defines the path OpenGL takes to
 complete the polygon, starting at the first vertex, then the second vertex, and
 so on until the polygon is closed. We specify this direction with a call to
@@ -1009,11 +1009,11 @@ enumeration, its opposite is `GL_CW` for clockwise winding vertices.
 After the OpenGL options are set, we initialize the matrices by setting them to
 the identity matrix. The view matrix, which describes the eye transformations,
 is translated two units into the negative z direction (backwards) so that the
-camera won’t intersect the cube.
+camera won't intersect the cube.
 
 ### Creating the Cube (`CreateCube`) ###
 
-We didn’t encounter any new concepts in the `CreateCube` function; we still
+We didn't encounter any new concepts in the `CreateCube` function; we still
 generate a bunch of buffers for vertex and index data and push them to the GPU.
 The only differences from the previous chapter are the retrieval of the shader
 uniforms described earlier and a new custom function named `LoadShader`.
@@ -1021,7 +1021,7 @@ uniforms described earlier and a new custom function named `LoadShader`.
 #### Loading Shaders from Files ####
 
 Previously, we hard-coded our GLSL shaders into our code as one giant constant
-string, from now on, we’ll use the `LoadShader` function to load them from text
+string, from now on, we'll use the `LoadShader` function to load them from text
 files instead, its prototype looks like this:
 
 <!--- 4.35 -->
@@ -1054,7 +1054,7 @@ calling `RotateAboutY`, followed by a call to `RotateAboutX`.
 
 Unlike in the previous chapters, we enable and disable the shader program as
 well as the VAO each draw call instead of just once to demonstrate how a scene
-with multiple objects is usually drawn. We’ll introduce multiple objects to our
+with multiple objects is usually drawn. We'll introduce multiple objects to our
 scene in a future chapter, although there is nothing special about it, and by
 now, you should be able to work out how to do this from the information
 presented throughout the chapters.
@@ -1090,7 +1090,7 @@ coordinates passed on to OpenGL.
 In this chapter, we rendered our first three-dimensional geometry onto the
 screen and learned about the basic transformations used in computer graphics.
 
-If you’re fuzzy on matrix mathematics or linear algebra in general, here are a
+If you're fuzzy on matrix mathematics or linear algebra in general, here are a
 few resources to get you up to speed since the topic is too broad to handle on
 this site:
 
