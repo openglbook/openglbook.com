@@ -376,7 +376,7 @@ update the `Initialize` function to look like the code below:
 With only a single function call, we have access to all of the functionality
 that OpenGL 4.0 provides.
 
-We already had the pre-processor include directive `#include <glew.h>` to get
+We already had the pre-processor include directive `#include <GL/glew.h>` to get
 access to all of GLEW’s function calls. If you browse through the `glew.h`
 file, you may notice that it replaces the normally used `gl.h` file. This is
 why we won't explicitly use the `gl.h` file provided by your compiler until a
