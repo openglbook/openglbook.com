@@ -639,8 +639,8 @@ types of objects would be represented in the new API. The proposed Object Model
 proposed a wonderful new method for creating objects through only a few
 function calls. Above all else, the methods used would be consistent for all
 types of objects through the use of templates. This meant that there would be
-no more discrepancies between vendors who would provide each provide their
-object creation functionality in a myriad of ways.
+no more discrepancies between vendors who would each provide their object
+creation functionality in a myriad of ways.
 
 Longs Peak would be an API compatible with the hardware of the time and
 preserve backwards compatibility with older versions of OpenGL, while Mt. Evans
