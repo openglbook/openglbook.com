@@ -444,7 +444,7 @@ and back buffers. At this line, your changes will be displayed to the screen
 and any new drawing will occur on what was previously the front buffer.</p>
 
 <p>In the following image, buffer B is used as the front buffer for displaying
-purposes, and buffer A is used as the front buffer for drawing purposes:</p>
+purposes, and buffer A is used as the back buffer for drawing purposes:</p>
 
 <p><img
   src="/images/4262_01_05.png"
@@ -484,7 +484,7 @@ update the <code>Initialize</code> function to look like the code below:</p>
 <p>With only a single function call, we have access to all of the functionality
 that OpenGL 4.0 provides.</p>
 
-<p>We already had the pre-processor include directive <code>#include &lt;glew.h&gt;</code> to get
+<p>We already had the pre-processor include directive <code>#include &lt;GL/glew.h&gt;</code> to get
 access to all of GLEW’s function calls. If you browse through the <code>glew.h</code>
 file, you may notice that it replaces the normally used <code>gl.h</code> file. This is
 why we won&#39;t explicitly use the <code>gl.h</code> file provided by your compiler until a

@@ -107,7 +107,7 @@
 
 <p>In the previous chapter we learned how easy it was to create a fully functional
 OpenGL 4.0 context by using FreeGLUT. However, this only gave us a blank window
-with an unused OpenGL context, so let’s put that context to good use by
+with an unused OpenGL context, so let&#39;s put that context to good use by
 learning:</p>
 
 <ul>
@@ -138,7 +138,7 @@ that the first object we draw is a triangle. As in the first chapter, if you
 don&#39;t understand everything while you&#39;re copying the code, <strong>don&#39;t worry</strong>,
 since we&#39;ll explore what happens in-depth in the next section.</p>
 
-<p>Since we’re in chapter two of the book, change the <code>WINDOW_TITLE_PREFIX</code>
+<p>Since we&#39;re in chapter two of the book, change the <code>WINDOW_TITLE_PREFIX</code>
 pre-processor definition to reflect Chapter 2.</p>
 
 <p>Add the following global variable declarations underneath the line containing
@@ -182,7 +182,7 @@ function call to <code>glClear</code>:</p>
 <script src="https://gist.github.com/11134375.js"> </script>
 
 <p>The next function is <code>CreateVBO</code>, which creates the buffer objects and defines
-the buffer’s contents. Add it right after the <code>CleanUp</code> function definition.</p>
+the buffer&#39;s contents. Add it right after the <code>CleanUp</code> function definition.</p>
 
 <script src="https://gist.github.com/11134421.js"> </script>
 
@@ -213,7 +213,7 @@ The output of your program should look like the following screenshot:</p>
 <h2>Step-By-Step</h2>
 
 <p>We&#39;ve added quite a bit of new code and many new OpenGL function calls that we
-haven&#39;t used before -- let’s explore exactly what we&#39;ve done.</p>
+haven&#39;t used before -- let&#39;s explore exactly what we&#39;ve done.</p>
 
 <p>The first thing we did was change the title of the window that we created by
 modifying the <code>WINDOW_TITLE_PREFIX</code> pre-processor definition, so no big change
@@ -233,7 +233,7 @@ software, the word &quot;shader&quot; is usually prevalent.</p>
 the graphics hardware. OpenGL expresses a shader program through a C-like
 programming language called the OpenGL Shading Language, or GLSL. In the code
 above, we&#39;ve already created two GLSL programs, one for per-vertex processing,
-and one for pre-fragment processing.</p>
+and one for per-fragment processing.</p>
 
 <p>A vertex shader operates on a per-vertex basis, modifying the vertex&#39;s
 attributes passed in. A fragment shader operates on a per-fragment, modifying
@@ -408,7 +408,7 @@ function and its two sister functions <code>glVertexAttribIPointer</code> and
 
 <p>Now we&#39;re getting to the core of the <code>CreateVBO</code> function and we start
 generating buffers by a call to <code>glGenBuffers</code>, which generates our buffers in
-the GPU’s memory. Here&#39;s its function prototype, retrieved from the OpenGL SDK
+the GPU&#39;s memory. Here&#39;s its function prototype, retrieved from the OpenGL SDK
 documentation:</p>
 
 <script src="https://gist.github.com/11134858.js"> </script>
@@ -427,7 +427,7 @@ a specific <em>target</em>.</p>
 <p>Buffers can be bound to several different targets, in our case
 <code>GL_ARRAY_BUFFER</code>, which signifies that the data provided contains vertex
 attributes. The target is bound to the buffer with a call to <code>glBindBuffer</code>,
-which takes the target type as its first parameter, and the buffer’s identifier
+which takes the target type as its first parameter, and the buffer&#39;s identifier
 (returned from <code>glGenBuffers</code>) as the second:</p>
 
 <script src="https://gist.github.com/11134882.js"> </script>
@@ -448,13 +448,12 @@ memory. This is achieved by making a call to <code>glBufferData</code>:</p>
 are copying data to the currently activated buffer with this target type, in our
 case the buffer identified by the value stored in <code>VboId</code>.</p>
 
-<p>The <code>size</code> parameter is set to our <code>Size</code> variable, previously initialized to
-contain the size in bytes of our <code>Vertices</code> array. As you can see from the
-function prototype above, the data is provided as a void pointer type through
-parameter <code>data</code>, which means that you can upload any data to the GPU’s memory
-as long as you can provide their size. In our case, this data are an array of
-floating point numbers, but it could easily be an array of bytes, or an array of
-integers for that matter.</p>
+<p>The <code>size</code> parameter is set to the size in bytes of our <code>Vertices</code> array. As you
+can see from the function prototype above, the data is provided as a void
+pointer type through parameter <code>data</code>, which means that you can upload any data
+to the GPU&#39;s memory as long as you can provide their size. In our case, this
+data are an array of floating point numbers, but it could easily be an array of
+bytes, or an array of integers for that matter.</p>
 
 <p>The <code>usage</code> parameter is set to <code>GL_STATIC_DRAW</code>, which signified to OpenGL that
 the data uploaded to the memory will not be modified (<em>static</em>) and used for
@@ -465,15 +464,15 @@ triangle.</p>
 
 <h2>Setting Vertex Attributes (CreateVBO)</h2>
 
-<p>Even though all of our data now resides in the GPU’s memory, OpenGL still
-doesn’t know what types of data these are; this is where the
+<p>Even though all of our data now resides in the GPU&#39;s memory, OpenGL still
+doesn&#39;t know what types of data these are; this is where the
 <code>glVertexAttribPointer</code> function comes into play whose prototype looks like
 this:</p>
 
 <script src="https://gist.github.com/11135202.js"> </script>
 
 <p><code>glVertexAttribPointer</code> provides OpenGL with all of the necessary metadata to
-use the block of raw data that we&#39;ve uploaded to the GPU’s memory using
+use the block of raw data that we&#39;ve uploaded to the GPU&#39;s memory using
 <code>glBufferData</code>.</p>
 
 <p>The first parameter that we provide to <code>glVertexAttribPointer</code> is <code>index</code>, which
@@ -669,9 +668,9 @@ following prototype:</p>
 
 <script src="https://gist.github.com/11240421.js"> </script>
 
-<p>The first parameter, <code>mode</code>, specifies the type of array data that’s going to be
+<p>The first parameter, <code>mode</code>, specifies the type of array data that&#39;s going to be
 drawn to the screen with this function call. In our case, this value is set to
-<code>GL_TRIANGLES</code>, but we’ll soon explore some more options for this parameter.</p>
+<code>GL_TRIANGLES</code>, but we&#39;ll soon explore some more options for this parameter.</p>
 
 <p>The second parameter, <code>first</code>, specifies the first index of the enabled vertex
 attribute arrays that we want to draw. The last parameter, <code>count</code>, specifies
@@ -719,7 +718,7 @@ the program is no longer in use, we can also safely delete the shader program:</
 <h3>Cleanup (DestroyVBO)</h3>
 
 <p>Now that you know how to properly create buffer objects and draw them, it&#39;s time
-to learn how to destroy them, so let’s take a quick look at <code>DestroyVBO</code>.</p>
+to learn how to destroy them, so let&#39;s take a quick look at <code>DestroyVBO</code>.</p>
 
 <p>Much like in the <code>CreateVBO</code> function, we define an <code>ErrorCheckValue</code> variable
 and populate it by calling <code>glGetError</code> to clear any errors that were previously
@@ -796,7 +795,7 @@ triangles, but even though the same vertices appear in both triangles, each
 triangle has to redefine this vertex. This is the same for the color array,
 which also contains duplicate values since there is one color for each vertex.</p>
 
-<p>Adding more triangles this way doesn’t take much modification, but causes
+<p>Adding more triangles this way doesn&#39;t take much modification, but causes
 unnecessary duplication of data when the triangles are consecutive in nature as
 ours are.</p>
 
@@ -853,7 +852,7 @@ requires the creation of an entirely new triangle. </p>
 <h1>Vertex Attributes</h1>
 
 <p>The aim of this section is to show you how you can upload your own custom data
-structures to the GPU’s memory and still access its data correctly.</p>
+structures to the GPU&#39;s memory and still access its data correctly.</p>
 
 <p>Create a copy of <code>chapter.2.1.c</code> named <code>chapter.2.4.c</code>, and open it up in your
 editor. Add the following structure definition right below the
@@ -901,7 +900,7 @@ object. This becomes apparent in the <code>CreateVBO</code> function where we no
 
 <p>The next major change is that we only call <code>glBindBuffer</code> once and bind both of
 the vertex attributes to this buffer. Next, we upload the entire <code>Vertices</code>
-array into the GPU’s memory, containing our three instances of <code>Vertex</code>.</p>
+array into the GPU&#39;s memory, containing our three instances of <code>Vertex</code>.</p>
 
 <h2>Stride and Pointer</h2>
 
