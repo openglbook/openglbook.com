@@ -336,7 +336,7 @@ and back buffers. At this line, your changes will be displayed to the screen
 and any new drawing will occur on what was previously the front buffer.
 
 In the following image, buffer B is used as the front buffer for displaying
-purposes, and buffer A is used as the front buffer for drawing purposes:
+purposes, and buffer A is used as the back buffer for drawing purposes:
 
 <img
   src="{{ site.url }}/images/4262_01_05.png"
