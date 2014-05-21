@@ -134,7 +134,7 @@ In the context of OpenGL (as well as Direct3D), a shader is program that runs on
 the graphics hardware. OpenGL expresses a shader program through a C-like
 programming language called the OpenGL Shading Language, or GLSL. In the code
 above, we've already created two GLSL programs, one for per-vertex processing,
-and one for pre-fragment processing.
+and one for per-fragment processing.
 
 A vertex shader operates on a per-vertex basis, modifying the vertex's
 attributes passed in. A fragment shader operates on a per-fragment, modifying
