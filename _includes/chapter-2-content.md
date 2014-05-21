@@ -10,7 +10,7 @@ Chapter 2: Vertices and Shapes
 
 In the previous chapter we learned how easy it was to create a fully functional
 OpenGL 4.0 context by using FreeGLUT. However, this only gave us a blank window
-with an unused OpenGL context, so let’s put that context to good use by
+with an unused OpenGL context, so let's put that context to good use by
 learning:
 
 * The fundamentals of how objects and shapes are constructed in OpenGL
@@ -39,7 +39,7 @@ that the first object we draw is a triangle. As in the first chapter, if you
 don't understand everything while you're copying the code, **don't worry**,
 since we'll explore what happens in-depth in the next section.
 
-Since we’re in chapter two of the book, change the `WINDOW_TITLE_PREFIX`
+Since we're in chapter two of the book, change the `WINDOW_TITLE_PREFIX`
 pre-processor definition to reflect Chapter 2.
 
 Add the following global variable declarations underneath the line containing
@@ -83,7 +83,7 @@ function call to `glClear`:
 {% gist 11134375 %}
 
 The next function is `CreateVBO`, which creates the buffer objects and defines
-the buffer’s contents. Add it right after the `CleanUp` function definition.
+the buffer's contents. Add it right after the `CleanUp` function definition.
 
 {% gist 11134421 %}
 
@@ -114,7 +114,7 @@ The output of your program should look like the following screenshot:
 ## Step-By-Step ##
 
 We've added quite a bit of new code and many new OpenGL function calls that we
-haven't used before -- let’s explore exactly what we've done.
+haven't used before -- let's explore exactly what we've done.
 
 The first thing we did was change the title of the window that we created by
 modifying the `WINDOW_TITLE_PREFIX` pre-processor definition, so no big change
@@ -308,7 +308,7 @@ function and its two sister functions `glVertexAttribIPointer` and
 
 Now we're getting to the core of the `CreateVBO` function and we start
 generating buffers by a call to `glGenBuffers`, which generates our buffers in
-the GPU’s memory. Here's its function prototype, retrieved from the OpenGL SDK
+the GPU's memory. Here's its function prototype, retrieved from the OpenGL SDK
 documentation:
 
 {% gist 11134858 %}
@@ -327,7 +327,7 @@ a specific *target*.
 Buffers can be bound to several different targets, in our case
 `GL_ARRAY_BUFFER`, which signifies that the data provided contains vertex
 attributes. The target is bound to the buffer with a call to `glBindBuffer`,
-which takes the target type as its first parameter, and the buffer’s identifier
+which takes the target type as its first parameter, and the buffer's identifier
 (returned from `glGenBuffers`) as the second:
 
 {% gist 11134882 %}
@@ -348,13 +348,12 @@ The `target` parameter is once again set to `GL_ARRAY_BUFFER` to signify that we
 are copying data to the currently activated buffer with this target type, in our
 case the buffer identified by the value stored in `VboId`.
 
-The `size` parameter is set to our `Size` variable, previously initialized to
-contain the size in bytes of our `Vertices` array. As you can see from the
-function prototype above, the data is provided as a void pointer type through
-parameter `data`, which means that you can upload any data to the GPU’s memory
-as long as you can provide their size. In our case, this data are an array of
-floating point numbers, but it could easily be an array of bytes, or an array of
-integers for that matter.
+The `size` parameter is set to the size in bytes of our `Vertices` array. As you
+can see from the function prototype above, the data is provided as a void
+pointer type through parameter `data`, which means that you can upload any data
+to the GPU's memory as long as you can provide their size. In our case, this
+data are an array of floating point numbers, but it could easily be an array of
+bytes, or an array of integers for that matter.
 
 The `usage` parameter is set to `GL_STATIC_DRAW`, which signified to OpenGL that
 the data uploaded to the memory will not be modified (*static*) and used for
@@ -365,15 +364,15 @@ triangle.
 
 ## Setting Vertex Attributes (CreateVBO) ##
 
-Even though all of our data now resides in the GPU’s memory, OpenGL still
-doesn’t know what types of data these are; this is where the
+Even though all of our data now resides in the GPU's memory, OpenGL still
+doesn't know what types of data these are; this is where the
 `glVertexAttribPointer` function comes into play whose prototype looks like
 this:
 
 {% gist 11135202 %}
 
 `glVertexAttribPointer` provides OpenGL with all of the necessary metadata to
-use the block of raw data that we've uploaded to the GPU’s memory using
+use the block of raw data that we've uploaded to the GPU's memory using
 `glBufferData`.
 
 The first parameter that we provide to `glVertexAttribPointer` is `index`, which
@@ -569,9 +568,9 @@ following prototype:
 
 {% gist 11240421 %}
 
-The first parameter, `mode`, specifies the type of array data that’s going to be
+The first parameter, `mode`, specifies the type of array data that's going to be
 drawn to the screen with this function call. In our case, this value is set to
-`GL_TRIANGLES`, but we’ll soon explore some more options for this parameter.
+`GL_TRIANGLES`, but we'll soon explore some more options for this parameter.
 
 The second parameter, `first`, specifies the first index of the enabled vertex
 attribute arrays that we want to draw. The last parameter, `count`, specifies
@@ -619,7 +618,7 @@ Which takes in the shader program object's identifier, in our case `ProgramId`.
 ### Cleanup (DestroyVBO) ###
 
 Now that you know how to properly create buffer objects and draw them, it's time
-to learn how to destroy them, so let’s take a quick look at `DestroyVBO`.
+to learn how to destroy them, so let's take a quick look at `DestroyVBO`.
 
 Much like in the `CreateVBO` function, we define an `ErrorCheckValue` variable
 and populate it by calling `glGetError` to clear any errors that were previously
@@ -696,7 +695,7 @@ triangles, but even though the same vertices appear in both triangles, each
 triangle has to redefine this vertex. This is the same for the color array,
 which also contains duplicate values since there is one color for each vertex.
 
-Adding more triangles this way doesn’t take much modification, but causes
+Adding more triangles this way doesn't take much modification, but causes
 unnecessary duplication of data when the triangles are consecutive in nature as
 ours are.
 
@@ -754,7 +753,7 @@ requires the creation of an entirely new triangle.
 # Vertex Attributes #
 
 The aim of this section is to show you how you can upload your own custom data
-structures to the GPU’s memory and still access its data correctly.
+structures to the GPU's memory and still access its data correctly.
 
 Create a copy of `chapter.2.1.c` named `chapter.2.4.c`, and open it up in your
 editor. Add the following structure definition right below the
@@ -802,7 +801,7 @@ object. This becomes apparent in the `CreateVBO` function where we now call
 
 The next major change is that we only call `glBindBuffer` once and bind both of
 the vertex attributes to this buffer. Next, we upload the entire `Vertices`
-array into the GPU’s memory, containing our three instances of `Vertex`.
+array into the GPU's memory, containing our three instances of `Vertex`.
 
 ## Stride and Pointer ##
 
