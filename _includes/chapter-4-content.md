@@ -757,6 +757,11 @@ After that, insert the code to retrieve the shader uniforms:
 <!--- 4.18 -->
 {% gist EddyLuten/d01acd9ba4e531b665e8 %}
 
+Right below that, insert the following buffer generation code:
+
+<!--- 4.38 -->
+{% gist EddyLuten/4c9cbfead60c762ebfa0 %}
+
 Insert the following VAO generation and binding code after that:
 
 <!--- 4.19 -->
