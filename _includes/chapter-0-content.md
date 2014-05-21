@@ -766,7 +766,7 @@ An important new feature in OpenGL 4.0 is called Tessellation, which allows for
 fine-grained control of surfaces and automated levels of detail in your scenes.
 We will explore what Tessellation is and how to use it in a future chapter.
 
-This book is uses the OpenGL 4.0 specification with the Core Profile
+This book uses the OpenGL 4.0 specification with the Core Profile
 enabled, which means that it is not compatible with any previous versions of
 the OpenGL API. We are also not going to use any deprecated features in order
 to stay as future-compatible as possible. This may seem a bit daunting at
