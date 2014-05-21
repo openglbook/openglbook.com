@@ -708,7 +708,7 @@ Then, right underneath the call to `glClearColor`, insert the following lines:
 {% gist EddyLuten/5559ad12f033f0b2a33e %}
 
 Inside of the `InitWindow` function definition, right after the function call
-to `glutCloseFunc`, place the following line:
+to `glutTimerFunc`, place the following line:
 
 <!--- 4.10 -->
 {% gist EddyLuten/90eaa15298c6dfd15462 %}
