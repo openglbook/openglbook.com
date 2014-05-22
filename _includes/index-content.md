@@ -8,11 +8,11 @@ Welcome To OpenGLBook.com!
   class="right"
 />
 
-**OpenGLBook.com** is a free OpenGL programming resource in online book format.
+**OpenGLBook.com** is a free OpenGL programming tutorial in online book format.
 Click on [The Book]({{ site.url }}/the-book.html) to start learning OpenGL 4.0.
 Several chapters contain OpenGL 3.3 compatible code samples in a sub-directory
-named "OpenGL 3.3" in the source code listing, if you only have access to
-OpenGL 3 / DirectX 11 level hardware.
+named "compatibility" in the source code listing, if you only have access to
+OpenGL 3 / DirectX 10 level hardware.
 
 **New Chapters** are released periodically as they are completed and announced
 on [the blog]({{ site.url }}/blog/).
