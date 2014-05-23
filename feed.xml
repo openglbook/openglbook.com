@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>OpenGLBook.com</title>
+		<description>A Free OpenGL Programming Resource</description>		
+		<link>http://openglbook.com/</link>
+		<atom:link href="http://openglbook.com/feed.xml" rel="self" type="application/rss+xml" />
+		
+			<item>
+				<title>OpenGLBook.com Relaunch</title>
+				<description>
+					
+				        &lt;p&gt;&lt;img
+    src=&quot;/images/Octocat.png&quot;
+    alt=&quot;Octocat&quot;
+    title=&quot;Octocat&quot;
+    class=&quot;right&quot;
+/&gt;&lt;/p&gt;
+
+&lt;p&gt;You may have noticed that for a few days the site was unavailable. This was caused by my old host, GoDaddy, who without informing me pulled the plug on my VPS account that hosted this site for the last three years. I still don&amp;#39;t know why this happened and can&amp;#39;t manually reactivate the account. Oh well, their loss.&lt;/p&gt;
+
+&lt;p&gt;However, this fiasco gave me incentive to finish converting the site to Markdown in preparation for release to GitHub Pages. I was planning this anyway, so tonight I put the final touches on the conversion, and as of right now, the entire site is hosted on GitHub pages.&lt;/p&gt;
+
+&lt;h2&gt;What This Means&lt;/h2&gt;
+
+&lt;p&gt;1.) Even though the site&amp;#39;s code samples were previously released under the MIT license, the site&amp;#39;s contents were not open source. This has now been remedied by licensing the contents of the site under the &lt;a href=&quot;http://creativecommons.org/licenses/by-sa/4.0/&quot;&gt;Creative Commons Attribution-ShareAlike 4.0 International&lt;/a&gt; license (CC BY-SA 4.0). The source code for the entire site is &lt;a href=&quot;https://github.com/openglbook/openglbook.com&quot;&gt;now available on GitHub&lt;/a&gt; for anyone to mess around with.&lt;/p&gt;
+
+&lt;p&gt;2.) I don&amp;#39;t have to pay for hosting anymore, so no more ads (yay!).&lt;/p&gt;
+
+&lt;p&gt;3.) Inline code samples are now hosted as gists, which makes maintaining the site content less of a nightmare.&lt;/p&gt;
+
+&lt;p&gt;4.) Chapters are stored as Markdown, so they&amp;#39;re editable in any text editor, not restricted to a clumsy web-based WYSIWYG editor.&lt;/p&gt;
+
+&lt;h2&gt;Known Issues&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Legacy chapter URLs no longer work (not fixing).&lt;/li&gt;
+&lt;li&gt;Code samples haven&amp;#39;t been put on GitHub &lt;em&gt;yet&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;Many old bugs haven&amp;#39;t been fixed since this was almost a verbatim copy.&lt;/li&gt;
+&lt;li&gt;There are still many files to clean up.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I&amp;#39;m expecting more issues with the site in the next couple of days, so if you come across something that doesn&amp;#39;t look quite right, please report the issue.&lt;/p&gt;
+
+				    
+				</description>
+				<pubDate>Tue, 20 May 2014 00:00:00 -0700</pubDate>
+				<link>http://openglbook.com//blog/openglbook-relaunch</link>
+				<guid isPermaLink="true">http://openglbook.com//blog/openglbook-relaunch</guid>
+			</item>
+		
+			<item>
+				<title>Poll: C++ and GLM Support</title>
+				<description>
+					
+				        &lt;p&gt;
+	Over the course of the last few months, I have received numerous emails and bug reports from people trying to compile the sample code as C++ code. So many, in fact, that I'm starting to think that the site may actually benefit from C++ code samples &lt;em&gt;instead&lt;/em&gt; of C code samples.
+&lt;/p&gt;
+&lt;p&gt;
+	To get a good idea of the consensus of C++ vs C in this case, I've opened up a little poll. Please take a second or so to select an option from the list and vote, I'd really like to hear your opinion on this. Also, if you have a comment on this, please post it as well.
+&lt;/p&gt;
+&lt;p&gt;
+	&lt;em&gt;Poll Closed&lt;/em&gt;
+	&lt;!-- polldaddy 5961810 --&gt;
+&lt;/p&gt;
+
+				    
+				</description>
+				<pubDate>Mon, 20 Feb 2012 00:00:00 -0800</pubDate>
+				<link>http://openglbook.com//blog/poll-c-and-glm-support</link>
+				<guid isPermaLink="true">http://openglbook.com//blog/poll-c-and-glm-support</guid>
+			</item>
+		
+			<item>
+				<title>Unable to create OpenGL 4.0 context (flags m, profile n)</title>
+				<description>
+					
+				        &lt;p&gt;
+	If you're getting the message &lt;code&gt;Unable to create OpenGL 4.0 context (flags m, profile n)&lt;/code&gt; when creating your context (where m and n are numbers) your hardware &lt;strong&gt;does not support OpenGL 4.0&lt;/strong&gt;.
+&lt;/p&gt;
+&lt;p&gt;
+	Sadly, this is not something you can fix without upgrading your hardware. As mentioned in the Preface, the minimum graphics hardware you need for an OpenGL 4.0 context is:
+&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;If you own an NVIDIA GPU, it must at least be in the Fermi family of products, starting with the GeForce GTX 400 series.&lt;/li&gt;
+	&lt;li&gt;If you own an AMD/ATI GPU, it must at least be in the Radeon HD 5000 series.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;
+	It is possible to run many of the samples using OpenGL 3.3 by using the code files found in the &quot;OpenGL 3.3&quot; directories of each chapters' source code listings. However, OpenGL 4.0+ core features will not work in OpenGL 3.3.
+&lt;/p&gt;
+
+				    
+				</description>
+				<pubDate>Wed, 13 Jul 2011 00:00:00 -0700</pubDate>
+				<link>http://openglbook.com//blog/unable-to-create-opengl-4-0-context-flags-n-profile-n</link>
+				<guid isPermaLink="true">http://openglbook.com//blog/unable-to-create-opengl-4-0-context-flags-n-profile-n</guid>
+			</item>
+		
+			<item>
+				<title>Setting up OpenGL, GLEW, and FreeGLUT in Visual C++</title>
+				<description>
+					
+				        &lt;p&gt;
+	This post walks you through setting up OpenGL, GLEW, and FreeGLUT support in Visual C++ in order to compile the samples properly. My original thought was to put this in an appendix after all of the chapters were completed, but there's need for it now, so here's the extremely verbose step-by-step explanation:
+&lt;/p&gt;
+
+				    
+				</description>
+				<pubDate>Sun, 26 Jun 2011 00:00:00 -0700</pubDate>
+				<link>http://openglbook.com//blog/setting-up-opengl-glew-and-freeglut-in-visual-c</link>
+				<guid isPermaLink="true">http://openglbook.com//blog/setting-up-opengl-glew-and-freeglut-in-visual-c</guid>
+			</item>
+		
+			<item>
+				<title>Chapter 4: Entering the Third Dimension Released</title>
+				<description>
+					
+				        &lt;p&gt;
+	An issue was brought up yesterday &lt;a href=&quot;http://code.google.com/p/openglbook-samples/issues/detail?id=2&quot; rel=&quot;nofollow&quot;&gt;concerning a bug in Chapter 2&lt;/a&gt;. If you change the layout input layout qualifiers in your GLSL shaders from that chapter to the following:
+&lt;/p&gt;
+&lt;pre&gt;
+layout(location=18) in vec4 in_Position;
+layout(location=1) in vec4 in_Color;
+&lt;/pre&gt;
+&lt;p&gt;
+	And update the calls to &lt;code&gt;glVertexAttribPointer&lt;/code&gt; and &lt;code&gt;glEnableVertexAttribArray&lt;/code&gt; accordingly, you will see nothing but a black screen &lt;strong&gt;on AMD hardware&lt;/strong&gt;.
+&lt;/p&gt;
+&lt;p&gt;
+	It turns out that this is a known bug, and &lt;a ref=&quot;nofollow&quot; href=&quot;http://www.opengl.org/discussion_boards/ubbthreads.php?ubb=showflat&amp;Number=286280&quot;&gt;someone on the OpenGL forums&lt;/a&gt; encountered this last year, so this bug has existed for a while.
+&lt;/p&gt;
+&lt;p&gt;
+	After contacting OpenGL bug-basher extraordinaire Christophe Riccio (who runs a great site at &lt;a href=&quot;http://www.g-truc.net/&quot; rel=&quot;nofollow&quot;&gt;G-Truc.net&lt;/a&gt;), he informed me that the only way to get this to work on AMD is to assign location 0, meaning that the following works:
+&lt;/p&gt;
+&lt;pre&gt;
+layout(location=18) in vec4 in_Position;
+layout(location=0) in vec4 in_Color;
+&lt;/pre&gt;
+&lt;p&gt;
+	So keep in mind when writing your programs to always occupy location 0 for something.
+&lt;/p&gt;
+
+				    
+				</description>
+				<pubDate>Sat, 25 Jun 2011 00:00:00 -0700</pubDate>
+				<link>http://openglbook.com//blog/glsl-input-layout-qualifier-bug-on-amd-hardware</link>
+				<guid isPermaLink="true">http://openglbook.com//blog/glsl-input-layout-qualifier-bug-on-amd-hardware</guid>
+			</item>
+		
+			<item>
+				<title>Chapter 4: Entering the Third Dimension Released</title>
+				<description>
+					
+				        &lt;p&gt;
+	I'm happy to inform you that &lt;em&gt;Chapter 4: Entering the Third Dimension&lt;/em&gt; is now available online by clicking on &lt;a href=&quot;/chapter-4-entering-the-third-dimension.html&quot;&gt;this link&lt;/a&gt;.
+&lt;/p&gt;
+&lt;p&gt;
+	Let me know if you have any &lt;a href=&quot;http://code.google.com/p/openglbook-samples/issues/list&quot;&gt;issues, bugs, errors&lt;/a&gt;, or simply wish to yell at me. Happy reading.
+&lt;/p&gt;
+
+				    
+				</description>
+				<pubDate>Fri, 24 Jun 2011 00:00:00 -0700</pubDate>
+				<link>http://openglbook.com//blog/chapter-4-entering-the-third-dimension-released</link>
+				<guid isPermaLink="true">http://openglbook.com//blog/chapter-4-entering-the-third-dimension-released</guid>
+			</item>
+		
+			<item>
+				<title>Now at Google Project Hosting</title>
+				<description>
+					
+				        &lt;p&gt;
+	&lt;img
+		src=&quot;/images/Google-Project-Hosting-Logo.png&quot;
+		alt=&quot;Google Project Hosting Logo&quot;
+		title=&quot;Google Project Hosting Logo&quot;
+		class=&quot;right&quot;
+	/&gt;
+	After a few requests for the Visual Studio Solution, I've moved the source code over from my self-hosted solution to &lt;a href=&quot;http://code.google.com/p/openglbook-samples/&quot;&gt;a Google Project Hosting solution&lt;/a&gt;. In the process, I've also Open Sourced the source code (not the chapters or the site, just the code) under the MIT license, &lt;a href=&quot;http://en.wikipedia.org/wiki/MIT_License&quot;&gt;a very permissive Open Source license&lt;/a&gt; that allows you to use the code for any purpose you want.
+&lt;/p&gt;
+&lt;p&gt;
+	The project itself is a Visual Studio 2010 solution containing individual projects for each of the chapters. If you have Subversion, you can check out the entire project, or if you'd like to view the files in your browser, &lt;a href=&quot;http://code.google.com/p/openglbook-samples/source/browse/&quot;&gt;you can do so here&lt;/a&gt; much better than I could implement on this site. Note that even though the project is a Visual Studio solution, the source can be compiled on many platforms.
+&lt;/p&gt;
+&lt;p&gt;
+	&lt;a href=&quot;http://code.google.com/p/openglbook-samples/&quot;&gt;openglbook-samples project @ Google Project Hosting&lt;/a&gt;
+&lt;/p&gt;
+
+				    
+				</description>
+				<pubDate>Thu, 16 Jun 2011 00:00:00 -0700</pubDate>
+				<link>http://openglbook.com//blog/now-at-google-project-hosting</link>
+				<guid isPermaLink="true">http://openglbook.com//blog/now-at-google-project-hosting</guid>
+			</item>
+		
+			<item>
+				<title>Chapter 4 Preview</title>
+				<description>
+					
+				        &lt;p&gt;
+	&lt;img
+		src=&quot;/images/Chapter4_Preview-150x150.png&quot;
+		alt=&quot;Chapter 4 Preview&quot;
+		title=&quot;Chapter 4 Preview&quot;
+		class=&quot;left&quot;
+	/&gt;
+	It's been a little while since the last update, but work on Chapter 4 is finally reaching a conclusion. In this chapter, we'll make our first steps into the third dimension and introduce a bit of required mathematics.
+&lt;/p&gt;
+&lt;p&gt;
+	If you haven't read the previous chapters yet, I &lt;em&gt;highly&lt;/em&gt; recommend you doing so before continuing with this chapter since you'll need to understand all of the previous concepts.
+&lt;/p&gt;
+&lt;p&gt;Keep an eye out for this chapter in the near future!&lt;/p&gt;
+
+				    
+				</description>
+				<pubDate>Thu, 16 Jun 2011 00:00:00 -0700</pubDate>
+				<link>http://openglbook.com//blog/chapter-4-preview</link>
+				<guid isPermaLink="true">http://openglbook.com//blog/chapter-4-preview</guid>
+			</item>
+		
+			<item>
+				<title>glGenVertexArrays Access Violation/segfault with GLEW</title>
+				<description>
+					
+				        &lt;p&gt;
+	&lt;img
+		title=&quot;Access Violation&quot;
+		src=&quot;/images/Access-Violation.png&quot;
+		alt=&quot;Access Violation&quot;
+		class=&quot;right&quot;
+	/&gt;
+	If you've been copying the code from the chapters, you may run into trouble when your program hits the &lt;code&gt;glGenVertexArrays&lt;/code&gt; function in the form of an Access Violation/segfault.
+&lt;/p&gt;
+&lt;p&gt;
+	To fix this, add the following statement right above your call to &lt;code&gt;glewInit&lt;/code&gt;:
+&lt;/p&gt;
+&lt;pre&gt;glewExperimental = GL_TRUE;&lt;/pre&gt;
+&lt;p&gt;
+	There seems to be some trouble with GLEW not entirely supporting the Core Profile out of the box, but the above fix should get you by for the time being.
+&lt;/p&gt;
+
+				    
+				</description>
+				<pubDate>Mon, 02 May 2011 00:00:00 -0700</pubDate>
+				<link>http://openglbook.com//blog/glgenvertexarrays-access-violationsegfault-with-glew</link>
+				<guid isPermaLink="true">http://openglbook.com//blog/glgenvertexarrays-access-violationsegfault-with-glew</guid>
+			</item>
+		
+			<item>
+				<title>Chapter 3: Index Buffer Objects and Primitive Types Released</title>
+				<description>
+					
+				        &lt;p&gt;
+	I'm happy to inform you that &quot;Chapter 3: Index Buffer Objects and Primitive Types&quot; is now available online by clicking on &lt;a href=&quot;/chapter-3-index-buffer-objects-and-primitive-types.html&quot;&gt;this link&lt;/a&gt;.
+&lt;/p&gt;
+&lt;p&gt;
+	Many thanks go out to &lt;a href=&quot;/credits.html&quot;&gt;Christian Rau and Phi Hung Nguyen&lt;/a&gt; for reviewing the chapter before it was released. Let me know if you have any issues, bugs, errors, or simply wish to yell at me. Happy reading.
+&lt;/p&gt;
+
+				    
+				</description>
+				<pubDate>Thu, 28 Apr 2011 00:00:00 -0700</pubDate>
+				<link>http://openglbook.com//blog/chapter-3-index-buffer-objects-and-primitive-types-released</link>
+				<guid isPermaLink="true">http://openglbook.com//blog/chapter-3-index-buffer-objects-and-primitive-types-released</guid>
+			</item>
+		
+	</channel>
+</rss>
