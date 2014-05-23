@@ -15,7 +15,8 @@ named "compatibility" in the source code listing, if you only have access to
 OpenGL 3 / DirectX 10 level hardware.
 
 **New Chapters** are released periodically as they are completed and announced
-on [the blog]({{ site.url }}/blog/).
+on [the blog]({{ site.url }}/blog/).If you wish to keep informed, subscribe to
+the blog's [RSS feed]({{ site.url }}/feed.xml) with your favorite RSS reader.
 
 **Before you start** make sure that you
 [read the preface]({{ site.url }}/chapter-0-preface-what-is-opengl.html)
