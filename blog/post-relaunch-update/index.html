@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>JavaScript OpenGL Function Linker | OpenGLBook.com</title>
+        <title>Post-Relaunch Update | OpenGLBook.com</title>
         <meta name="viewport" content="width=device-width">
 
         <!-- syntax highlighting CSS -->
@@ -104,33 +104,48 @@
           </div>
 
           <div class="post">
-<h1 class="post-title">JavaScript OpenGL Function Linker</h1>
-<div class="meta">12 Apr 2011</div>
+<h1 class="post-title">Post-Relaunch Update</h1>
+<div class="meta">22 May 2014</div>
 
-<p>
-	If anyone is interested, here's a little jQuery/JavaScript function that replaces all OpenGL function names in your HTML document with a highlighted, clickable JavaScript link to the appropriate OpenGL manual page.
-</p>
+<p>A quick breakdown of the changes that have happened since the relaunch and a bit of information about what&#39;s to come.</p>
+
 <!--more-->
-<p>
-	For example, any OpenGL function name anywhere inside of an HTML &lt;p&gt; element will transform, simply include the javascript file:
-</p>
-<pre>&lt;script type=&quot;text/javascript&quot; src=&quot;jsglhl.js&quot;&gt;&lt;/script&gt;</pre>
-<p>
-	And call the following function somewhere after the document has loaded (if you use jQuery, use <code>$(document).ready()</code>).
-</p>
-<pre>LinkOpenGLManPages();</pre>
-<p>
-	And your OpenGL function names will transform:
-</p>
-<p>
-	glDrawElements - as normal style paragraph text<br />
-	<code>glVertexAttrib</code> - inside of a &lt;code&gt; element<br />
-	<strong>glViewport</strong> - inside of a &lt;strong&gt; element
-</p>
-<p>
-	For more examples, see <a href="/chapter-2-vertices-and-shapes.html">Chapter 2</a>. It's licensed under the <a href="http://en.wikipedia.org/wiki/MIT_License" target="_blank">MIT license</a>, so you can do with it whatever you want:<br />
-	<strong><a href="/scripts/jsglhl.js">Download</a></strong>
-</p>
+
+<p><img
+    src="/images/ladybug.png"
+    alt="The good kind of bug"
+    title="The good kind of bug"
+    class="left"
+/></p>
+
+<h2>Bugs and Issues</h2>
+
+<p>With this migration, I finally got around to handling some of those <em>really</em> old bugs that were filed all the way back in 2011. All of the reported typos have been handled so far, and there are only <a href="https://github.com/openglbook/openglbook.com/issues?labels=bug">a few more bugs to go through</a>.</p>
+
+<p>If you find any issue with the text or code, please don&#39;t hesitate to report them by selecting the appropriate option from the &quot;Report Issues&quot; menu atop ever single page. This will take you to the GitHub issue tracker for the project where you can file an issue. Also, if you&#39;re able to fix the issue yourself, don&#39;t hesistate to do so and shoot over a pull request.</p>
+
+<h2>Code Samples</h2>
+
+<p>The code samples now have their <a href="https://github.com/openglbook/openglbook-samples">own GitHub repository</a>. For now, it contains a directory structure similar to that of the previous repository, but in the future this will change with the shift to non-OpenGL 4.0 specific samples and text. If you don&#39;t want to clone the repository using git, you can also download an archive containing all of the files <a href="https://github.com/openglbook/openglbook-samples/releases">on the releases page.</a></p>
+
+<h2>Remember That Poll?</h2>
+
+<p>Well, the results are in with 32.63% of the voters wanting C++ but no GLM support, 42.06% wanting C++ plus GLM support, and 25.31% wanting everything to remain the same.</p>
+
+<p><img
+    src="/images/poll-results.png"
+    alt="C++ poll results"
+    title="C++ poll results"
+    class="center"
+/></p>
+
+<p>The focus of the poll was to determine if the samples should be written in C++ instead of C. I&#39;ve had a lot of time to think about it, and regardless of the poll&#39;s results, I&#39;m not converting the samples to C++. This decision comes from taking into account the many style differences, increasing complexity, and of course the massive effort it would take to convert everything. Not to mention that C is an easier language to learn and this site&#39;s main goal is to provide a resource that&#39;s easy to read.</p>
+
+<p>There are a few other resources out there that <em>do</em> use C++ and even provide full frameworks that handle resource creation and storage that I personally believe should not be avoided if your aim is to learn these things yourself.</p>
+
+<h2>So, What <em>Is</em> Next?</h2>
+
+<p>Besides bugs, I&#39;ve also entered feature requests and enhancements to the <a href="https://github.com/openglbook/openglbook.com/issues?labels=feature-request%2Cenhancement&amp;page=1&amp;state=open">issue tracker on GitHub</a>. Not all of these may make it to the site, but it&#39;s a good indicator of what&#39;s coming next. Also, it&#39;s a good place to request a feature or chapter that you&#39;d like to see.</p>
 
 
 </div>

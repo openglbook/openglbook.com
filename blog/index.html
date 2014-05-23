@@ -106,9 +106,33 @@
           <!-- This loops through the paginated posts -->
 
 <div class="post">
+  <h1 class="post-title"><a href="/blog/post-relaunch-update/">Post-Relaunch Update</a></h1>
+  <div class="meta">
+    Posted on 22 May 2014 by
+    
+      
+      <a href="mailto:eddyluten+openglbook@gmail.com">Eddy Luten</a>.
+    
+  </div>
+  <div>
+    
+        <p>A quick breakdown of the changes that have happened since the relaunch and a bit of information about what&#39;s to come.</p>
+
+      
+        <p><a href="/blog/post-relaunch-update">Continue reading&hellip;</a></p>
+    
+  </div>
+  <div style="clear:both;"></div>
+</div>
+
+<div class="post">
   <h1 class="post-title"><a href="/blog/openglbook-relaunch/">OpenGLBook.com Relaunch</a></h1>
   <div class="meta">
-    Posted on 20 May 2014
+    Posted on 20 May 2014 by
+    
+      
+      <a href="mailto:eddyluten@gmail.com">Eddy Luten</a>.
+    
   </div>
   <div>
     
@@ -152,7 +176,11 @@
 <div class="post">
   <h1 class="post-title"><a href="/blog/poll-c-and-glm-support/">Poll: C++ and GLM Support</a></h1>
   <div class="meta">
-    Posted on 20 Feb 2012
+    Posted on 20 Feb 2012 by
+    
+      
+      <a href="mailto:eddyluten@gmail.com">Eddy Luten</a>.
+    
   </div>
   <div>
     
@@ -175,7 +203,11 @@
 <div class="post">
   <h1 class="post-title"><a href="/blog/unable-to-create-opengl-4-0-context-flags-n-profile-n/">Unable to create OpenGL 4.0 context (flags m, profile n)</a></h1>
   <div class="meta">
-    Posted on 13 Jul 2011
+    Posted on 13 Jul 2011 by
+    
+      
+      <a href="mailto:eddyluten@gmail.com">Eddy Luten</a>.
+    
   </div>
   <div>
     
@@ -201,7 +233,11 @@
 <div class="post">
   <h1 class="post-title"><a href="/blog/setting-up-opengl-glew-and-freeglut-in-visual-c/">Setting up OpenGL, GLEW, and FreeGLUT in Visual C++</a></h1>
   <div class="meta">
-    Posted on 26 Jun 2011
+    Posted on 26 Jun 2011 by
+    
+      
+      <a href="mailto:eddyluten@gmail.com">Eddy Luten</a>.
+    
   </div>
   <div>
     
@@ -210,42 +246,6 @@
 </p>
       
         <p><a href="/blog/setting-up-opengl-glew-and-freeglut-in-visual-c">Continue reading&hellip;</a></p>
-    
-  </div>
-  <div style="clear:both;"></div>
-</div>
-
-<div class="post">
-  <h1 class="post-title"><a href="/blog/glsl-input-layout-qualifier-bug-on-amd-hardware/">Chapter 4: Entering the Third Dimension Released</a></h1>
-  <div class="meta">
-    Posted on 25 Jun 2011
-  </div>
-  <div>
-    
-        <p>
-	An issue was brought up yesterday <a href="http://code.google.com/p/openglbook-samples/issues/detail?id=2" rel="nofollow">concerning a bug in Chapter 2</a>. If you change the layout input layout qualifiers in your GLSL shaders from that chapter to the following:
-</p>
-<pre>
-layout(location=18) in vec4 in_Position;
-layout(location=1) in vec4 in_Color;
-</pre>
-<p>
-	And update the calls to <code>glVertexAttribPointer</code> and <code>glEnableVertexAttribArray</code> accordingly, you will see nothing but a black screen <strong>on AMD hardware</strong>.
-</p>
-<p>
-	It turns out that this is a known bug, and <a ref="nofollow" href="http://www.opengl.org/discussion_boards/ubbthreads.php?ubb=showflat&Number=286280">someone on the OpenGL forums</a> encountered this last year, so this bug has existed for a while.
-</p>
-<p>
-	After contacting OpenGL bug-basher extraordinaire Christophe Riccio (who runs a great site at <a href="http://www.g-truc.net/" rel="nofollow">G-Truc.net</a>), he informed me that the only way to get this to work on AMD is to assign location 0, meaning that the following works:
-</p>
-<pre>
-layout(location=18) in vec4 in_Position;
-layout(location=0) in vec4 in_Color;
-</pre>
-<p>
-	So keep in mind when writing your programs to always occupy location 0 for something.
-</p>
-
     
   </div>
   <div style="clear:both;"></div>

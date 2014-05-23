@@ -106,9 +106,53 @@
           <!-- This loops through the paginated posts -->
 
 <div class="post">
+  <h1 class="post-title"><a href="/blog/glsl-input-layout-qualifier-bug-on-amd-hardware/">Chapter 4: Entering the Third Dimension Released</a></h1>
+  <div class="meta">
+    Posted on 25 Jun 2011 by
+    
+      
+      <a href="mailto:eddyluten@gmail.com">Eddy Luten</a>.
+    
+  </div>
+  <div>
+    
+        <p>
+	An issue was brought up yesterday <a href="http://code.google.com/p/openglbook-samples/issues/detail?id=2" rel="nofollow">concerning a bug in Chapter 2</a>. If you change the layout input layout qualifiers in your GLSL shaders from that chapter to the following:
+</p>
+<pre>
+layout(location=18) in vec4 in_Position;
+layout(location=1) in vec4 in_Color;
+</pre>
+<p>
+	And update the calls to <code>glVertexAttribPointer</code> and <code>glEnableVertexAttribArray</code> accordingly, you will see nothing but a black screen <strong>on AMD hardware</strong>.
+</p>
+<p>
+	It turns out that this is a known bug, and <a ref="nofollow" href="http://www.opengl.org/discussion_boards/ubbthreads.php?ubb=showflat&Number=286280">someone on the OpenGL forums</a> encountered this last year, so this bug has existed for a while.
+</p>
+<p>
+	After contacting OpenGL bug-basher extraordinaire Christophe Riccio (who runs a great site at <a href="http://www.g-truc.net/" rel="nofollow">G-Truc.net</a>), he informed me that the only way to get this to work on AMD is to assign location 0, meaning that the following works:
+</p>
+<pre>
+layout(location=18) in vec4 in_Position;
+layout(location=0) in vec4 in_Color;
+</pre>
+<p>
+	So keep in mind when writing your programs to always occupy location 0 for something.
+</p>
+
+    
+  </div>
+  <div style="clear:both;"></div>
+</div>
+
+<div class="post">
   <h1 class="post-title"><a href="/blog/chapter-4-entering-the-third-dimension-released/">Chapter 4: Entering the Third Dimension Released</a></h1>
   <div class="meta">
-    Posted on 24 Jun 2011
+    Posted on 24 Jun 2011 by
+    
+      
+      <a href="mailto:eddyluten@gmail.com">Eddy Luten</a>.
+    
   </div>
   <div>
     
@@ -127,7 +171,11 @@
 <div class="post">
   <h1 class="post-title"><a href="/blog/now-at-google-project-hosting/">Now at Google Project Hosting</a></h1>
   <div class="meta">
-    Posted on 16 Jun 2011
+    Posted on 16 Jun 2011 by
+    
+      
+      <a href="mailto:eddyluten@gmail.com">Eddy Luten</a>.
+    
   </div>
   <div>
     
@@ -155,7 +203,11 @@
 <div class="post">
   <h1 class="post-title"><a href="/blog/chapter-4-preview/">Chapter 4 Preview</a></h1>
   <div class="meta">
-    Posted on 16 Jun 2011
+    Posted on 16 Jun 2011 by
+    
+      
+      <a href="mailto:eddyluten@gmail.com">Eddy Luten</a>.
+    
   </div>
   <div>
     
@@ -181,7 +233,11 @@
 <div class="post">
   <h1 class="post-title"><a href="/blog/glgenvertexarrays-access-violationsegfault-with-glew/">glGenVertexArrays Access Violation/segfault with GLEW</a></h1>
   <div class="meta">
-    Posted on 02 May 2011
+    Posted on 02 May 2011 by
+    
+      
+      <a href="mailto:eddyluten@gmail.com">Eddy Luten</a>.
+    
   </div>
   <div>
     
@@ -200,25 +256,6 @@
 <pre>glewExperimental = GL_TRUE;</pre>
 <p>
 	There seems to be some trouble with GLEW not entirely supporting the Core Profile out of the box, but the above fix should get you by for the time being.
-</p>
-
-    
-  </div>
-  <div style="clear:both;"></div>
-</div>
-
-<div class="post">
-  <h1 class="post-title"><a href="/blog/chapter-3-index-buffer-objects-and-primitive-types-released/">Chapter 3: Index Buffer Objects and Primitive Types Released</a></h1>
-  <div class="meta">
-    Posted on 28 Apr 2011
-  </div>
-  <div>
-    
-        <p>
-	I'm happy to inform you that "Chapter 3: Index Buffer Objects and Primitive Types" is now available online by clicking on <a href="/chapter-3-index-buffer-objects-and-primitive-types.html">this link</a>.
-</p>
-<p>
-	Many thanks go out to <a href="/credits.html">Christian Rau and Phi Hung Nguyen</a> for reviewing the chapter before it was released. Let me know if you have any issues, bugs, errors, or simply wish to yell at me. Happy reading.
 </p>
 
     

@@ -7,6 +7,20 @@
 		<atom:link href="http://openglbook.com/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>Post-Relaunch Update</title>
+				<description>
+					
+				        &lt;p&gt;A quick breakdown of the changes that have happened since the relaunch and a bit of information about what&amp;#39;s to come.&lt;/p&gt;
+
+
+				    
+				</description>
+				<pubDate>Thu, 22 May 2014 00:00:00 -0700</pubDate>
+				<link>http://openglbook.com//blog/post-relaunch-update</link>
+				<guid isPermaLink="true">http://openglbook.com//blog/post-relaunch-update</guid>
+			</item>
+		
+			<item>
 				<title>OpenGLBook.com Relaunch</title>
 				<description>
 					
@@ -242,24 +256,6 @@ layout(location=0) in vec4 in_Color;
 				<pubDate>Mon, 02 May 2011 00:00:00 -0700</pubDate>
 				<link>http://openglbook.com//blog/glgenvertexarrays-access-violationsegfault-with-glew</link>
 				<guid isPermaLink="true">http://openglbook.com//blog/glgenvertexarrays-access-violationsegfault-with-glew</guid>
-			</item>
-		
-			<item>
-				<title>Chapter 3: Index Buffer Objects and Primitive Types Released</title>
-				<description>
-					
-				        &lt;p&gt;
-	I'm happy to inform you that &quot;Chapter 3: Index Buffer Objects and Primitive Types&quot; is now available online by clicking on &lt;a href=&quot;/chapter-3-index-buffer-objects-and-primitive-types.html&quot;&gt;this link&lt;/a&gt;.
-&lt;/p&gt;
-&lt;p&gt;
-	Many thanks go out to &lt;a href=&quot;/credits.html&quot;&gt;Christian Rau and Phi Hung Nguyen&lt;/a&gt; for reviewing the chapter before it was released. Let me know if you have any issues, bugs, errors, or simply wish to yell at me. Happy reading.
-&lt;/p&gt;
-
-				    
-				</description>
-				<pubDate>Thu, 28 Apr 2011 00:00:00 -0700</pubDate>
-				<link>http://openglbook.com//blog/chapter-3-index-buffer-objects-and-primitive-types-released</link>
-				<guid isPermaLink="true">http://openglbook.com//blog/chapter-3-index-buffer-objects-and-primitive-types-released</guid>
 			</item>
 		
 	</channel>
