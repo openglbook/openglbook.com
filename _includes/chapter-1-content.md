@@ -355,10 +355,6 @@ now the front buffer and buffer A is now the back buffer:
   class="center"
 />
 
-After the buffers are swapped, the final function in `RenderFunction` is
-called, namely `glutPostRedisplay`, which tells FreeGLUT that the application
-is once again ready for rendering.
-
 # Adding GLEW #
 
 Now that we have an OpenGL 4.0 context, we'll need the tools to work with it,
