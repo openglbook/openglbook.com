@@ -418,7 +418,7 @@ data-type of each component passed to the `type` parameter, in our case
 If the values in our vertex array were not floating point values but integer
 values, we'd have the option of normalizing the values to a certain range before
 using them by passing `GL_TRUE` into the `normalized` parameter. If the values
-provided were signed integers, the values would be normalized to the [-1, - 1]
+provided were signed integers, the values would be normalized to the [-1, 1]
 range, and if they were unsigned, they would be normalized to the [0, 1] range.
 For example, if we'd pass in an unsigned byte with a value of 255, the resulting
 floating point value would be 1.0. In our program, the values passed are
