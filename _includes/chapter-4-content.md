@@ -209,9 +209,10 @@ of unit vectors. The column vector for x points in the x-direction, the column
 vector for y in the y-direction, the column vector for z in the z-direction, and
 the column vector used for translation set to zero for no translation.
 
-Our own identity matrix is stored in the `IDENTITY_MATRIX` constant, defined in
-the `Utils.h` file. If you browse through some of the functions in `Utils.c`,
-you'll notice that we use an identity matrix for almost every transformation.
+Our own identity matrix is stored in the `IDENTITY_MATRIX` constant, declared
+as an extern in `Utils.h` and defined in the `Utils.c` file. If you browse
+through some of the functions in `Utils.c`, you'll notice that we use an
+identity matrix for almost every transformation.
 
 ## Transformations ##
 
