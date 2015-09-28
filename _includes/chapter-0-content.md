@@ -1000,6 +1000,9 @@ licenses that allow you to use GLEW in any code base, similar to the license
 that FreeGLUT uses. Please make sure to get version 1.5.4 or higher for OpenGL
 4.0 support.
 
+## Setting up Guides ##
+[Setting up OpenGL, GLEW, and FreeGLUT in Visual C++](http://openglbook.com/blog/setting-up-opengl-glew-and-freeglut-in-visual-c/)
+
 ## Other Libraries ##
 
 Any other library dependencies will be listed at the beginning of each chapter.
