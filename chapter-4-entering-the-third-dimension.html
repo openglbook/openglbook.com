@@ -154,13 +154,253 @@ file called <code>Utils.h</code>, and add the following lines:</p>
 
 <!--- 4.1 -->
 
-<script src="https://gist.github.com/EddyLuten/11242920.js"> </script>
+<p><noscript><pre>#ifndef UTILS_H</p>
+
+<h1>define UTILS_H</h1>
+
+<h1>include &lt;stdlib.h&gt;</h1>
+
+<h1>include &lt;stdio.h&gt;</h1>
+
+<h1>include &lt;string.h&gt;</h1>
+
+<h1>include &lt;math.h&gt;</h1>
+
+<h1>include &lt;time.h&gt;</h1>
+
+<h1>include &lt;GL/glew.h&gt;</h1>
+
+<h1>include &lt;GL/freeglut.h&gt;</h1>
+
+<p>static const double PI = 3.14159265358979323846;</p>
+
+<p>typedef struct Vertex
+{
+  float Position[4];
+  float Color[4];
+} Vertex;</p>
+
+<p>typedef struct Matrix
+{
+  float m[16];
+} Matrix;</p>
+
+<p>extern const Matrix IDENTITY_MATRIX;</p>
+
+<p>float Cotangent(float angle);
+float DegreesToRadians(float degrees);
+float RadiansToDegrees(float radians);</p>
+
+<p>Matrix MultiplyMatrices(const Matrix* m1, const Matrix* m2);
+void RotateAboutX(Matrix* m, float angle);
+void RotateAboutY(Matrix* m, float angle);
+void RotateAboutZ(Matrix* m, float angle);
+void ScaleMatrix(Matrix* m, float x, float y, float z);
+void TranslateMatrix(Matrix* m, float x, float y, float z);</p>
+
+<p>Matrix CreateProjectionMatrix(
+  float fovy,
+  float aspect<em>ratio,
+  float near</em>plane,
+  float far_plane
+);</p>
+
+<p>void ExitOnGLError(const char* error<em>message);
+GLuint LoadShader(const char* filename, GLenum shader</em>type);</p>
+
+<h1>endif</h1>
+
+<p></pre></noscript><script src="https://gist.github.com/EddyLuten/11242920.js"> </script></p>
 
 <p>Now create a second file named <code>Utils.c</code> and insert the following lines:</p>
 
 <!--- 4.2 -->
 
-<script src="https://gist.github.com/EddyLuten/11242940.js"> </script>
+<p><noscript><pre>#include &quot;Utils.h&quot;</p>
+
+<p>const Matrix IDENTITY_MATRIX = { {
+  1, 0, 0, 0,
+  0, 1, 0, 0,
+  0, 0, 1, 0,
+  0, 0, 0, 1
+} };</p>
+
+<p>float Cotangent(float angle)
+{
+  return (float)(1.0 / tan(angle));
+}</p>
+
+<p>float DegreesToRadians(float degrees)
+{
+  return degrees * (float)(PI / 180);
+}</p>
+
+<p>float RadiansToDegrees(float radians)
+{
+  return radians * (float)(180 / PI);
+}</p>
+
+<p>Matrix MultiplyMatrices(const Matrix* m1, const Matrix* m2)
+{
+  Matrix out = IDENTITY<em>MATRIX;
+  unsigned int row, column, row</em>offset;</p>
+
+<p>for (row = 0, row<em>offset = row * 4; row &lt; 4; ++row, row</em>offset = row * 4)
+    for (column = 0; column &lt; 4; ++column)
+      out.m[row<em>offset + column] =
+        (m1-&gt;m[row</em>offset + 0] * m2-&gt;m[column + 0]) +
+        (m1-&gt;m[row<em>offset + 1] * m2-&gt;m[column + 4]) +
+        (m1-&gt;m[row</em>offset + 2] * m2-&gt;m[column + 8]) +
+        (m1-&gt;m[row_offset + 3] * m2-&gt;m[column + 12]);</p>
+
+<p>return out;
+}</p>
+
+<p>void ScaleMatrix(Matrix* m, float x, float y, float z)
+{
+  Matrix scale = IDENTITY_MATRIX;</p>
+
+<p>scale.m[0] = x;
+  scale.m[5] = y;
+  scale.m[10] = z;</p>
+
+<p>memcpy(m-&gt;m, MultiplyMatrices(m, &amp;scale).m, sizeof(m-&gt;m));
+}</p>
+
+<p>void TranslateMatrix(Matrix* m, float x, float y, float z)
+{
+  Matrix translation = IDENTITY_MATRIX;</p>
+
+<p>translation.m[12] = x;
+  translation.m[13] = y;
+  translation.m[14] = z;</p>
+
+<p>memcpy(m-&gt;m, MultiplyMatrices(m, &amp;translation).m, sizeof(m-&gt;m));
+}</p>
+
+<p>void RotateAboutX(Matrix* m, float angle)
+{
+  Matrix rotation = IDENTITY_MATRIX;
+  float sine = (float)sin(angle);
+  float cosine = (float)cos(angle);</p>
+
+<p>rotation.m[5] = cosine;
+  rotation.m[6] = -sine;
+  rotation.m[9] = sine;
+  rotation.m[10] = cosine;</p>
+
+<p>memcpy(m-&gt;m, MultiplyMatrices(m, &amp;rotation).m, sizeof(m-&gt;m));
+}</p>
+
+<p>void RotateAboutY(Matrix* m, float angle)
+{
+  Matrix rotation = IDENTITY_MATRIX;
+  float sine = (float)sin(angle);
+  float cosine = (float)cos(angle);</p>
+
+<p>rotation.m[0] = cosine;
+  rotation.m[8] = sine;
+  rotation.m[2] = -sine;
+  rotation.m[10] = cosine;</p>
+
+<p>memcpy(m-&gt;m, MultiplyMatrices(m, &amp;rotation).m, sizeof(m-&gt;m));
+}</p>
+
+<p>void RotateAboutZ(Matrix* m, float angle)
+{
+  Matrix rotation = IDENTITY_MATRIX;
+  float sine = (float)sin(angle);
+  float cosine = (float)cos(angle);</p>
+
+<p>rotation.m[0] = cosine;
+  rotation.m[1] = -sine;
+  rotation.m[4] = sine;
+  rotation.m[5] = cosine;</p>
+
+<p>memcpy(m-&gt;m, MultiplyMatrices(m, &amp;rotation).m, sizeof(m-&gt;m));
+}</p>
+
+<p>Matrix CreateProjectionMatrix(
+  float fovy,
+  float aspect<em>ratio,
+  float near</em>plane,
+  float far_plane
+)
+{
+  Matrix out = { { 0 } };</p>
+
+<p>const float
+    y<em>scale = Cotangent(DegreesToRadians(fovy / 2)),
+    x</em>scale = y<em>scale / aspect</em>ratio,
+    frustum<em>length = far</em>plane - near_plane;</p>
+
+<p>out.m[0] = x<em>scale;
+  out.m[5] = y</em>scale;
+  out.m[10] = -((far<em>plane + near</em>plane) / frustum<em>length);
+  out.m[11] = -1;
+  out.m[14] = -((2 * near</em>plane * far<em>plane) / frustum</em>length);</p>
+
+<p>return out;
+}</p>
+
+<p>void ExitOnGLError(const char* error_message)
+{
+  const GLenum ErrorValue = glGetError();</p>
+
+<p>if (ErrorValue != GL<em>NO</em>ERROR)
+  {
+    fprintf(stderr, &quot;%s: %s\n&quot;, error<em>message, gluErrorString(ErrorValue));
+    exit(EXIT</em>FAILURE);
+  }
+}</p>
+
+<p>GLuint LoadShader(const char* filename, GLenum shader<em>type)
+{
+  GLuint shader</em>id = 0;
+  FILE* file;
+  long file<em>size = -1;
+  char* glsl</em>source;</p>
+
+<p>if (NULL != (file = fopen(filename, &quot;rb&quot;)) &amp;&amp;
+    0 == fseek(file, 0, SEEK<em>END) &amp;&amp;
+    -1 != (file</em>size = ftell(file)))
+  {
+    rewind(file);</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">if (NULL != (glsl_source = (char*)malloc(file_size + 1)))
+{
+  if (file_size == (long)fread(glsl_source, sizeof(char), file_size, file))
+  {
+    glsl_source[file_size] = &amp;#39;\0&amp;#39;;
+
+    if (0 != (shader_id = glCreateShader(shader_type)))
+    {
+      glShaderSource(shader_id, 1, &amp;amp;glsl_source, NULL);
+      glCompileShader(shader_id);
+      ExitOnGLError(&amp;quot;Could not compile a shader&amp;quot;);
+    }
+    else
+      fprintf(stderr, &amp;quot;ERROR: Could not create a shader.\n&amp;quot;);
+  }
+  else
+    fprintf(stderr, &amp;quot;ERROR: Could not read file %s\n&amp;quot;, filename);
+
+  free(glsl_source);
+}
+else
+  fprintf(stderr, &amp;quot;ERROR: Could not allocate %i bytes.\n&amp;quot;, file_size);
+
+fclose(file);
+</code></pre></div>
+<p>}
+  else
+  {
+    if (NULL != file)
+      fclose(file);
+    fprintf(stderr, &quot;ERROR: Could not open file %s\n&quot;, filename);
+  }</p>
+
+<p>return shader_id;
+}</pre></noscript><script src="https://gist.github.com/EddyLuten/11242940.js"> </script></p>
 
 <h1>Step-By-Step: Mathematics</h1>
 
@@ -788,7 +1028,7 @@ with a single <code>#include</code> to <code>Utils.h</code>:</p>
 
 <!--- 4.3 -->
 
-<script src="https://gist.github.com/EddyLuten/095476c1fe61e9b7a605.js"> </script>
+<p><noscript><pre>#include &quot;Utils.h&quot;</pre></noscript><script src="https://gist.github.com/EddyLuten/095476c1fe61e9b7a605.js"> </script></p>
 
 <p>As with each chapter, update <code>WINDOW_TITLE_PREFIX</code> to reflect the current
 chapter.</p>
@@ -797,136 +1037,229 @@ chapter.</p>
 
 <!--- 4.4 -->
 
-<script src="https://gist.github.com/EddyLuten/1055007717fe8949ae1f.js"> </script>
+<p><noscript><pre>GLuint
+  ProjectionMatrixUniformLocation,
+  ViewMatrixUniformLocation,
+  ModelMatrixUniformLocation,
+  BufferIds[3] = { 0 },
+  ShaderIds[3] = { 0 };</pre></noscript><script src="https://gist.github.com/EddyLuten/1055007717fe8949ae1f.js"> </script></p>
 
 <p>Underneath that, add the following matrices:</p>
 
 <!--- 4.5 -->
 
-<script src="https://gist.github.com/EddyLuten/3ecfb19215078c295652.js"> </script>
+<p><noscript><pre>Matrix
+  ProjectionMatrix,
+  ViewMatrix,
+  ModelMatrix;</pre></noscript><script src="https://gist.github.com/EddyLuten/3ecfb19215078c295652.js"> </script></p>
 
 <p>Right below that, add the following variable declarations:</p>
 
 <!--- 4.6 -->
 
-<script src="https://gist.github.com/EddyLuten/3d980ad11db92a3bbd7f.js"> </script>
+<p><noscript><pre>float CubeRotation = 0;
+clock_t LastTime = 0;</pre></noscript><script src="https://gist.github.com/EddyLuten/3d980ad11db92a3bbd7f.js"> </script></p>
 
 <p>Underneath the declaration of the <code>IdleFunction</code> function, insert the following
 new function declarations:</p>
 
 <!--- 4.7 -->
 
-<script src="https://gist.github.com/EddyLuten/771852633450cd7f6e76.js"> </script>
+<p><noscript><pre>void CreateCube(void);
+void DestroyCube(void);
+void DrawCube(void);</pre></noscript><script src="https://gist.github.com/EddyLuten/771852633450cd7f6e76.js"> </script></p>
 
 <p>Inside of the <code>Initialize</code> function definition, make the following function call
 right above the function call to <code>glClearColor</code>:</p>
 
 <!--- 4.8 -->
 
-<script src="https://gist.github.com/EddyLuten/6963527fb4c2ad1a99eb.js"> </script>
+<p><noscript><pre>glGetError();</pre></noscript><script src="https://gist.github.com/EddyLuten/6963527fb4c2ad1a99eb.js"> </script></p>
 
 <p>Then, right underneath the call to <code>glClearColor</code>, insert the following lines:</p>
 
 <!--- 4.9 -->
 
-<script src="https://gist.github.com/EddyLuten/5559ad12f033f0b2a33e.js"> </script>
+<p><noscript><pre>glEnable(GL<em>DEPTH</em>TEST);
+glDepthFunc(GL_LESS);
+ExitOnGLError(&quot;ERROR: Could not set OpenGL depth testing options&quot;);</p>
+
+<p>glEnable(GL<em>CULL</em>FACE);
+glCullFace(GL<em>BACK);
+glFrontFace(GL</em>CCW);
+ExitOnGLError(&quot;ERROR: Could not set OpenGL culling options&quot;);</p>
+
+<p>ModelMatrix = IDENTITY<em>MATRIX;
+ProjectionMatrix = IDENTITY</em>MATRIX;
+ViewMatrix = IDENTITY_MATRIX;
+TranslateMatrix(&amp;ViewMatrix, 0, 0, -2);</p>
+
+<p>CreateCube();</pre></noscript><script src="https://gist.github.com/EddyLuten/5559ad12f033f0b2a33e.js"> </script></p>
 
 <p>Inside of the <code>InitWindow</code> function definition, right after the function call
 to <code>glutTimerFunc</code>, place the following line:</p>
 
 <!--- 4.10 -->
 
-<script src="https://gist.github.com/EddyLuten/90eaa15298c6dfd15462.js"> </script>
+<p><noscript><pre>glutCloseFunc(DestroyCube);</pre></noscript><script src="https://gist.github.com/EddyLuten/90eaa15298c6dfd15462.js"> </script></p>
 
 <p>Next, inside of the <code>ResizeFunction</code> function definition, underneath the call
 to <code>glViewport</code>, insert the following lines:</p>
 
 <!--- 4.11 -->
 
-<script src="https://gist.github.com/EddyLuten/bbba58a6a866bb135229.js"> </script>
+<p><noscript><pre>ProjectionMatrix =
+  CreateProjectionMatrix(
+    60,
+    (float)CurrentWidth / CurrentHeight,
+    1.0f,
+    100.0f
+  ); </p>
+
+<p>glUseProgram(ShaderIds[0]);
+glUniformMatrix4fv(ProjectionMatrixUniformLocation, 1, GL_FALSE, ProjectionMatrix.m);
+glUseProgram(0);</pre></noscript><script src="https://gist.github.com/EddyLuten/bbba58a6a866bb135229.js"> </script></p>
 
 <p>In the <code>RenderFunction</code> function definition, right after the call to <code>glClear</code>,
 place the following function call:</p>
 
 <!--- 4.12 -->
 
-<script src="https://gist.github.com/EddyLuten/ca507a1e78286ea54762.js"> </script>
+<p><noscript><pre>DrawCube();</pre></noscript><script src="https://gist.github.com/EddyLuten/ca507a1e78286ea54762.js"> </script></p>
 
 <p>We&#39;ll be entering the following function definition piece by piece in logical
 steps. First, create the following empty function definition:</p>
 
 <!--- 4.13 -->
 
-<script src="https://gist.github.com/EddyLuten/74fe2527c7f679fba05e.js"> </script>
+<p><noscript><pre>void CreateCube(void)
+{
+}</pre></noscript><script src="https://gist.github.com/EddyLuten/74fe2527c7f679fba05e.js"> </script></p>
 
 <p>At the first line of the function, insert the cube&#39;s vertex definitions:</p>
 
 <!--- 4.14 -->
 
-<script src="https://gist.github.com/EddyLuten/617687afdc71a3ee8102.js"> </script>
+<p><noscript><pre>const Vertex VERTICES[8] =
+{
+  { { -.5f, -.5f,  .5f, 1 }, { 0, 0, 1, 1 } },
+  { { -.5f,  .5f,  .5f, 1 }, { 1, 0, 0, 1 } },
+  { {  .5f,  .5f,  .5f, 1 }, { 0, 1, 0, 1 } },
+  { {  .5f, -.5f,  .5f, 1 }, { 1, 1, 0, 1 } },
+  { { -.5f, -.5f, -.5f, 1 }, { 1, 1, 1, 1 } },
+  { { -.5f,  .5f, -.5f, 1 }, { 1, 0, 0, 1 } },
+  { {  .5f,  .5f, -.5f, 1 }, { 1, 0, 1, 1 } },
+  { {  .5f, -.5f, -.5f, 1 }, { 0, 0, 1, 1 } }
+};</pre></noscript><script src="https://gist.github.com/EddyLuten/617687afdc71a3ee8102.js"> </script></p>
 
 <p>Right after that, insert the cube&#39;s index definitions:</p>
 
 <!--- 4.15 -->
 
-<script src="https://gist.github.com/EddyLuten/5d782e809d5df7d55401.js"> </script>
+<p><noscript><pre>const GLuint INDICES[36] =
+{
+  0,2,1,  0,3,2,
+  4,3,0,  4,7,3,
+  4,1,5,  4,0,1,
+  3,6,2,  3,7,6,
+  1,6,5,  1,2,6,
+  7,5,6,  7,4,5
+};</pre></noscript><script src="https://gist.github.com/EddyLuten/5d782e809d5df7d55401.js"> </script></p>
 
 <p>After that, place the following shader-program creation code:</p>
 
 <!--- 4.16 -->
 
-<script src="https://gist.github.com/EddyLuten/b06f2085e3f330a1f69f.js"> </script>
+<p><noscript><pre>ShaderIds[0] = glCreateProgram();
+ExitOnGLError(&quot;ERROR: Could not create the shader program&quot;);</pre></noscript><script src="https://gist.github.com/EddyLuten/b06f2085e3f330a1f69f.js"> </script></p>
 
 <p>Immediately underneath that, place the following shader loading and attaching
 code:</p>
 
 <!--- 4.17 -->
 
-<script src="https://gist.github.com/EddyLuten/388c6a4ae16c515ff854.js"> </script>
+<p><noscript><pre>ShaderIds[1] = LoadShader(&quot;SimpleShader.fragment.glsl&quot;, GL<em>FRAGMENT</em>SHADER);
+ShaderIds[2] = LoadShader(&quot;SimpleShader.vertex.glsl&quot;, GL<em>VERTEX</em>SHADER);
+glAttachShader(ShaderIds[0], ShaderIds[1]);
+glAttachShader(ShaderIds[0], ShaderIds[2]);</p>
+
+<p>glLinkProgram(ShaderIds[0]);
+ExitOnGLError(&quot;ERROR: Could not link the shader program&quot;);</pre></noscript><script src="https://gist.github.com/EddyLuten/388c6a4ae16c515ff854.js"> </script></p>
 
 <p>After that, insert the code to retrieve the shader uniforms:</p>
 
 <!--- 4.18 -->
 
-<script src="https://gist.github.com/EddyLuten/d01acd9ba4e531b665e8.js"> </script>
+<p><noscript><pre>ModelMatrixUniformLocation = glGetUniformLocation(ShaderIds[0], &quot;ModelMatrix&quot;);
+ViewMatrixUniformLocation = glGetUniformLocation(ShaderIds[0], &quot;ViewMatrix&quot;);
+ProjectionMatrixUniformLocation = glGetUniformLocation(ShaderIds[0], &quot;ProjectionMatrix&quot;);
+ExitOnGLError(&quot;ERROR: Could not get the shader uniform locations&quot;);</pre></noscript><script src="https://gist.github.com/EddyLuten/d01acd9ba4e531b665e8.js"> </script></p>
 
 <p>Right below that, insert the following buffer generation code:</p>
 
 <!--- 4.38 -->
 
-<script src="https://gist.github.com/EddyLuten/4c9cbfead60c762ebfa0.js"> </script>
+<p><noscript><pre>glGenBuffers(2, &amp;BufferIds[1]);
+ExitOnGLError(&quot;ERROR: Could not generate the buffer objects&quot;);</pre></noscript><script src="https://gist.github.com/EddyLuten/4c9cbfead60c762ebfa0.js"> </script></p>
 
 <p>Insert the following VAO generation and binding code after that:</p>
 
 <!--- 4.19 -->
 
-<script src="https://gist.github.com/EddyLuten/b3471d8ee667beb3132c.js"> </script>
+<p><noscript><pre>glGenVertexArrays(1, &amp;BufferIds[0]);
+ExitOnGLError(&quot;ERROR: Could not generate the VAO&quot;);
+glBindVertexArray(BufferIds[0]);
+ExitOnGLError(&quot;ERROR: Could not bind the VAO&quot;);</pre></noscript><script src="https://gist.github.com/EddyLuten/b3471d8ee667beb3132c.js"> </script></p>
 
 <p>After that, enable the following vertex attribute locations:</p>
 
 <!--- 4.20 -->
 
-<script src="https://gist.github.com/EddyLuten/7a183a810e45a8e7576c.js"> </script>
+<p><noscript><pre>glEnableVertexAttribArray(0);
+glEnableVertexAttribArray(1);
+ExitOnGLError(&quot;ERROR: Could not enable vertex attributes&quot;);</pre></noscript><script src="https://gist.github.com/EddyLuten/7a183a810e45a8e7576c.js"> </script></p>
 
 <p>Insert the following VBO binding, data uploading, and vertex attribute
 descriptions after that:</p>
 
 <!--- 4.21 -->
 
-<script src="https://gist.github.com/EddyLuten/83d11077a915c859a5d9.js"> </script>
+<p><noscript><pre>glBindBuffer(GL<em>ARRAY</em>BUFFER, BufferIds[1]);
+glBufferData(GL<em>ARRAY</em>BUFFER, sizeof(VERTICES), VERTICES, GL<em>STATIC</em>DRAW);
+ExitOnGLError(&quot;ERROR: Could not bind the VBO to the VAO&quot;);</p>
+
+<p>glVertexAttribPointer(0, 4, GL<em>FLOAT, GL</em>FALSE, sizeof(VERTICES[0]), (GLvoid<em>)0);
+glVertexAttribPointer(1, 4, GL<em>FLOAT, GL</em>FALSE, sizeof(VERTICES[0]), (GLvoid</em>)sizeof(VERTICES[0].Position));
+ExitOnGLError(&quot;ERROR: Could not set VAO attributes&quot;);</pre></noscript><script src="https://gist.github.com/EddyLuten/83d11077a915c859a5d9.js"> </script></p>
 
 <p>For the final lines of the function, insert the IBO binding and uploading code:</p>
 
 <!--- 4.22 -->
 
-<script src="https://gist.github.com/EddyLuten/56225d608e9f63c84855.js"> </script>
+<p><noscript><pre>glBindBuffer(GL<em>ELEMENT</em>ARRAY<em>BUFFER, BufferIds[2]);
+glBufferData(GL</em>ELEMENT<em>ARRAY</em>BUFFER, sizeof(INDICES), INDICES, GL<em>STATIC</em>DRAW);
+ExitOnGLError(&quot;ERROR: Could not bind the IBO to the VAO&quot;);</p>
+
+<p>glBindVertexArray(0);</pre></noscript><script src="https://gist.github.com/EddyLuten/56225d608e9f63c84855.js"> </script></p>
 
 <p>Immediately after the <code>CreateCube</code> function definition, insert the following
 new function definition:</p>
 
 <!--- 4.23 -->
 
-<script src="https://gist.github.com/EddyLuten/e883d46cf87948e4c6e8.js"> </script>
+<p><noscript><pre>void DestroyCube(void)
+{
+  glDetachShader(ShaderIds[0], ShaderIds[1]);
+  glDetachShader(ShaderIds[0], ShaderIds[2]);
+  glDeleteShader(ShaderIds[1]);
+  glDeleteShader(ShaderIds[2]);
+  glDeleteProgram(ShaderIds[0]);
+  ExitOnGLError(&quot;ERROR: Could not destroy the shaders&quot;);</p>
+
+<p>glDeleteBuffers(2, &amp;BufferIds[1]);
+  glDeleteVertexArrays(1, &amp;BufferIds[0]);
+  ExitOnGLError(&quot;ERROR: Could not destroy the buffer objects&quot;);
+}</pre></noscript><script src="https://gist.github.com/EddyLuten/e883d46cf87948e4c6e8.js"> </script></p>
 
 <p>The last function we&#39;ll define draws the cube to the screen. Insert the
 following empty function definition immediately after the <code>DestroyCube</code>
@@ -934,45 +1267,90 @@ function definition:</p>
 
 <!--- 4.24 -->
 
-<script src="https://gist.github.com/EddyLuten/e1f250cac07a404dbd68.js"> </script>
+<p><noscript><pre>void DrawCube(void)
+{
+}</pre></noscript><script src="https://gist.github.com/EddyLuten/e1f250cac07a404dbd68.js"> </script></p>
 
 <p>At the first line of the function, insert the following lines used for time-based rotations:</p>
 
 <!-- 4.25 -->
 
-<script src="https://gist.github.com/EddyLuten/d070de499c0cd4b250c1.js"> </script>
+<p><noscript><pre>float CubeAngle;
+clock_t Now = clock();
+if (LastTime == 0)
+  LastTime = Now;</p>
+
+<p>CubeRotation += 45.0f * ((float)(Now - LastTime) / CLOCKS<em>PER</em>SEC);
+CubeAngle = DegreesToRadians(CubeRotation);
+LastTime = Now;</pre></noscript><script src="https://gist.github.com/EddyLuten/d070de499c0cd4b250c1.js"> </script></p>
 
 <p>After that, insert the following matrix transformations:</p>
 
 <!-- 4.26 -->
 
-<script src="https://gist.github.com/EddyLuten/3dc558e4081bc5db257f.js"> </script>
+<p><noscript><pre>ModelMatrix = IDENTITY_MATRIX;
+RotateAboutY(&amp;ModelMatrix, CubeAngle);
+RotateAboutX(&amp;ModelMatrix, CubeAngle);</pre></noscript><script src="https://gist.github.com/EddyLuten/3dc558e4081bc5db257f.js"> </script></p>
 
 <p>Immediately after that, insert the following shader related function calls:</p>
 
 <!--- 4.27 -->
 
-<script src="https://gist.github.com/EddyLuten/7c63a0972e30c4f07415.js"> </script>
+<p><noscript><pre>glUseProgram(ShaderIds[0]);
+ExitOnGLError(&quot;ERROR: Could not use the shader program&quot;);</p>
+
+<p>glUniformMatrix4fv(ModelMatrixUniformLocation, 1, GL<em>FALSE, ModelMatrix.m);
+glUniformMatrix4fv(ViewMatrixUniformLocation, 1, GL</em>FALSE, ViewMatrix.m);
+ExitOnGLError(&quot;ERROR: Could not set the shader uniforms&quot;);</pre></noscript><script src="https://gist.github.com/EddyLuten/7c63a0972e30c4f07415.js"> </script></p>
 
 <p>Finally, insert the last lines of this function used for drawing purposes:</p>
 
 <!-- 4.28 -->
 
-<script src="https://gist.github.com/EddyLuten/89e07362707c7e4a5fad.js"> </script>
+<p><noscript><pre>glBindVertexArray(BufferIds[0]);
+ExitOnGLError(&quot;ERROR: Could not bind the VAO for drawing purposes&quot;);</p>
+
+<p>glDrawElements(GL<em>TRIANGLES, 36, GL</em>UNSIGNED_INT, (GLvoid*)0);
+ExitOnGLError(&quot;ERROR: Could not draw the cube&quot;);</p>
+
+<p>glBindVertexArray(0);
+glUseProgram(0);</pre></noscript><script src="https://gist.github.com/EddyLuten/89e07362707c7e4a5fad.js"> </script></p>
 
 <p>Next, create a text file called <code>SimpleShader.vertex.glsl</code>, and insert the
 following lines:</p>
 
 <!--- 4.29 -->
 
-<script src="https://gist.github.com/EddyLuten/419748bfb11a3b625fd8.js"> </script>
+<p><noscript><pre>#version 400</p>
+
+<p>layout(location=0) in vec4 in<em>Position;
+layout(location=1) in vec4 in</em>Color;
+out vec4 ex_Color;</p>
+
+<p>uniform mat4 ModelMatrix;
+uniform mat4 ViewMatrix;
+uniform mat4 ProjectionMatrix;</p>
+
+<p>void main(void)
+{
+  gl<em>Position = (ProjectionMatrix * ViewMatrix * ModelMatrix) * in</em>Position;
+  ex<em>Color = in</em>Color;
+}</pre></noscript><script src="https://gist.github.com/EddyLuten/419748bfb11a3b625fd8.js"> </script></p>
 
 <p>Lastly, create another text file called <code>SimpleShader.fragment.glsl</code> with the
 following containing the following lines:</p>
 
 <!--- 4.30 -->
 
-<script src="https://gist.github.com/EddyLuten/fb062bb7db27595279e5.js"> </script>
+<p><noscript><pre>#version 400</p>
+
+<p>in vec4 ex<em>Color;
+out vec4 out</em>Color;</p>
+
+<p>void main(void)
+{
+  out<em>Color = ex</em>Color;
+}</pre></noscript><script src="https://gist.github.com/EddyLuten/fb062bb7db27595279e5.js"> </script></p>
 
 <p>After you compile your program, make sure that these GLSL files are in the same
 directory as your executable before your run the executable. When you do, the
@@ -1020,7 +1398,7 @@ their names by calling the OpenGL function <code>glGetUniformLocation</code>:</p
 
 <!--- 4.31 -->
 
-<script src="https://gist.github.com/EddyLuten/e25a566c36319e3c50f7.js"> </script>
+<p><noscript><pre>GLint glGetUniformLocation(GLuint program, const GLchar* name);</pre></noscript><script src="https://gist.github.com/EddyLuten/e25a566c36319e3c50f7.js"> </script></p>
 
 <ul>
 <li>The program parameter takes in the shader program&#39;s identifier as generated by
@@ -1042,7 +1420,12 @@ a 4x4 floating-point matrix:</p>
 
 <!--- 4.32 -->
 
-<script src="https://gist.github.com/EddyLuten/9bf5a2567d98a2697553.js"> </script>
+<p><noscript><pre>void glUniformMatrix4fv(
+  Glint location,
+  GLsizei count,
+  GLboolean transpose,
+  const GLfloat* value
+);</pre></noscript><script src="https://gist.github.com/EddyLuten/9bf5a2567d98a2697553.js"> </script></p>
 
 <ul>
 <li>The <code>location</code> parameter takes in the location of the uniform as queried by
@@ -1063,14 +1446,19 @@ identity matrix in C looks like the following piece of code:</p>
 
 <!--- 4.33 -->
 
-<script src="https://gist.github.com/EddyLuten/02c19a85e6cc88791916.js"> </script>
+<p><noscript><pre>float Identity[16] = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };</pre></noscript><script src="https://gist.github.com/EddyLuten/02c19a85e6cc88791916.js"> </script></p>
 
 <p>If we lay it out in a bit more readable format (as in <code>Utils.h</code>), we can see the
 layout of the matrix:</p>
 
 <!--- 4.34 -->
 
-<script src="https://gist.github.com/EddyLuten/e074bef3945216fbce68.js"> </script>
+<p><noscript><pre>float Identity[16] = {
+  1, 0, 0, 0,
+  0, 1, 0, 0,
+  0, 0, 1, 0,
+  0, 0, 0, 1
+};</pre></noscript><script src="https://gist.github.com/EddyLuten/e074bef3945216fbce68.js"> </script></p>
 
 <p>The matrix&#39;s column vectors occupy contiguous memory, meaning that the x-column
 vector occupies indices 0 through 3; the y-column vector occupies indices 4
@@ -1188,7 +1576,7 @@ files instead, its prototype looks like this:</p>
 
 <!--- 4.35 -->
 
-<script src="https://gist.github.com/EddyLuten/0538fa1225b581c89748.js"> </script>
+<p><noscript><pre>GLuint LoadShader(const char* filename, GLenum shader_type);</pre></noscript><script src="https://gist.github.com/EddyLuten/0538fa1225b581c89748.js"> </script></p>
 
 <ul>
 <li>The <code>filename</code> parameter takes in the filename of the GLSL shader to read</li>
@@ -1234,7 +1622,9 @@ earlier in the chapter. In the GLSL source code, they look like this:</p>
 
 <!--- 4.36 -->
 
-<script src="https://gist.github.com/EddyLuten/e07ab8b36747caad538d.js"> </script>
+<p><noscript><pre>uniform mat4 ModelMatrix;
+uniform mat4 ViewMatrix;
+uniform mat4 ProjectionMatrix;</pre></noscript><script src="https://gist.github.com/EddyLuten/e07ab8b36747caad538d.js"> </script></p>
 
 <p>As mentioned earlier, the matrices in the shader have the exact same names as
 the ones in the source code. This is not a requirement, but simply to show the
@@ -1245,7 +1635,7 @@ vertex position:</p>
 
 <!--- 4.37 -->
 
-<script src="https://gist.github.com/EddyLuten/2832fcabb2e37a37bc15.js"> </script>
+<p><noscript><pre>gl<em>Position = (ProjectionMatrix * ViewMatrix * ModelMatrix) * in</em>Position;</pre></noscript><script src="https://gist.github.com/EddyLuten/2832fcabb2e37a37bc15.js"> </script></p>
 
 <p>As you can see, the transformation for the vertex happens by multiplying the
 matrices together to form one transformation matrix (the multiplication between

@@ -151,61 +151,73 @@ pre-processor definition to reflect Chapter 2.</p>
 <p>Add the following global variable declarations underneath the line containing
 the <code>FrameCount</code> variable:</p>
 
-<script src="https://gist.github.com/11133700.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11133700.js"> </script></p>
 
 <p>Next up are the contents of our very first GLSL vertex shader, add the following
 lines below the <code>ColorBufferId</code> declaration:</p>
 
-<script src="https://gist.github.com/11133716.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11133716.js"> </script></p>
 
 <p>Below that follows our GLSL fragment shader:</p>
 
-<script src="https://gist.github.com/11133728.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11133728.js"> </script></p>
 
 <p>There are also a few new functions in this chapter, so add the following lines
 underneath the last function declaration, which should be <code>Idlefunction</code>:</p>
 
-<script src="https://gist.github.com/11133792.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11133792.js"> </script></p>
 
 <p>The next change is quite a bit further in the file, inside of the Initialize
 function. Right above the <code>glClearColor</code> function call, add the following
 function calls:</p>
 
-<script src="https://gist.github.com/11133812.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11133812.js"> </script></p>
 
 <p>We also need to register one more FreeGLUT call back function, so in the
 InitWindow function, make the final line right underneath <code>glutTimerFunc</code>:</p>
 
-<script src="https://gist.github.com/11134348.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11134348.js"> </script></p>
 
 <p>The call back function passed to <code>glutCloseFunc</code> is <code>CleanUp</code>, which is defined
 at the end of the file right underneath the <code>glutTimerFunc</code> definition like so:</p>
 
-<script src="https://gist.github.com/11134367.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11134367.js"> </script></p>
 
 <p>Next, modify <code>RenderFunction</code> to include the following line right below the
 function call to <code>glClear</code>:</p>
 
-<script src="https://gist.github.com/11134375.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11134375.js"> </script></p>
 
 <p>The next function is <code>CreateVBO</code>, which creates the buffer objects and defines
 the buffer&#39;s contents. Add it right after the <code>CleanUp</code> function definition.</p>
 
-<script src="https://gist.github.com/11134421.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11134421.js"> </script></p>
 
 <p>Add the next function definition, <code>DestroyVBO</code>, right underneath the <code>CreateVBO</code>
 function definition:</p>
 
-<script src="https://gist.github.com/11134449.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11134449.js"> </script></p>
 
 <p>Our next function is <code>CreateShaders</code>, which is defined right under <code>DestroyVBO</code>:</p>
 
-<script src="https://gist.github.com/11134488.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11134488.js"> </script></p>
 
 <p>And finally, to destroy our shaders, define <code>DestroyShaders</code> right underneath
 the <code>CreateShaders</code> definition:</p>
 
-<script src="https://gist.github.com/11134505.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11134505.js"> </script></p>
 
 <p>Now that you have all of the required content, compile your program and run it.
 The output of your program should look like the following screenshot:</p>
@@ -250,7 +262,8 @@ the final color of a pixel.</p>
 
 <p>Let&#39;s take a quick look at the Vertex shader:</p>
 
-<script src="https://gist.github.com/11134557.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11134557.js"> </script></p>
 
 <p>The first line of our vertex shader program is a GLSL pre-processor definition
 denoting which version of GLSL the program requires; in our case this is version
@@ -301,7 +314,8 @@ shader stage of our GLSL program:</p>
 
 <h3>The Fragment Shader</h3>
 
-<script src="https://gist.github.com/11134694.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11134694.js"> </script></p>
 
 <p>The <code>ex_Color</code> parameter is not an output in this shader, but an input instead.
 This is because we have copied the output variable of the same name from the
@@ -394,7 +408,8 @@ point, but we discard the value returned by this call.</p>
 generates Vertex Array Objects in the GPU&#39;s memory and passes back their
 identifiers:</p>
 
-<script src="https://gist.github.com/11134839.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11134839.js"> </script></p>
 
 <p>Its first parameter <code>n</code> describes the amount, or <strong>n</strong>umber of Vertex Arrays to
 generate. After they are generated, their identifiers (or &quot;names&quot; in the OpenGL
@@ -418,7 +433,8 @@ generating buffers by a call to <code>glGenBuffers</code>, which generates our b
 the GPU&#39;s memory. Here&#39;s its function prototype, retrieved from the OpenGL SDK
 documentation:</p>
 
-<script src="https://gist.github.com/11134858.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11134858.js"> </script></p>
 
 <p>Its first parameter, <code>n</code>, is the <strong>n</strong>umber of buffers requested. Once <em>n</em>
 buffers have been generated, their identifiers (also referred to as &quot;names&quot; in
@@ -437,7 +453,8 @@ attributes. The target is bound to the buffer with a call to <code>glBindBuffer<
 which takes the target type as its first parameter, and the buffer&#39;s identifier
 (returned from <code>glGenBuffers</code>) as the second:</p>
 
-<script src="https://gist.github.com/11134882.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11134882.js"> </script></p>
 
 <p>Not only does <code>glBindBuffer</code> bind the buffer to the specified target, it also
 activates the current buffer object as the target. This means that any
@@ -449,7 +466,8 @@ value stored in <code>VboId</code> by <code>glGenBuffers</code>.</p>
 <p>Now that the buffer is bound, we can copy our vertex data over to the GPU&#39;s
 memory. This is achieved by making a call to <code>glBufferData</code>:</p>
 
-<script src="https://gist.github.com/11135165.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11135165.js"> </script></p>
 
 <p>The <code>target</code> parameter is once again set to <code>GL_ARRAY_BUFFER</code> to signify that we
 are copying data to the currently activated buffer with this target type, in our
@@ -476,7 +494,8 @@ doesn&#39;t know what types of data these are; this is where the
 <code>glVertexAttribPointer</code> function comes into play whose prototype looks like
 this:</p>
 
-<script src="https://gist.github.com/11135202.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11135202.js"> </script></p>
 
 <p><code>glVertexAttribPointer</code> provides OpenGL with all of the necessary metadata to
 use the block of raw data that we&#39;ve uploaded to the GPU&#39;s memory using
@@ -492,11 +511,13 @@ identify those parameters marked with a layout qualifier in a GLSL shader
 program. For example if we changed the <code>index</code> parameter to 18, we must also
 update the GLSL shader&#39;s layout qualifier&#39;s <code>location</code> argument to 18:</p>
 
-<script src="https://gist.github.com/11135219.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11135219.js"> </script></p>
 
 <p>Has a 1:1 association with:</p>
 
-<script src="https://gist.github.com/11135226.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11135226.js"> </script></p>
 
 <p>As you can see, we&#39;re describing the <code>in_Position</code> variable with
 <code>glVertexAttribPointer</code> by having four floating point components, which
@@ -605,7 +626,8 @@ linked before it can be executed.</p>
 <p>First, we must create shader objects for both our vertex shader, this is
 accomplished by calling the <code>glCreateShader</code> function:</p>
 
-<script src="https://gist.github.com/11240297.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11240297.js"> </script></p>
 
 <p>This function tells the OpenGL to generate a new shader object of <code>shaderType</code>
 and return its identifier. In our program we store this identifier in variable
@@ -613,7 +635,8 @@ and return its identifier. In our program we store this identifier in variable
 source code to OpenGL for compilation. This is done with a call to
 <code>glShaderSource</code>:</p>
 
-<script src="https://gist.github.com/11240312.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11240312.js"> </script></p>
 
 <p>This function copies the source code in the string specified by parameter
 <code>string</code> and associates it with the shader object identified by parameter
@@ -629,7 +652,8 @@ if you use normal null-terminated strings, as in our case.</p>
 <p>Now that we have our shader&#39;s source code in memory, we have to compile it
 before we can get any further. This is done with the <code>glCompileShader</code> function:</p>
 
-<script src="https://gist.github.com/11240329.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11240329.js"> </script></p>
 
 <p>This is a fairly straightforward function which takes in the shader&#39;s identifier
 as its <code>shader</code> parameter.</p>
@@ -639,27 +663,31 @@ the fragment shader. Now that we&#39;ve compiled the individual shaders, we need
 combine them in a shader program object. To do this, we must generate a program
 object:</p>
 
-<script src="https://gist.github.com/11240338.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11240338.js"> </script></p>
 
 <p>This function returns an identifier which we store in <code>ProgramId</code> and takes in
 no parameters. You can think of a shader program object as a regular executable:
 it is composed of several compiled objects linked together to form a whole. To
 attach the shaders to the program we use the <code>glAttachShader</code> function:</p>
 
-<script src="https://gist.github.com/11240358.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11240358.js"> </script></p>
 
 <p>The syntax for this function couldn&#39;t be simpler in that it takes in the
 identifier for the the shader program object in its <code>program</code> parameter and the
 identifier of the shader in the <code>shader</code> parameter. The last step before we can
 use our shader program is linking:</p>
 
-<script src="https://gist.github.com/11240374.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11240374.js"> </script></p>
 
 <p>Another almost self-explanatory function which takes in the shader program
 object&#39;s identifier and doesn&#39;t return a value. After this whole process
 completes, we can use our new shader program by calling <code>glUseProgram</code>:</p>
 
-<script src="https://gist.github.com/11240398.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11240398.js"> </script></p>
 
 <p>Which takes in the shader program object&#39;s identifier and makes it current. The
 current program remains active until <code>glUseProgram</code> is called with another
@@ -673,7 +701,8 @@ enabled for drawing with a call to <code>glEnableVertexAttribArray</code>, our c
 vertex arrays from <code>CreateVBO</code>. The OpenGL function <code>glDrawArrays</code> has the
 following prototype:</p>
 
-<script src="https://gist.github.com/11240421.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11240421.js"> </script></p>
 
 <p>The first parameter, <code>mode</code>, specifies the type of array data that&#39;s going to be
 drawn to the screen with this function call. In our case, this value is set to
@@ -695,14 +724,16 @@ called by FreeGLUT to dispose of some of our generated objects.</p>
 <p>There are a few function calls required to clean up shaders, but before we can
 clean up, we&#39;ll have to tell OpenGL to stop using our shader program by calling:</p>
 
-<script src="https://gist.github.com/11240624.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11240624.js"> </script></p>
 
 <p>By passing zero as the <code>program</code> parameter, we tell OpenGL to stop using the
 shader program. Now that our shader program is no longer being used, we can
 safely detach the fragment and vertex shaders from our program object by calling
 <code>glDetachShader</code>:</p>
 
-<script src="https://gist.github.com/11240633.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11240633.js"> </script></p>
 
 <p>This function is the exact opposite of <code>glAttachShader</code> and expects the exact
 same parameters: *it takes in the identifier for the the shader program object
@@ -712,13 +743,15 @@ parameter.</p>
 <p>Since the shaders are now no longer in use by the shader program, we can safely
 delete them by calling <code>glDeleteShader</code>:</p>
 
-<script src="https://gist.github.com/11240643.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11240643.js"> </script></p>
 
 <p>Which simply takes in the shader&#39;s identifier, in our case <code>VertexShaderId</code> and
 <code>FragmentShaderId</code>. After the shaders have been detached from the program, and
 the program is no longer in use, we can also safely delete the shader program:</p>
 
-<script src="https://gist.github.com/11240655.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11240655.js"> </script></p>
 
 <p>Which takes in the shader program object&#39;s identifier, in our case <code>ProgramId</code>.</p>
 
@@ -740,7 +773,8 @@ appropriate indices provided.</p>
 <code>GL_ARRAY_BUFFER</code> target. This allows us to safely delete the buffers by calling
 <code>glDeleteBuffers</code>, whose prototype looks like this:</p>
 
-<script src="https://gist.github.com/11240670.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11240670.js"> </script></p>
 
 <p>As you may have noticed, this call is similar to <code>glGenBuffers</code> since it takes
 in the exact same parameters, but does the exact opposite by deleting instead of
@@ -765,15 +799,18 @@ up. let&#39;s make some changes to our program in order to draw our rectangle:</
 <p>Change the <code>Vertices</code> array in <code>CreateVBO</code> to contain six total vertices, making
 the total number of elements in this array twenty-four:</p>
 
-<script src="https://gist.github.com/11240708.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11240708.js"> </script></p>
 
 <p>Similar to the <code>Vertices</code> array, also change the <code>Color</code> array to contain twenty-four elements because of its six RGBA colors:</p>
 
-<script src="https://gist.github.com/11240718.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11240718.js"> </script></p>
 
 <p>And last but not least, change the <code>DrawArrays</code> command in our <code>RenderFunction</code> to draw six vertices instead of three:</p>
 
-<script src="https://gist.github.com/11240740.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11240740.js"> </script></p>
 
 <p>The output of your program should now look like this:</p>
 
@@ -812,16 +849,19 @@ ours are.</p>
 Change the <code>Vertices</code> array in the <code>CreateVBO</code> function to contain the following
 four vertices:</p>
 
-<script src="https://gist.github.com/11240814.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11240814.js"> </script></p>
 
 <p>Change the <code>Colors</code> array in the same function to this:</p>
 
-<script src="https://gist.github.com/11240831.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11240831.js"> </script></p>
 
 <p>And lastly, change the <code>glDrawArrays</code> function call in <code>RenderFunction</code> to the
 following:</p>
 
-<script src="https://gist.github.com/11240843.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11240843.js"> </script></p>
 
 <p>The output of your program should like the following screenshot:</p>
 
@@ -865,19 +905,23 @@ structures to the GPU&#39;s memory and still access its data correctly.</p>
 editor. Add the following structure definition right below the
 <code>WINDOW_TITLE_PREFIX</code> definition:</p>
 
-<script src="https://gist.github.com/11240878.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11240878.js"> </script></p>
 
 <p>Remove the <code>ColorBufferId</code> variable declaration, so the section looks as follows:</p>
 
-<script src="https://gist.github.com/11240888.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11240888.js"> </script></p>
 
 <p>Next, replace the entire <code>CreateVBO</code> function with the following code:</p>
 
-<script src="https://gist.github.com/11240908.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11240908.js"> </script></p>
 
 <p>And finally, remove the following line from the <code>DestroyVBO</code> function:</p>
 
-<script src="https://gist.github.com/11240924.js"> </script>
+<p><noscript><pre>400: Invalid request
+</pre></noscript><script src="https://gist.github.com/11240924.js"> </script></p>
 
 <p>The output of this program is exactly the same as the output of the very first
 exercise of this chapter, a single triangle:</p>

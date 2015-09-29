@@ -68,10 +68,10 @@
 				<description>
 					
 				        &lt;p&gt;
-	Over the course of the last few months, I have received numerous emails and bug reports from people trying to compile the sample code as C++ code. So many, in fact, that I'm starting to think that the site may actually benefit from C++ code samples &lt;em&gt;instead&lt;/em&gt; of C code samples.
+	Over the course of the last few months, I have received numerous emails and bug reports from people trying to compile the sample code as C++ code. So many, in fact, that I&#39;m starting to think that the site may actually benefit from C++ code samples &lt;em&gt;instead&lt;/em&gt; of C code samples.
 &lt;/p&gt;
 &lt;p&gt;
-	To get a good idea of the consensus of C++ vs C in this case, I've opened up a little poll. Please take a second or so to select an option from the list and vote, I'd really like to hear your opinion on this. Also, if you have a comment on this, please post it as well.
+	To get a good idea of the consensus of C++ vs C in this case, I&#39;ve opened up a little poll. Please take a second or so to select an option from the list and vote, I&#39;d really like to hear your opinion on this. Also, if you have a comment on this, please post it as well.
 &lt;/p&gt;
 &lt;p&gt;
 	&lt;em&gt;Poll Closed&lt;/em&gt;
@@ -90,7 +90,7 @@
 				<description>
 					
 				        &lt;p&gt;
-	If you're getting the message &lt;code&gt;Unable to create OpenGL 4.0 context (flags m, profile n)&lt;/code&gt; when creating your context (where m and n are numbers) your hardware &lt;strong&gt;does not support OpenGL 4.0&lt;/strong&gt;.
+	If you&#39;re getting the message &lt;code&gt;Unable to create OpenGL 4.0 context (flags m, profile n)&lt;/code&gt; when creating your context (where m and n are numbers) your hardware &lt;strong&gt;does not support OpenGL 4.0&lt;/strong&gt;.
 &lt;/p&gt;
 &lt;p&gt;
 	Sadly, this is not something you can fix without upgrading your hardware. As mentioned in the Preface, the minimum graphics hardware you need for an OpenGL 4.0 context is:
@@ -100,7 +100,7 @@
 	&lt;li&gt;If you own an AMD/ATI GPU, it must at least be in the Radeon HD 5000 series.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;
-	It is possible to run many of the samples using OpenGL 3.3 by using the code files found in the &quot;OpenGL 3.3&quot; directories of each chapters' source code listings. However, OpenGL 4.0+ core features will not work in OpenGL 3.3.
+	It is possible to run many of the samples using OpenGL 3.3 by using the code files found in the &quot;OpenGL 3.3&quot; directories of each chapters&#39; source code listings. However, OpenGL 4.0+ core features will not work in OpenGL 3.3.
 &lt;/p&gt;
 
 				    
@@ -115,7 +115,7 @@
 				<description>
 					
 				        &lt;p&gt;
-	This post walks you through setting up OpenGL, GLEW, and FreeGLUT support in Visual C++ in order to compile the samples properly. My original thought was to put this in an appendix after all of the chapters were completed, but there's need for it now, so here's the extremely verbose step-by-step explanation:
+	This post walks you through setting up OpenGL, GLEW, and FreeGLUT support in Visual C++ in order to compile the samples properly. My original thought was to put this in an appendix after all of the chapters were completed, but there&#39;s need for it now, so here&#39;s the extremely verbose step-by-step explanation:
 &lt;/p&gt;
 
 				    
@@ -165,7 +165,7 @@ layout(location=0) in vec4 in_Color;
 				<description>
 					
 				        &lt;p&gt;
-	I'm happy to inform you that &lt;em&gt;Chapter 4: Entering the Third Dimension&lt;/em&gt; is now available online by clicking on &lt;a href=&quot;/chapter-4-entering-the-third-dimension.html&quot;&gt;this link&lt;/a&gt;.
+	I&#39;m happy to inform you that &lt;em&gt;Chapter 4: Entering the Third Dimension&lt;/em&gt; is now available online by clicking on &lt;a href=&quot;/chapter-4-entering-the-third-dimension.html&quot;&gt;this link&lt;/a&gt;.
 &lt;/p&gt;
 &lt;p&gt;
 	Let me know if you have any &lt;a href=&quot;http://code.google.com/p/openglbook-samples/issues/list&quot;&gt;issues, bugs, errors&lt;/a&gt;, or simply wish to yell at me. Happy reading.
@@ -189,10 +189,10 @@ layout(location=0) in vec4 in_Color;
 		title=&quot;Google Project Hosting Logo&quot;
 		class=&quot;right&quot;
 	/&gt;
-	After a few requests for the Visual Studio Solution, I've moved the source code over from my self-hosted solution to &lt;a href=&quot;http://code.google.com/p/openglbook-samples/&quot;&gt;a Google Project Hosting solution&lt;/a&gt;. In the process, I've also Open Sourced the source code (not the chapters or the site, just the code) under the MIT license, &lt;a href=&quot;http://en.wikipedia.org/wiki/MIT_License&quot;&gt;a very permissive Open Source license&lt;/a&gt; that allows you to use the code for any purpose you want.
+	After a few requests for the Visual Studio Solution, I&#39;ve moved the source code over from my self-hosted solution to &lt;a href=&quot;http://code.google.com/p/openglbook-samples/&quot;&gt;a Google Project Hosting solution&lt;/a&gt;. In the process, I&#39;ve also Open Sourced the source code (not the chapters or the site, just the code) under the MIT license, &lt;a href=&quot;http://en.wikipedia.org/wiki/MIT_License&quot;&gt;a very permissive Open Source license&lt;/a&gt; that allows you to use the code for any purpose you want.
 &lt;/p&gt;
 &lt;p&gt;
-	The project itself is a Visual Studio 2010 solution containing individual projects for each of the chapters. If you have Subversion, you can check out the entire project, or if you'd like to view the files in your browser, &lt;a href=&quot;http://code.google.com/p/openglbook-samples/source/browse/&quot;&gt;you can do so here&lt;/a&gt; much better than I could implement on this site. Note that even though the project is a Visual Studio solution, the source can be compiled on many platforms.
+	The project itself is a Visual Studio 2010 solution containing individual projects for each of the chapters. If you have Subversion, you can check out the entire project, or if you&#39;d like to view the files in your browser, &lt;a href=&quot;http://code.google.com/p/openglbook-samples/source/browse/&quot;&gt;you can do so here&lt;/a&gt; much better than I could implement on this site. Note that even though the project is a Visual Studio solution, the source can be compiled on many platforms.
 &lt;/p&gt;
 &lt;p&gt;
 	&lt;a href=&quot;http://code.google.com/p/openglbook-samples/&quot;&gt;openglbook-samples project @ Google Project Hosting&lt;/a&gt;
@@ -216,10 +216,10 @@ layout(location=0) in vec4 in_Color;
 		title=&quot;Chapter 4 Preview&quot;
 		class=&quot;left&quot;
 	/&gt;
-	It's been a little while since the last update, but work on Chapter 4 is finally reaching a conclusion. In this chapter, we'll make our first steps into the third dimension and introduce a bit of required mathematics.
+	It&#39;s been a little while since the last update, but work on Chapter 4 is finally reaching a conclusion. In this chapter, we&#39;ll make our first steps into the third dimension and introduce a bit of required mathematics.
 &lt;/p&gt;
 &lt;p&gt;
-	If you haven't read the previous chapters yet, I &lt;em&gt;highly&lt;/em&gt; recommend you doing so before continuing with this chapter since you'll need to understand all of the previous concepts.
+	If you haven&#39;t read the previous chapters yet, I &lt;em&gt;highly&lt;/em&gt; recommend you doing so before continuing with this chapter since you&#39;ll need to understand all of the previous concepts.
 &lt;/p&gt;
 &lt;p&gt;Keep an eye out for this chapter in the near future!&lt;/p&gt;
 
@@ -241,7 +241,7 @@ layout(location=0) in vec4 in_Color;
 		alt=&quot;Access Violation&quot;
 		class=&quot;right&quot;
 	/&gt;
-	If you've been copying the code from the chapters, you may run into trouble when your program hits the &lt;code&gt;glGenVertexArrays&lt;/code&gt; function in the form of an Access Violation/segfault.
+	If you&#39;ve been copying the code from the chapters, you may run into trouble when your program hits the &lt;code&gt;glGenVertexArrays&lt;/code&gt; function in the form of an Access Violation/segfault.
 &lt;/p&gt;
 &lt;p&gt;
 	To fix this, add the following statement right above your call to &lt;code&gt;glewInit&lt;/code&gt;:
