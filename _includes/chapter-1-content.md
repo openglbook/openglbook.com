@@ -346,7 +346,7 @@ purposes, and buffer A is used as the back buffer for drawing purposes:
 />
 
 After the call to `glutSwapBuffers`, the buffers are swapped and buffer B is
-now the front buffer and buffer A is now the back buffer:
+now the back buffer and buffer A is now the front buffer:
 
 <img
   src="{{ site.url }}/images/4262_01_06.png"
