@@ -340,9 +340,9 @@ demonstration of how one could implement OpenGL and as a guideline to vendors.
 Needless to say, this implementation was dreadfully slow since it was not
 optimized and graphics accelerators for the PC were virtually nonexistent.
 In fact, this performance issue was so apparent that there is a Microsoft
-knowledge base article ([KB121282](http://support.microsoft.com/kb/121282))
-warning that using NT 3.5's OpenGL screensavers may slow your machine down
-since it took significant time from the computer's CPU.
+knowledge base article (KB121282) warning that using NT 3.5's OpenGL
+screensavers may slow your machine down since it took significant time from
+the computer's CPU.
 
 ## DirectX ##
 
