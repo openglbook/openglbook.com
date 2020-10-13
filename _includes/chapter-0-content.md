@@ -279,7 +279,7 @@ powerful functionality, but are usually specific to the vendor's implementation
 of OpenGL.
 
 You can then call the functionality provided by these extensions by loading
-them in you program though an extension loading mechanism that retrieves a
+them in you program through an extension loading mechanism that retrieves a
 function pointer. This loading mechanism is however not standardized, so sadly
 each platform has its own specific extension loading functions. This limitation
 is most apparent on the Microsoft Windows platform where the OpenGL header
