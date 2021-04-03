@@ -31,8 +31,8 @@ important player in relaying information and chronicling history. The
 requirement for visual feedback is so important that it is hard to acknowledge
 the existence of something if you cannot see it. Bacteria, for instance, were
 purely speculative before their visual discovery in the seventeenth century by
-Antonie van Leeuwenhoek who invented the microscope, but became an integral
-part of modern science.
+Antonie van Leeuwenhoek, one of the first microscopists and microbiologists,
+areas that became an integral part of modern science.
 
 Computer data is represented in nothing more than electrical pulses, which are
 also invisible to the naked eye. A method of displaying this data had to be
